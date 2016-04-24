@@ -1,0 +1,85 @@
+\chapter{Numerical implementation}
+\minitoc
+
+This chapter is devoted to numerical implementation of Model \ref{model:dynagraddama} applied to explicit dynamic situations. The two damage constitutive laws \eqref{eq:at2} and \eqref{eq:at1} will be used. The elastic energy density split \eqref{eq:elasticTC} is also adopted to take into account tension-compression asymmetry. Our implementation can be considered as a large displacement extension of the previous work of \cite{PhamAmorMarigoMaurini:2011,Bourdin:2011,BordenVerhooselScottHughesLandis:2012} on quasi-static and dynamic phase-field like models for fracture. Similarily, only the irreversiblity condition and the variational inequality \eqref{eq:vi} will be effectively implemented, which amounts to solve numerically the classical wave equation \eqref{eq:waveeq} and the minimality principle for damage \eqref{eq:crackmin} at every time step. However it is shown in \cite{LarsenOrtnerSuli:2010} that the time-discrete numerical model will also balance energy as required in \eqref{eq:dyngdeb}, when the time increment becomes small. Their constructive proof makes use of the implicit Euler scheme used in \cite{Bourdin:2011}, however our experience suggests the same for the explicit central difference scheme as we describe below.
+
+In this contribution the spatial and temporal discretization is as usual decoupled and will be discussed below separately. Space-time finite element methods will exploit fully the variational nature of the formulation \eqref{eq:vi} and can be considered as a possible improvement in the future.
+
+\section{Spatial discretization}
+Classical finite element method is used to discretize in space the displacement $\vec{u}_t$ and the damage field $\alpha_t$ based on a same mesh $\Omega_h$. Usual geometrical element types can be used: triangular or quadrilateral elements in 2-d; tetrahedral or hexagonal elements in 3-d, to name just a few. It should be ideally unstructured and uniform in mesh sizes otherwise some directions may be preferred when cracks propagate \cite{PhamAmorMarigoMaurini:2011}. The typical element size $h$ of the mesh should be comparable and preferably smaller with respect to the internal length $\ell$ in order to calculate correctly the damage dissipation energy \eqref{eq:surface} and the material response inside the crack process zone of order $\mathcal{O}(\ell)$, see \cite{BourdinFrancfortMarigo:2008}.
+
+\paragraph{Displacement problem} The displacement $\vec{u}_t$ and the damage field $\alpha_t$ will be both discretized with linear isoparametric finite elements as nodal vectors \cite{PhamAmorMarigoMaurini:2011,MesgarnejadBourdinKhonsari:2014}. Inside an arbitrary element $\Omega_\mathrm{e}\in\Omega_h$, we thus have
+\begin{align*}
+& \vec{u}_t(\vec{x})=\vec{N}(\vec{x})\uvec\quad\text{and}\quad\symgrad\vec{u}_t(\vec{x})=\vec{B}(\vec{x})\uvec\, , \\
+& \alpha_t(\vec{x})=\vec{N}_\alpha(\vec{x})\dvec\quad\text{and}\quad\nabla\alpha_t(\vec{x})=\vec{B}_\alpha(\vec{x})\dvec
+\end{align*}
+where $\vec{N}$ and $\vec{B}$ are respectively the interpolation and differentiation matrices applied on local nodal vectors $\uvec$ and $\dvec$ specific to the element $\Omega_\mathrm{e}$. The Hencky logarithmic strain \eqref{eq:logstrain} depends nonlinearly on the displacement vector and will be denoted by
+\begin{equation}
+\eps_t(\vec{x})=\vec{h}(\vec{x},\uvec).
+\end{equation}
+Its effective calculation will be detailed in Sect. \ref{sec:explicitnewmark}. In explicit dynamics \emph{linear} elements are largely preferred due to their low computational cost and an easily obtained diagonal lumped mass matrix. According to \cite{BourdinFrancfortMarigo:2008}, linear elements perform equally well compared to higher-order elements in terms of $\Gamma$-convergence. Finally this P1-P1 finite element discretization is not forbidden according to \cite{SimoneAskesPeerlingsSluys:2003}.
+
+Owing to the explicit Newmark scheme to be described in Sect. \ref{sec:explicitnewmark}, at the beginning of every time step the current configuration $\vphi_t(\Omega)$ is already calculated from the last iteration. Hence the Eulerian elastodynamic equation \eqref{eq:waveeq} will be naturally solved on the deformed mesh obtained by constantly updating the mesh coordinates $\vec{x}_t=\vec{x}+\vec{u}_t(\vec{x})\in\Omega_t$. This is referred to the updated Lagrangian formulation \cite{PieroLancioniMarch:2007}. However in other general implicit cases the dynamic or static equilibrium can only be prescribed in the \emph{last known} configuration. The wave equation \eqref{eq:waveeq} after discretization in space reads
+\begin{equation} \label{eq:waveeqsdis}
+\vec{M}\ddot{\uvec}=\vec{F}_\mathrm{ext}-\vec{F}_\mathrm{int}(\uvec,\dvec)
+\end{equation}
+with $\vec{M}$ the classical lumped mass matrix, $\vec{F}_\mathrm{ext}$ the external force vector corresponding to the potential \eqref{eq:power} and $\vec{F}_\mathrm{int}$ the internal force vector assembled from the elementary vectors given by
+\begin{equation} \label{eq:Fint}
+\begin{aligned}
+& \vec{F}_\mathrm{int}^\me=\int_{\Omega_\me}\vec{B}^\mT\sig\bigl(\vec{h}(\cdot,\uvec),\vec{N}_\alpha\dvec\bigr) \\
+&= \int_{\Omega_\me}\vec{B}^\mT\left(a(\vec{N}_\alpha\dvec)\sig_0^+\bigl(\vec{h}(\cdot,\uvec)\bigr)+\sig_0^-\bigl(\vec{h}(\cdot,\uvec)\bigr)\right).
+\end{aligned}
+\end{equation}
+For simplex finite elements (triangular and tetrahedral elements) the Jacobian of the transformation (between the reference and the physical elements) as well as the differentiation matrix $\vec{B}$ are constant, thus \eqref{eq:Fint} can be integrated exactly using an effective stress
+\begin{equation} \label{eq:FintSim}
+\vec{F}_\mathrm{int}^\me=\abs{\Omega_\me}\vec{B}^\mT\sig_\mathrm{eff}=\abs{\Omega_\me}\vec{B}^\mT(a_\mathrm{eff}\sig_0^++\sig_0^-)
+\end{equation}
+with $a_\mathrm{eff}$ the effective stiffness degradation
+\[
+a_\mathrm{eff}=\frac{1}{\abs{\Omega_\me}}\int_{\Omega_\me}a(\vec{N}_\alpha\dvec).
+\]
+For tensor product finite elements, a loop on the Gauss points is necessary and our experience suggests that 4 Gauss points for quadrilateral elements and 8 for hexagonal elements are sufficient. We also note that in explicit dynamics a residual stiffness $k_\mathrm{res}$ is not needed in the stiffness degradation function as no matrix inversion is needed, contrary to the implicit cases \cite{PhamAmorMarigoMaurini:2011,SchlueterWillenbuecherKuhnMueller:2014}.
+
+\paragraph{Damage problem} According to \eqref{eq:crackmin}, the damage minimality condition 	is naturally formulated in the initial reference configuration. From a physical point of view, this corresponds to the fact that the damage dissipation energy is destined to measure the length or the area of cracks defined in the reference configuration. Technically the concerned energies can be written in the deformed mesh (at the expense of additional unpleasant $\vec{F}_t$ and $J_t$ terms), however it is not necessary \cite{PieroLancioniMarch:2007}. Using the damage constitutive laws \eqref{eq:at2} and \eqref{eq:at1}, the total damageable energy $\mathcal{E}+\mathcal{S}$ is quadratic with respect to the damage vector $\dvec$ and \eqref{eq:crackmin} after spatial discretization reads 
+\begin{equation} \label{eq:crackdis}
+q_{\uvec}(\dvec)\leq q_{\uvec}(\underline{\vec{\beta}})\text{ for all $\underline{\vec{\beta}}$ that $0\leq\dvec\leq\underline{\vec{\beta}}\leq 1$}
+\end{equation}
+with the quadratic function defined by
+\begin{equation} \label{eq:Hb}
+q_{\uvec}(\dvec)=\frac{1}{2}\dvec^\mT\vec{H}(\uvec)\dvec-\vec{b}(\uvec)^\mT\dvec.
+\end{equation}
+The Hessian matrix $\vec{H}$ and the second member vector $\vec{b}$ depend solely on the current deformation state $\uvec$ and hence are constant during the solving process of the damage problem. Their exact forms depend on the damage constitutive law used.
+
+\section{Temporal discretization}
+Given an arbitrary discretization $(t^n)$ of the time interval of interest $I$ where the superscript $n$ denotes a quantity evaluated at the $n$-th time step, our objective here is to solve the spatially discretized wave equation \eqref{eq:waveeqsdis} coupled with the crack minimality condition \eqref{eq:crackdis} at these steps. In this contribution we consider dynamic fracture problems in brittle materials under impact-type loadings. In general the time scale involved is typically of order $\mathcal{O}(\SI{1}{ms})\ll\mathcal{O}(\SI{1}{s})$, thus in absence of a costly matrix inversion the explicit Newmark scheme with a lumped mass matrix is very suitable for this kind of situations. It is a special case of the $\beta$-Newmark family \cite{Newmark:1959} with $\beta=0$ and hence is second-order accurate, symplectic which implies energy conservation but unfortunately conditionally stable. After spatial discretization the constraint prescribed on the current time increment $\Delta t$ is often determined by the CFL condition $\Delta t<\Delta t_\mathrm{CFL}=\min(h/c)$ where $h$ is the mesh size, $c$ is the material sound speed and the smallest value is chosen among all elements. This is not a very inconvenient feature in our application since in presence of high geometrical and material nonlinearities even unconditionally stable implicit schemes need a small time increment comparable to $\Delta t_\mathrm{CFL}$. In the calculation of the material sound speed, current damage state as well as the tension-compression split formulation is taken into account. Thus a totally damaged element under tension does not penalize the total computational time.
+
+We note that after temporal discretization \eqref{eq:crackdis} reads
+\begin{equation} \label{eq:crackstdis}
+q_{\,\uvec^n}(\dvec^n)\leq q_{\,\uvec^n}(\underline{\vec{\beta}}) \text{ for all $\underline{\vec{\beta}}$ that $0\leq\dvec^{n-1}\leq\underline{\vec{\beta}}\leq 1$}
+\end{equation}
+where the Hessian matrix and the second member vector in \eqref{eq:Hb} are evaluated at $\uvec^n$. It can be translated to an effective minimization of the quadratic function $q$ under the constraint that $\dvec^n$ is pointwise non-decreasing with respect to its previous value. In absence of the temporal derivative of the damage field $\dot{\alpha}_t$, \eqref{eq:crackstdis} is not a genuine time evolution problem as the sole time dependence is introduced via the irreversibility condition. The current damage $\dvec^n$ can be accurately calculated as long as the current deformation state $\uvec^n$ is known.
+
+In the time-continuous model the wave equation \eqref{eq:waveeq} and the damage minimality condition \eqref{eq:crackmin} are coupled in the first-order stability principle \eqref{eq:vi}. After discretization $\uvec$ and $\dvec$ evaluated at the last and current iterations are in general involved in a non-explicit fashion. We can use a monolithic scheme which solves simultaneously at a time step the above two subproblems using a Newton-type nonlinear solver \cite{BordenVerhooselScottHughesLandis:2012,SchlueterWillenbuecherKuhnMueller:2014}. A staggered scheme which decouples algorithmically the wave equation and the energy minimization problem is also widely used \cite{Bourdin:2011,HofackerMiehe:2012}. In our case it turns out that the explicit Newmark scheme automatically decouples the time evolution system in $(\uvec,\dvec)$ and the two subproblems can be independently solved one from the other at every time step. It is due to the fact that the current acceleration $\ddot{\uvec}^n$ can be obtained based on the current known deformation state $\uvec^n$ and the current damage $\dvec^n$ calculated from $\uvec^n$. The time-stepping scheme can be summarized in Algorithm \ref{algo:numericalmodel}. It is known as the Velocity Verlet implementation since velocities at mid-steps appear and all quantities at time $t^n$ are obtained after the $n$-th time step and can be used for post-processing. A bound-constrained minimization problem appears in every time iteration of the elastodynamic equation, and thus its efficient implementation is crucial. We observe that the initial damage is recomputed $\dvec^{-1}\mapsto\dvec^0$ in the step 2. The role of $\dvec^{-1}$ is to bring some \emph{a priori} knowledge of the damage field resulting from a previous calculation or more frequently to represent an initial crack $\dvec^{-1}=1$ on $\Gamma_0$. The initial step 2 thus renders it compatible with the initial displacement condition and the energy minimization structure.
+\begin{algorithm*}[htbp]
+\caption{Discretized numerical model of Model \ref{model:dynagraddama}.} \label{algo:numericalmodel}
+\begin{algorithmic}[1]\linespread{1.2}\selectfont\normalsize
+\State Given initial conditions $\uvec^0$, $\dot{\uvec}^0$ and $\dvec^{-1}$.
+\State Reinitialize the damage $\dvec^0=\operatorname{arg min}q_{\,\uvec^0}(\cdot)$ subjected to constraints $0\leq\dvec^{-1}\leq\dvec^0\leq 1$.
+\State Initialize the acceleration $\vec{M}\ddot{\uvec}^0=\vec{F}_\mathrm{ext}^0-\vec{F}_\mathrm{int}(\uvec^0,\dvec^0)$.
+\For{every successive time step $n\geq 0$}
+  \State Update $\dot{\uvec}^{n+1/2}=\dot{\uvec}^{n}+\frac{\Delta t}{2}\ddot{\uvec}^n$.
+  \State Update $\uvec^{n+1}=\uvec^n+\Delta t\dot{\uvec}^{n+1/2}$.
+  \State Update $\dvec^{n+1}=\operatorname{arg min}q_{\,\uvec^{n+1}}(\cdot)$ subjected to constraints $0\leq\dvec^n\leq\dvec^{n+1}\leq 1$.
+  \State Update $\vec{M}\ddot{\uvec}^{n+1}=\vec{F}_\mathrm{ext}^{n+1}-\vec{F}_\mathrm{int}(\uvec^{n+1},\dvec^{n+1})$.
+  \State Update $\dot{\uvec}^{n+1}=\dot{\uvec}^{n+1/2}+\frac{\Delta t}{2}\ddot{\uvec}^{n+1}$.
+\EndFor
+\end{algorithmic}
+\end{algorithm*}
+
+We end this section on temporal discretization by the numerical calculation of the Hencky logarithmic strain $\vec{h}_t$ defined in \eqref{eq:logstrain}. Although the polar decomposition is indeed unnecessary by remarking that $\log\vec{V}_t=\frac{1}{2}\log\vec{B}_t$, spectral decomposition of the left Cauchy-Green tensor $\vec{B}_t=\vec{F}_t\vec{F}_t^\mT$ is unavoidable. In this work we use an approximation of the Hencky strain based on the following remarkable property established in \cite{XiaoBruhnsMeyers:1997}: within a proper corotational frame the rate of the Hencky strain equals the stretching tensor. Combined with the time-stepping scheme in Algorithm \ref{algo:numericalmodel} an increment of the Hencky strain can be given by $\Delta\vec{h}^n\approx\symgrad\Delta\vec{u}^n$ where $\Delta\vec{u}^n=\vec{u}^n-\vec{u}^{n-1}$ is referred to the current configuration. To have better accuracy, a second-order approximation based on the incremental Almansi strain is used
+\[
+\Delta\vec{h}^n\approx\frac{1}{2}\bigl(\nabla\Delta\vec{u}^n+\nabla^\mT\Delta\vec{u}^n-(\nabla^\mT\Delta\vec{u}^n)(\nabla\Delta\vec{u}^n)\bigr).
+\]
+Finally the current Hencky strain is incremented $\vec{h}^n=\vec{h}^{n-1}+\Delta\vec{h}^n$.
+
+\section{Implementation}

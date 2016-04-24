@@ -1,0 +1,26 @@
+syntax: glob
+
+*~
+*.out
+*.log
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.nav
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*.mtc
+*.maf
+*.idx
+*.ilg
+*.ind
+*.mtc*
+*.brf
+main.pdf
+.DS_Store
+_minted-main
