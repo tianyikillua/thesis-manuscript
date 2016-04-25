@@ -76,6 +76,22 @@ Explain differences between brittle and ductile fracture
 3d validation?
 %Highlight the differences with respect to existing phase-field methods w(alpha)=alpha^2
 
+\subsection{Comparaison with the dissipative phase-field approaches}
+
+The phase-field model studied in \cite{KarmaKesslerLevine:2001,HakimKarma:2009} constitutes another continuum and regularized approach for quasi-static and dynamic fracture problems. A specific damage-like\footnote{Indeed, the function $1-\phi$ can be seen as the damage using their definition of the phase field $\phi$.} scalar \emph{phase} field $\phi$ is introduced to continously separate the broken state $\phi=0$ and the sound one $\phi=1$. In a quasi-static setting, the governing equations for the displacement $\vec{u}$ and the phase fields $\phi$ can be obtained in a semi-variational way from the total energy $\mathcal{E}(\vec{u}_t,\phi_t)$, which, using notations used in \cite{HakimKarma:2009}, gives
+\begin{align}
+0 &= \frac{\partial\mathcal{E}}{\partial\vec{u}}(\vec{u}_t,\phi_t) \label{eq:PF_u} \\
+\chi^{-1}\dot{\phi}_t &= -\frac{\partial\mathcal{E}}{\partial\phi}(\vec{u}_t,\phi_t) \label{eq:PF_phi}
+\end{align}
+where \eqref{eq:PF_u} describes the static equilibrum of the body with potential diffuse or localized damage zones and \eqref{eq:PF_phi} is the standard Ginzburg-Landau equation with $\chi>0$ a kinetic or mobility \cite{KuhnMuller:2010} coefficient controlling the (physical) additional total energy disspation in the form of heat during the crack propagation, as can be seen by following (corrected) equation based on (13) in \cite{HakimKarma:2009}
+\begin{equation} \label{eq:PF_dissipation}
+\dot{\mathcal{E}}_t=-\chi\left(\frac{\partial\mathcal{E}}{\partial\phi}(\vec{u}_t,\phi_t)\right)^2\leq 0.
+\end{equation}
+
+Note that the Griffith-like crack creation is the only dissipation mechanism in our gradient damage model and an energy balance condition \todo{ref. to be added} is added in the formulation to ensure that all the elastic energy released will be used to supplement crack propagation. This is the major formulational difference between our model and the \emph{dissipative} phase field models because of \eqref{eq:PF_dissipation}. A parallel consequence of the apparence of a kinetic coefficient $0<\chi<\infty$ in \eqref{eq:PF_phi}, as discussed in \cite{Bourdin:2011}, is that an evolutionary parabolic equation \eqref{eq:PF_phi} governing the phase field is coupled with the elliptic static equilibrum problem \eqref{eq:PF_u}. Physically it means that the crack can evolve solely with a rate determined by $\chi$, even if the structure is in static equilibrum at $t=T$ with all external loading frozen for all $t>T$. With a physical time being introduced into the model (the dimension of the kinetic coefficient is $[\mathrm{T}]^{-1}$), the coupled system \eqref{eq:PF_u}-\eqref{eq:PF_phi} isn't well suited for quasi-static computations, as numerically the static equilibrum  $\vec{K}\vec{u}=\vec{F}$ should be combined with a specific time-stepping scheme (the explicit Euler scheme in \cite{HakimKarma:2009}) to integrate the evolution problem for the phase field.
+
+Other differences exist and concern mainly the dependence of the total energy on the phase field $\phi_t\mapsto\mathcal{E}(\vec{u}_t,\phi_t)$. Our formulation is general in the sense that the stiffness degration $\alpha\mapsto a(\alpha)$ and the local damage dissipation $\alpha\mapsto w(\alpha)$ are only required to verify some physical properties \todo{ref. to be added} based on which three particular constitutive laws are studied in this paper. As can be been in the subsequent numerical experiments, all these models are similar in essence and can be used to investigate brittle fracture problems. On the contrary, the dissipative phase field models \cite{KarmaKesslerLevine:2001,HakimKarma:2009} seem to favour a particular set of constitutive functions. As long as these functions verify the properties \todo{ref. to be added}, they can be seen to be contained in our general gradient damage model. 
+
 
 \section{Summary of this Chapter} \label{sec:summarychap1}
 \begin{itemize}
