@@ -1,4 +1,4 @@
-% !TEX root = ../main.tex
+%!TEX root=../main.tex
 \chapter{Introduction} \label{chap:introduction}
 \minitoc
 
@@ -28,24 +28,30 @@ Cracks can be regarded as a macroscopic manifestation of material defects at a m
 
 In this work inertial effects are taken into account in the structural analysis of cracked bodies. This is the object of dynamic fracture\index{Fracture!Dynamic}. As opposed to the traditional quasi-static approach, the framework of dynamic fracture focuses on some specific problem settings and may present some theoretic advantages.
 \begin{itemize}
-\item The introduction of kinetic energy brings a physical time scale to the fracture problem. Inertial effects could not be ignored if one wants to analyze the transient behavior of structures due to external dynamic loadings such as impact or the interactions between stress waves and the crack.
+\item The introduction of kinetic energy brings a physical time scale to the fracture problem. Inertial effects could not be ignored if one wants to analyze the transient behavior of structures due to external dynamic loadings such as impact or the interactions between stress waves and the crack \cite{Ravi-ChandarKnauss:1984b}.
 
 \item Even though the structure is subject to slowly applied loads such that the quasi-static hypothesis is verified, the crack itself may still propagates at a speed comparable to that of the mechanical waves. In the classical fracture mechanics theory, such situations refer to an \emph{unstable propagation} since crack evolution is no longer controllable through external hard or soft devices applied to the body. A complete theoretic framework for analyzing such unstable propagations necessarily includes dynamics.
 \end{itemize}
 
 The temporal and spatial evolution of cracks can be characterized by several stages or events which are summarized as follows. The temporal evolution focuses on \emph{when} cracks propagate:
 \begin{itemize}
-\item \textbf{Nucleation and/or initiation} concerns the appearance of a propagating crack inside a body (or on its boundary) due to external loading. \emph{Nucleation} refers to the formation of cracks from a perfectly unflawed configuration. From a material point of view, the nucleation event should be considered as a macroscopic modeling simplification since micro cracks or flaws may be present at a lower scale and may eventually evolve into macro-cracks under the influence of external loading. These material or structural imperfections are in general not accounted for in a continuum mechanics approach and we consider that a body is initially sound when stress singularity is absent from an elastic modeling viewpoint. On the other hand, crack \emph{initiation} is well defined and refers to the time at which the existing macro-crack or the defect begins to propagate in the structure.
+\item \textbf{Nucleation and/or initiation} concerns the appearance of a propagating crack inside a body (or on its boundary) due to external loading. \emph{Nucleation} refers to the formation of cracks from a perfectly unflawed configuration. From a material point of view, the nucleation event should be considered as a macroscopic modeling simplification since micro cracks or flaws may be present at a lower scale and may eventually evolve into macro-cracks under the influence of external loading. These material or structural imperfections are in general not accounted for in a continuum mechanics approach and we consider that a body is initially sound when stress singularity is absent from an elastic modeling viewpoint. On the other hand, crack \emph{initiation} refers to the time at which the existing macro-crack or the defect begins to propagate in the structure.
 
-\item \textbf{Propagation} phase is
-the most dangerous part of defect evolution for industrial applications as in constitutes a threat to structural integrity. Crack propagation is systematically accompanied by a material-dependent energy consumption, which is balanced by a release of the total mechanical energy. This energy balance concept is the cornerstone of several theoretical models of fracture mechanics.
+\item \textbf{Propagation}, being stable or not, is
+the most dangerous part of defect evolution for industrial applications as in constitutes a threat to structural integrity. Crack propagation is systematically accompanied by a material-dependent energy consumption, which is balanced by a release of the total mechanical energy. This energy balance concept is the cornerstone of several theoretical models of fracture mechanics \cite{Griffith:1921,Mott:1947}.
 
-\item \textbf{Arrest} refers to a propagating crack that stops in a continuous or abrupt fashion
+\item \textbf{Arrest} refers to a propagating crack that becomes stationary in a continuous or abrupt fashion. In the latter case, arrest can no longer be considered as a time reversal of the crack initiation process \cite{Ravi-ChandarKnauss:1984c}.
 \end{itemize}
 
-Meanwhile, the spatial evolution refers to the path along which the crack propagates, \emph{i.e.} how cracks propagate:
+Meanwhile, the spatial evolution refers to the path along which the crack propagates, \emph{i.e.} how cracks propagate. In a two-dimensional setting, the following concepts are generally involved:
 \begin{itemize}
-\item \textbf{Curving and kinking}
+\item \textbf{Curving and kinking} concerns curvature evolution of the crack path. When idealizing the crack as a mathematical curve $l\mapsto\vec{\gamma}(l)$, crack curving refers to a tangent that varies continuously along the path, as opposed to kinking where a discontinuous change of crack propagation direction takes place, see \cref{fig:kink}. This last can be considered as a theoretic modeling of a crack that suddenly deviates from its initial propagation direction.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.35\textwidth]{kinking.pdf}
+\caption{Curved crack path versus kinked crack path} \label{fig:kink}
+\end{figure}
+
 \item \textbf{Branching}
 \item \textbf{Other topology changes}
 \end{itemize}
