@@ -1,7 +1,243 @@
 \appendix
-\chapter{Detailed calculations}
 
-\section{Calculation of the first-order action variation} \label{sec:calactionvariation}
+\chapter{Griffith Revisited}
+As discussed in the introduction, this section will be devoted to a rigorous reformulation of an energetic approach to dynamic fracture. The basic assumptions will be a two-dimensional homogeneous and isotropic linear elastic body $\Omega$ containing a smoothly propagating crack $\Gamma_t$ with a pre-defined path $l\mapsto\vec{\gamma}(l)\in\mathbb{R}^2$ parametrized by its arc length $t\mapsto l_t\geq 0$. The symbol $\vec{P}_t=\vec{\gamma}(l_t)$ will be used to represent the crack tip at time $t$. The current cracked configuration will be denoted by $\domaint$ on which the kinematic quantities are defined. For the sake of simplicity, the crack $\Gamma_t$ is assumed to remain far from the boundary $\partial\Omega$. The spatial crack path $l\mapsto\vec{\gamma}(l)$ can be curved but in this contribution we will only consider a straight crack with a constant tangent $\vec{\gamma}'(l_t)=\vtau_t=\vtau_0$. Generalization to a curved crack path will be briefly discussed at the end of this section.
+
+The basic energetic ingredients of the variational formulation are defined as follows. Under the small strain hypothesis, the elastic energy is given by
+\begin{equation} \label{eq:elastic}
+\mathcal{E}(\vec{u}_t,l_t)=\int_\domaint\psi\bigl(\eps(\vec{u}_t)\bigr)\dx=\int_\domaint\frac{1}{2}\tens{A}\eps(\vec{u}_t)\cdot\eps(\vec{u}_t)\dx=\int_\domaint\frac{1}{2}\sig_t\cdot\eps(\vec{u}_t)\dx
+\end{equation}
+where $\tens{A}$ is the elasticity tensor, $\eps$ denotes the symmetrized gradient operator which gives the linearized strain $\eps(\vec{u}_t)=\frac{1}{2}(\nabla\vec{u}_t+\nabla^\mT\vec{u}_t)$ when applied to the displacement vector, and $\sig_t=\tens{A}\eps(\vec{u}_t)$ represents the stress tensor. The kinetic energy defined on the uncracked bulk is the usual quadratic function of the velocity field modulated by the material density
+\begin{equation} \label{eq:kinetic}
+\mathcal{K}(\dot{\vec{u}}_t,l_t)=\int_\domaint\kappa(\dot{\vec{u}}_t)\dx=\int_\domaint\frac{1}{2}\rho\dot{\vec{u}}_t\cdot\dot{\vec{u}}_t\dx.
+\end{equation}
+The Griffith surface energy \cite{Griffith:1921} illustrates the hypothesis that the crack creation is accompanied by an energy dissipation solely proportional to its area (or length in 2-d cases) with a material dependent factor $\gc$ called the fracture toughness. It reads in our case
+\begin{equation} \label{eq:griffith}
+\mathcal{S}(l_t)=\gc\cdot(l_t-l_0).
+\end{equation}
+Finally we define the external work potential $\mathcal{W}_t$ taking into account any possible body forces or surface tractions applied on a subset ${\partial\Omega_F}$ of the boundary
+\begin{equation} \label{eq:externalwork}
+\mathcal{W}_t(\vec{u}_t)=\int_\domaint \vec{f}_t\cdot\vec{u}_t\dx+\int_{\partial\Omega_F} \vec{F}_t\cdot\vec{u}_t\D{\vec{s}}.
+\end{equation}
+We suppose that they are sufficiently regular in time and in space.
+
+\subsection{Lagrangian Description in the Initial Cracked Configuration} \label{sec:initialconfiguration}
+The displacement $\vec{u}_t$ is defined in the current crack configuration $\domaint$, consequently its total variation depends on that of the crack. A Lagrangian description of the fracture problem is thus preferred if ones needs to rigorously define an energy release rate with respect to the crack length \cite{Destuynder:1981}. The current cracked \emph{material} configuration $\domaint$ is transformed to the initial one $\domaini$ thanks to a well-defined bijection $\philt_{l_t}$ whose inverse as well as itself is differentiable, see Fig. \ref{fig:philt}. Proving existence of such diffeomorphisms may be technical \cite{KhludnevSokolowskiSzulc:2010} and consequently will be directly admitted. This bijection $\philt$ should not be confused with the actual deformation $\vec{\varphi}_t$ of the body which takes a particular material point $\vec{x}\in\domaint$ to its spatial location $\vec{\varphi}_t(\vec{x})$ in the deformed configuration $\vec{\varphi}_t(\domaint)$. Recall that the displacement field $\vec{u}_t$ is defined by $\vec{\varphi}_t(\vec{x})=\vec{x}+\vec{u}_t(\vec{x})$ for all $\vec{x}$ in $\domaint$.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{Li-Fig1.pdf}
+\caption{Definition of a diffeomorphism $\philt_{l_t}:\domaini\to\domaint$ transforming the current cracked material configuration $\domaint$ to the initial one $\domaini$. It should not be confused with the actual deformation $\vec{\varphi}_t$ of the body which takes a particular material point $\vec{x}\in\domaint$ to its spatial location $\vec{\varphi}_t(\vec{x})$ in the deformed configuration $\vec{\varphi}_t(\domaint)$} \label{fig:philt}
+\end{figure}
+
+In this particular case of a straight crack path, we can explicit this domain transformation by using a virtual perturbation $\vtheta^*$ defined on the initial configuration \cite{Destuynder:1981,KhludnevSokolowskiSzulc:2010}. This virtual perturbation should verify the following
+\begin{definition}[Virtual Perturbation] \label{def:velocityfield}
+\begin{enumerate}
+\item It is sufficiently smooth in space to satisfy the definition of a diffeomorphism.
+\item It represents a virtual crack advance along the current crack propagation direction, that is in our case $\vtheta^*(\vec{P}_0)=\vtau_0$.
+\item It does not alter the crack lip \emph{shape}, that is $\vtheta^*\cdot\vec{n}=0$ on the crack lip $\Gamma_0$ with $\vec{n}$ the unit normal vector.
+\item The domain boundary remains invariant, \emph{i.e.} $\vtheta^*=\vec{0}$ on $\partial\Omega$.
+\end{enumerate}
+An example of such virtual perturbations is given in Fig. \ref{fig:exampletheta}.
+\end{definition}
+\begin{figure}[htbp]\sidecaption
+\centering
+\includegraphics[width=0.45\textwidth]{Li-Fig2.pdf}
+\caption{A particular virtual perturbation $\vtheta^*=\theta\vtau_0$ verifying Definition \ref{def:velocityfield}. It is obtained by solving the Laplace's equation $\Delta\theta=0$ inside the crown $r\leq\norm{\vec{x}^*-\vec{P}_0}\leq R$ with adequate boundary conditions} \label{fig:exampletheta}
+\end{figure}
+
+With an arbitrary virtual perturbation verifying Definition \ref{def:velocityfield}, we can thus construct the bijection between the initial and current cracked material configurations
+\begin{equation} \label{eq:philt}
+\philt_{l_t}:\vec{x}^*\mapsto\vec{x}=\vec{x}^*+(l_t-l_0)\vtheta^*(\vec{x}^*).
+\end{equation}
+where $\vec{x}=\philt_{l_t}(\vec{x}^*)$ denotes the material point $\vec{x}$ in the current cracked configuration $\domaint$ associated with the material point $\vec{x^*}$ in the initial cracked configuration $\domaini$. For notational simplicity, we will suppress its subscript by writing $\philt=\philt_{l_t}$. The (real) displacement field $\vec{u}_t$ will thus be pulled-back to the initial configuration via the introduced bijection by
+\begin{equation} \label{eq:transportofu}
+\vec{u}_t\circ\philt=\vec{u}_t^*
+\end{equation}
+from which along with \eqref{eq:philt} we deduce the following useful identities using the classical chain rule
+\begin{align}
+\nabla\vec{u}_t^*(\vec{x}^*) &= \nabla\vec{u}_t(\vec{x})\nabla\philt(\vec{x}^*)\,, \label{eq:grad} \\
+\dot{\vec{u}}_t^*(\vec{x}^*) &= \dot{\vec{u}}_t(\vec{x})+\nabla\vec{u}_t(\vec{x})\dot{l}_t\vtheta^*(\vec{x}^*)=\dot{\vec{u}}_t(\vec{x})+\nabla\vec{u}_t^*(\vec{x}^*)\nabla\philt(\vec{x}^*)^{-1}\dot{l}_t\vtheta^*(\vec{x}^*). \label{eq:v}
+\end{align}
+As can be observed, all quantities \emph{referring} to the initial material configuration $\domaini$ are indicated by a superscript $(\cdot)^*$. In particular, the Lebesgue integration measure in $\domaini$ will be denoted by $\mathrm{d}\vec{x^*}$. When spatial or temporal differentiation is present, the pullback operation similar to \eqref{eq:transportofu} is performed first. Hence in \eqref{eq:grad}, $\nabla\vec{u}_t^*$ denotes the gradient of $\vec{u}_t^*$ in $\domaini$, and in \eqref{eq:v}, $\dot{\vec{u}}_t^*$ is understood as the time derivative of the transported displacement.
+
+By virtue of \eqref{eq:grad} and \eqref{eq:v}, we can thus rewrite the elastic  energy \eqref{eq:elastic} and the kinetic \eqref{eq:kinetic} energy using the transported displacement
+\begin{equation} \label{eq:elastici}
+\mathcal{E}(\vec{u}_t,l_t)=\mathcal{E}^*(\vec{u}_t^*,l_t)=\int_\domaini\psi\bigl({\textstyle\frac{1}{2}}\nabla\vec{u}_t^*\nabla\philt^{-1}+{\textstyle\frac{1}{2}}\nabla\philt^{-\mathsf{T}}(\nabla\vec{u}_t^*)^\mT\bigr)\det\nabla\philt\dxx
+\end{equation}
+and
+\begin{equation} \label{eq:kinetici}
+\mathcal{K}(\dot{\vec{u}}_t,l_t)=\mathcal{K}^*(\vec{u}_t^*,\dot{\vec{u}}_t^*,l_t,\dot{l}_t)=\int_\domaini\kappa(\dot{\vec{u}}_t^*-\dot{l}_t\nabla\vec{u}_t^*\nabla\philt^{-1}\vtheta^*)\det\nabla\philt\dxx
+\end{equation}
+where we note that the transported kinetic energy functional $\mathcal{K}^*$ depends on the transported displacement $\vec{u}_t^*$ and the crack velocity $\dot{l}_t$. Since the boundary $\partial\Omega$ is invariant under the transformation $\philt$, the external work potential \eqref{eq:externalwork} written in the initial configuration reads
+\begin{equation} \label{eq:externalworki}
+\mathcal{W}_t(\vec{u}_t)=\mathcal{W}^*_t(\vec{u}_t^*,l_t)=\int_\domaini (\vec{f}_t\circ\philt)\cdot\vec{u}_t^*\det\nabla\philt\dxx+\int_{\partial\Omega_F} \vec{F}_t\cdot\vec{u}_t^*\D{\vec{s}}.
+\end{equation}
+
+Finally, note that we can also map the original virtual perturbation $\vtheta^*$ defined on the initial configuration to the current one, via a pushforward operation
+\[
+\vtheta_t=\vtheta^*\circ\philt^{-1}.
+\]
+All the properties discussed in Definition \ref{def:velocityfield} for the initial virtual perturbation should adequately apply for the push-forwarded one by using the current crack tip $\vec{P}_t=\philt(\vec{P}_0)$ and lip $\Gamma_t$.
+
+\subsection{Reformulation Based on a Space-Time Action Integral} \label{sec:reformulationtheta}
+We suppose that the body $\Omega$ evolves due to an external work potential $\mathcal{W}_t$ and a Dirichlet-type imposed displacement $t\mapsto\vec{U}_t$ on a time-independent subset $\partial\Omega_U$ of the boundary. We will proceed to formulate the crack evolution equation from the (generalized) Hamilton's principle \cite{Hamilton:1834}, by constructing a space-time action integral similar to that introduced in \cite{Adda-BediaAriasAmarLund:1999} and then calculating directly the action variation corresponding to arbitrary virtual displacement variation and crack advance. Recall that The Principle of Least Action is formulated as a Boundary Value Problem: fix the displacement $\vec{u}$ at two time ends, the real displacement evolution $t\mapsto\vec{u}_t$ renders the action stationary\footnote{But in practice it is the initial displacement $\vec{u}_0$ and velocity $\dot{\vec{u}}_0$ that are known and we will use the equations derived from the Hamiltonian principle to solve the physical Initial Value Problem.}. Given an arbitrary interval of time $I=[0,T]$ and the values of the (transported) displacement $\vec{u}^*$ at both time ends noted $\vec{u}^*_{\partial I}=(\vec{u}^*_0,\vec{u}^*_T)$, we will construct the admissible displacement evolution space
+\begin{equation} \label{eq:Cu}
+\mathcal{C}(\vec{u}^*)=\set{\vec{v}^*:I\times(\domaini)\to\mathbb{R}^2|\vec{v}_t^*\in\mathcal{C}_t\text{ for all $t\in I$ and }\vec{v}^*_{\partial I}=\vec{u}^*_{\partial I}}.
+\end{equation}
+where the admissible function space $\mathcal{C}_t$ for the current (transported) displacement at time $t$ is an affine space of type $\mathcal{C}_t=\mathcal{C}_0+\vec{U}_t$ with the associated vector space given by
+\[
+\mathcal{C}_0=\set{\vec{u}^*_t:\domaini\to\mathbb{R}^2|\vec{u}^*_t=\vec{0}\text{ on }\partial\Omega_U}.
+\]
+
+For the admissible crack evolution, we require that the evolution of the crack tip $t\mapsto l_t$ should be a non-decreasing function of time and virtual advance of the crack tip at every instant should also be non-negative to ensure irreversibility. Concretely, given an arbitrary but non-decreasing crack evolution $t\mapsto l_t$, the admissible crack evolution space is given by
+\begin{equation} \label{eq:Dl}
+\mathcal{Z}(l)=\set{s:I\to\mathbb{R}^+|s_t\geq l_t\text{ for all $t\in I$ and }s_{\partial I}=l_{\partial I}}.
+\end{equation}
+
+With the definition of the elastic energy \eqref{eq:elastici}, kinetic energy \eqref{eq:kinetici}, Griffith surface energy \eqref{eq:griffith} and external work potential \eqref{eq:externalworki} along with the admissible function spaces \eqref{eq:Cu} and \eqref{eq:Dl}, we are now in a position to form the space-time action integral given by
+\begin{equation} \label{eq:action}
+\mathcal{A}(\vec{u}^*,l)=\int_I\mathcal{L}_t(\vec{u}^*_t,\dot{\vec{u}}^*_t,l_t,\dot{l}_t)\D{t}=\int_I\bigl(\mathcal{E}^*(\vec{u}_t^*,l_t)+\mathcal{S}(l_t)-\mathcal{K}^*(\vec{u}_t^*,\dot{\vec{u}}_t^*,l_t,\dot{l}_t)-\mathcal{W}_t^*(\vec{u}_t^*,l_t)\bigr)\D{t}
+\end{equation}
+which involves a generalized Lagrangian density $\mathcal{L}_t(\vec{u}^*_t,\dot{\vec{u}}^*_t,l_t,\dot{l}_t)$. The coupled evolution described by the couple $(\vec{u}^*,l)\in\mathcal{C}(\vec{u}^*)\times\mathcal{Z}(l)$ will then be governed by
+\begin{definition}[Variational Formulation of Dynamic Fracture] \label{def:griffith}
+\begin{enumerate}
+\item \textbf{Irreversibility}: the crack length is a non-decreasing function of time $\dot{l}_t\geq 0$.
+\item \textbf{First-order stability}: the first-order action variation is non-negative with respect to arbitrary admissible displacement and crack evolutions
+\begin{equation} \label{eq:stability}
+\mathcal{A}'(\vec{u}^*,l)(\vec{v}^*-\vec{u}^*,s-l)\geq 0\text{ for all $\vec{v}^*\in\mathcal{C}(\vec{u}^*)$ and all $s\in\mathcal{Z}(l)$}.
+\end{equation}
+\item \textbf{Energy balance}: the only energy dissipation is due to crack propagation such that we have the following energy balance
+\begin{equation} \label{eq:eb}
+\mathcal{H}_t=\mathcal{H}_0+\int_0^t\left(\int_{\Omega\setminus\Gamma_s}\bigl(\sig_s\cdot\eps(\dot{\vec{U}}_s)+\rho\ddot{\vec{u}}_s\cdot\dot{\vec{U}}_s\bigr)\dx-\mathcal{W}_s(\dot{\vec{U}}_s)-\dot{\mathcal{W}}_s(\vec{u}_s)\right)\D{s}
+\end{equation}
+where the total energy is defined by
+\begin{equation}
+\mathcal{H}_t=\mathcal{E}^*(\vec{u}_t^*,l_t)+\mathcal{S}(l_t)+\mathcal{K}^*(\vec{u}_t^*,\dot{\vec{u}}_t^*,l_t,\dot{l}_t)-\mathcal{W}^*_t(\vec{u}_t^*,l_t).
+\end{equation}
+\end{enumerate}
+\end{definition}
+
+\begin{remark}
+We assume that the considered fields are sufficiently smooth in time and in space so that all calculations make sense. A precise statement of the functional spaces in the most general case remains beyond the scope of this paper.
+\end{remark}
+
+In the first-order stability principle \eqref{eq:stability}, the notation $\mathcal{A}'(\vec{u}^*,l)(\vec{v}^*-\vec{u}^*,s-l)$ denotes the Gâteaux derivative of the action functional with respect to the displacement variation $\vec{w}^*=\vec{v}^*-\vec{u}^*$ and crack advance $\delta l=s-l$. Recall that the transported displacement $\vec{u}_t^*$ is defined on the initial configuration $\Omega\setminus\Gamma_0$ which is fixed during the (virtual) crack increment, thanks to the introduction of the diffeomorphism $\philt$. The displacement variation $\vec{w}^*$ is thus independent from that of the crack $\delta l$, and induces automatically a variation $\vec{w}$ in the current material configuration via a pushforward operation $\vec{w}\circ\philt=\vec{w}^*$.
+
+\subsection{Equivalence with the Classical Formulations}
+We will show in this section that the variational approach to dynamic fracture embodied by Definition \ref{def:griffith} is equivalent to the usual wave equation in the uncracked bulk and the Griffith's law of crack evolution \cite{Freund:1990}. However, it should be noted that the variational formulation is more general. To achieve this goal, we will carefully evaluate the derivative of the action functional with respect to arbitrary displacement variation $\vec{w}^*=\vec{v}^*-\vec{u}^*$ and crack advance $\delta l=s-l$. Lengthy calculations are detailed in Appendices \ref{sec:calactionvariation} and \ref{sec:ebcalc} and we will only present here the main results.
+
+By firstly evaluating the action variation corresponding to zero virtual crack advance $\delta l=s-l=0$ and using the fact that $\vec{v}_t^*-\vec{u}_t^*=\vec{w}_t^*\in\mathcal{C}_0$ is a vector space, we obtain by virtue of the regularity hypotheses
+\begin{equation} \label{eq:actionvariationzerocrackadvance}
+\begin{aligned}
+\mathcal{A}'(\vec{u}^*,l)(\vec{w}^*,0) &= \int_I\left(\int_\domaint\bigl(\rho\ddot{\vec{u}}_t-\div\sig_t-\vec{f}_t\bigr)\cdot\vec{w}_t\dx+\int_{\partial\Omega_F}(\sig_t\vec{n}-\vec{F}_t)\cdot\vec{w}_t\D{\vec{s}}+\int_{\Gamma_t}\sig_t\vec{n}\cdot\vec{w}_t\D{\vec{s}}\right)\D{t} \\
+&= 0\text{ for all $\vec{w}_t^*\in\mathcal{C}_0$}
+\end{aligned}
+\end{equation}
+from which the classical wave equation is deduced
+\begin{equation} \label{eq:classicalwave}
+\rho\ddot{\vec{u}}_t-\div\sig_t=\vec{f}_t\quad\text{in }\domaint\,,\quad\sig_t\vec{n}=\vec{F}_t\quad\text{on }\partial\Omega_F\quad\text{and}\quad\sig_t\vec{n}=\vec{0}\quad\text{on }\Gamma_t.
+\end{equation}
+We then evaluate the action derivative with zero virtual displacement variation $\vec{w}^*=\vec{0}$, leading to
+\begin{equation} \label{eq:actionvariationzerodisplacement}
+\mathcal{A}'(\vec{u}^*,l)(\vec{0},\delta l)=\int_I(\gc-G_t)\delta l_t\D{t}\geq 0\text{ for all $\delta l_t\geq 0$ with $t\in(0,T)$}
+\end{equation}
+where the dynamic energy release rate $G_t$ to be compared with the fracture toughness $\gc$ reads 
+\begin{equation} \label{eq:Gt}
+G_t=\int_\domaint\Bigl(\bigl(\kappa(\dot{\vec{u}}_t)-\psi\bigl(\eps(\vec{u}_t)\bigr)\bigr)\div\vtheta_t+\sig_t\cdot(\nabla\vec{u}_t\nabla\vtheta_t)+\div(\vec{f}_t\otimes\vtheta_t)\cdot\vec{u}_t+\rho\ddot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t+\rho\dot{\vec{u}}_t\cdot\nabla\dot{\vec{u}}_t\vtheta_t\Bigr)\dx.
+\end{equation}
+From \eqref{eq:actionvariationzerodisplacement}, we retrieve the desired crack stability condition which states that the dynamic energy release rate must be smaller or equal to the material fracture toughness. The consistency condition can then be derived thanks to the energy balance principle \eqref{eq:eb} and calculations in Appendix \ref{sec:ebcalc}, leading to the following Griffith's law of crack propagation
+\begin{equation} \label{eq:griffithslaw}
+\dot{l}_t\geq0\,,\quad G_t\leq\gc\quad\text{and}\quad(G_t-\gc)\dot{l}_t=0.
+\end{equation}
+
+Note that we retrieve the static energy release rate \cite{Destuynder:1981} by setting the velocity $\dot{\vec{u}}_t$ and the acceleration $\ddot{\vec{u}}_t$ in \eqref{eq:Gt} to zero. A similar formula for $G_t$ is obtained in \cite{AttiguiPetit:1996} by constructing an \emph{ad-hoc} field $0\leq\norm{\vtheta_t}\leq 1$ which transforms surface (line) integrals to volume (surface) integrals. Here the dynamic energy release rate $G_t$ is identified by calculating the variation of the space-time action integral \eqref{eq:action} with respect to crack increment \emph{evolution}. Using the Euler-Lagrange equation 
+\[
+\mathcal{A}'(\vec{u}^*,l)(\vec{0},\delta l)=\int_I\left(\frac{\partial\mathcal{L}_t}{\partial l_t}-\frac{\md}{\md t}\frac{\partial\mathcal{L}_t}{\partial\dot{l}_t}\right)\cdot\delta l_t\D{t}
+\]
+and the fact that the Lagrangian density depends on the crack velocity $\dot{l}_t$ solely via the kinetic energy $\mathcal{K}^*$, we find the same expression for the dynamic energy release rate $G_t$ as indicated in \cite[p.~423]{Freund:1990}
+\[
+G_t=\frac{\partial(\mathcal{K}^*+\mathcal{W}_t^*-\mathcal{E}^*)}{\partial l_t}-\frac{\md}{\md t}\frac{\partial\mathcal{K}^*}{\partial\dot{l}_t}.
+\]
+Contrary to the quasi-static regime, this quantity $G_t$ doesn't possess the physical meaning of the derivative of the Lagrangian energy with respect to crack extension due to the presence of the term $(\md/\md t)(\partial\mathcal{K}^*/\partial\dot{l}_t)$, as has been already noted in \cite{NishiokaAtluri:1983}.
+
+Although $\vtheta_t$ enters into the definition of $G_t$ in \eqref{eq:Gt}, the dynamic energy release rate is independent of the exact virtual perturbation used to establish the bijection \eqref{eq:philt}, owing to the following
+\begin{proposition} \label{prop:J}
+The dynamic energy release rate $G_t$ is equivalent to the classical dynamic $J$-integral in the form of a path integral \cite{Freund:1990}
+\begin{equation} \label{eq:Jdyn}
+G_t=\lim_{r\to 0}\int_{C_r}\vec{J}_t\vec{n}\cdot\vtau_t\ds\quad\text{with}\quad\vec{J}_t=\Bigl(\psi\bigl(\eps(\vec{u}_t)\bigr)+\kappa(\dot{\vec{u}}_t)\Bigr)\mathbb{I}-\nabla\vec{u}_t^\mT\sig_t
+\end{equation}
+where $\vec{n}$ is defined as the normal pointing out of the ball $B_r(\vec{P}_t)$ with $C_r=\partial B_r(\vec{P}_t)$ its boundary. As a corollary, the dynamic energy release rate $\eqref{eq:Gt}$ is independent of the virtual perturbation.
+\end{proposition}
+
+\begin{proof}
+To removing any singularities near the crack tip $\vec{P}_t$, we will partition the cracked domain $\domaint$ into the part $\tilde{B}_r=B_r(\vec{P}_t)\setminus\Gamma_t$ included in the ball $B_r(\vec{P}_t)$, and the part $\Omega_r=\Omega\setminus\bigl(\Gamma_t\cup B_r(\vec{P}_t)\bigr)$ outside the ball, see Fig. \ref{fig:partition}.
+\begin{figure}[htbp]\sidecaption
+\centering
+\includegraphics[width=0.4\textwidth]{Li-Fig3.pdf}
+\caption{Partition of the cracked domain $\domaint$ using a $\vec{P}_t$-centered ball $B_r(\vec{P}_t)$ of radius $r$} \label{fig:partition}
+\end{figure}
+Using the following identity in $\Omega_r$
+\begin{multline} \label{eq:div}
+\div\Bigl(\bigl(\kappa(\dot{\vec{u}}_t)+\vec{f}_t\cdot\vec{u}_t-\psi\bigl(\eps(\vec{u}_t)\bigr)\bigr)\vtheta_t\Bigr)=\rho\dot{\vec{u}}_t\cdot\nabla\dot{\vec{u}}_t\vtheta_t+\nabla\vec{f}_t\vtheta_t\cdot\vec{u}_t+\vec{f}_t\cdot\nabla\vec{u}_t\vtheta_t \\
+-\sig_t\cdot\eps(\nabla\vec{u}_t)\vtheta_t+\bigl(\kappa(\dot{\vec{u}}_t)+\vec{f}_t\cdot\vec{u}_t-\psi\bigl(\eps(\vec{u}_t)\bigr)\bigr)\div\vtheta_t
+\end{multline}
+and performing an integration by parts
+\begin{equation} \label{eq:signunt}
+\int_{\Omega_r}\sig_t\cdot(\nabla\vec{u}_t\nabla\vtheta_t)\dx=-\int_{C_r}(\nabla\vec{u}_t^\mT\sig_t)\vec{n}\cdot\vtheta_t\dx-\int_{\Omega_r}(\div\sig_t\cdot\nabla\vec{u}_t\vtheta_t+\sig_t\cdot\nabla^2\vec{u}_t\vtheta_t)\dx\,,
+\end{equation}
+the dynamic energy release rate $G_t$ reads
+\begin{align*}
+G_t &= \int_{\tilde{B}_r}(\ldots)\dx+\int_{\Omega_r}\Bigl(\div\Bigl(\bigl(\kappa(\dot{\vec{u}}_t)+\vec{f}_t\cdot\vec{u}_t-\psi\bigl(\eps(\vec{u}_t)\bigr)\bigr)\vtheta_t\Bigr)-(\div\sig_t+\vec{f}_t-\rho\ddot{\vec{u}}_t)\cdot\nabla\vec{u}_t\vtheta_t\Bigr)\dx \\
+&\pushright{-\int_{C_r}(\nabla\vec{u}_t^\mT\sig_t)\vec{n}\cdot\vtheta_t\ds} \\
+&= \int_{\tilde{B}_r}(\ldots)\dx-\int_{C_r}\left(\Bigl(\kappa(\dot{\vec{u}}_t)+\vec{f}_t\cdot\vec{u}_t-\psi\bigl(\eps(\vec{u}_t)\bigr)\Bigr)(\vtheta_t\cdot\vec{n})+(\nabla\vec{u}_t^\mT\sig_t)\vec{n}\cdot\vtheta_t\right)\ds \\
+&= \int_{\tilde{B}_r}(\ldots)\dx+\int_{C_r}\vec{E}_t\vec{n}\cdot\vtheta_t\ds-\int_{C_r}(\vec{f}_t\cdot\vec{u}_t)(\vtheta_t\cdot\vec{n})\ds
+\end{align*}
+where the second equality follows from dynamic equilibrium \eqref{eq:classicalwave}. On the last line $\vec{E}_t$ denotes the dynamic Eshelby tensor \cite{Maugin:1994}
+\begin{equation} \label{eq:Eshelby}
+\vec{E}_t=\Bigl(\psi\bigl(\eps(\vec{u}_t)\bigr)-\kappa(\dot{\vec{u}}_t)\Bigr)\mathbb{I}-\nabla\vec{u}_t^\mT\sig_t.
+\end{equation}
+The last term involving the body force density $\vec{f}_t$ will have a vanishing contribution as $r\to 0$, since $\vec{f}_t$ is supposed to be regular and asymptotically $\vec{u}_t$ is of order $\mathcal{O}(r^{1/2})$ in linear elastic fracture mechanics.
+
+To solve the contradiction \cite{Maugin:1994} of having the Lagrangian density in \eqref{eq:Eshelby} and the Hamiltonian density in \eqref{eq:Jdyn}, contributions from the integral on $\tilde{B}_r$ must be considered. By classical singularity analysis and the steady state condition $\dot{\vec{q}}_t\approx-\nabla\vec{q}_t\dot{l}_t\vtau_t$ verified for all (tensorial) fields $\vec{q}$ near the crack tip \cite{Freund:1990}, the first two terms of $G_t$ in \eqref{eq:Gt} are of order $\mathcal{O}(r^{-1})$ and hence have a vanishing contribution when integrated with the area element $r\D{r}\D{\theta}$ on $\tilde{B}_r$ as $r$ tends to zero. Similarly the term involving the body force density $\vec{f}_t$ is not singular enough to contribute. However the last two terms $\rho\ddot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t+\rho\dot{\vec{u}}_t\cdot\nabla\dot{\vec{u}}_t\vtheta_t$ are integrable \cite{NishiokaAtluri:1983} and will yield a finite value in the limit. Using the real velocity field $\dot{\vec{u}}_t$ in the steady state condition and the fact that $\vtheta_t\to\vtau_t$ when $r$ becomes small due to continuity, we have
+\[
+\rho\ddot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t=\rho\dot{\vec{u}}_t\cdot\nabla\dot{\vec{u}}_t\vtheta_t\quad\text{as}\quad r\to 0.
+\]
+Then an integration by parts in $\tilde{B}_r$ gives (noting that $\vtheta_t\cdot\vec{n}=0$ on $\Gamma_t$)
+\begin{equation} \label{eq:magicformula}
+\int_{\tilde{B}_r}\rho\dot{\vec{u}}_t\cdot\nabla\dot{\vec{u}}_t\vtheta_t\dx=\int_{C_r}\rho(\dot{\vec{u}}_t\cdot\dot{\vec{u}}_t)(\vtheta_t\cdot\vec{n})\ds-\int_{\tilde{B}_r}\rho\dot{\vec{u}}_t\cdot\nabla\dot{\vec{u}}_t\vtheta_t\dx-\int_{\tilde{B}_r}\rho\dot{\vec{u}}_t\cdot\dot{\vec{u}}_t\div\vtheta_t\dx
+\end{equation}
+from which the contribution from the last two terms in \eqref{eq:Gt} can be deduced
+\[
+\lim_{r\to 0}\int_{\tilde{B}_r}(\rho\ddot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t+\rho\dot{\vec{u}}_t\cdot\nabla\dot{\vec{u}}_t\vtheta_t)\dx=\lim_{r\to 0}\int_{\tilde{B}_r}2\rho\dot{\vec{u}}_t\cdot\nabla\dot{\vec{u}}_t\vtheta_t\dx=\lim_{r\to 0}\int_{C_r}\rho(\dot{\vec{u}}_t\cdot\dot{\vec{u}}_t)(\vtheta_t\cdot\vec{n})\ds=\lim_{r\to 0}\int_{C_r}2\kappa(\dot{\vec{u}}_t)\vtheta_t\cdot\vec{n}\ds
+\]
+where the last term in \eqref{eq:magicformula} vanishes in the limit $r\to 0$. We obtain hence
+\begin{equation}
+G_t=\lim_{r\to 0}\int_{C_r}(\vec{E}_t+2\kappa(\dot{\vec{u}}_t)\mathbb{I})\vec{n}\cdot\vtheta_t\ds=\lim_{r\to 0}\int_{C_r}\vec{J}_t\vec{n}\cdot\vtau_t\ds.
+\end{equation}
+which completes the proof. \qed
+\end{proof}
+
+\begin{remark}
+Compared to the classical $J$-integral, the advantage of the dynamic energy release rate in the form of \eqref{eq:Gt} resides in its direct usage for numerical computations with finite elements, since it involves an integral in the cells. 
+\end{remark}
+
+\begin{remark}[Generalization to curved or kinked crack paths]
+Let us recall that the crack $l\mapsto\vec{\gamma}(l)$ is supposed to follow a pre-defined straight path in this paper. It can be generalized to arbitrary but smooth enough \emph{pre-defined} curved paths without much technical difficulties. It suffices to carefully reconstruct the virtual perturbation $\vtheta_t$ along the crack path, as a solution to a particular Cauchy evolution problem \cite{KhludnevSokolowskiSzulc:2010}. The obtained \emph{scalar} crack equation of motion will be formally the same as \eqref{eq:griffithslaw}, which predicts the crack length $l_t$ as a function of time along the this path. Note however that crack propagation direction should be at least continuous in time (curved path) so that the shape derivative method embodied by the diffeomorphism $\philt$ makes sense. In presence of a crack kinking associated with a temporal discontinuity of the crack tangent (Fig. \ref{fig:kinking}), the shape derivative methods should be adapted to capture the topology change due to the kinking \cite{Hintermuller:2011}.
+\begin{figure}[htbp]\sidecaption
+\centering
+\includegraphics[width=0.35\linewidth]{Li-Fig4.pdf}
+\caption{\small Curved crack path versus kinked crack path} \label{fig:kinking}
+\end{figure}
+
+When the crack path is unknown, an interesting attempt is to include the crack tangent angle into the action integral \eqref{eq:action} and evaluate the variation induced by arbitrary crack direction change. Remark that the propagation criterion derived in \cite{Oleaga:2001,Adda-BediaAriasAmarLund:1999} corresponds in fact to a vectorial extension of the scalar propagation law \eqref{eq:griffithslaw}
+\[
+\lim_{r\to 0}\int_{C_r}\vec{J}_t\vec{n}\ds=\gc\vtau_t
+\]
+and the component perpendicular to the crack propagation direction $\vtau_t$ determines the crack path.  
+\end{remark}
+
+\chapter{Detailed Calculations}
+\section{Calculation of the First-Order Action Variation} \label{sec:calactionvariation}
 We will carefully explore the first-order stability principle \eqref{eq:stability} by calculating the action variation with respect to arbitrary displacement and crack variations. The following easily established identities
 \begin{align*}
 \frac{\md}{\md l_t}\det\nabla\philt(\vec{x}^*) &= \det\nabla\philt(\vec{x}^*)\tr(\nabla\vtheta^*(\vec{x}^*)\nabla\philt(\vec{x}^*)^{-1})=\div\vtheta_t(\vec{x})\det\nabla\philt(\vec{x}^*), \\
@@ -12,13 +248,15 @@ will be used for all subsequent calculations.
 The classical wave equation can be obtained by calculating the action variation with zero crack advance $\delta l=0$
 \begin{multline*}
 \mathcal{A}'(\vec{u}^*,l)(\vec{w}^*,0)=\int_I\D{t}\int_\domaini\Big(\tens{A}\bigl({\textstyle\frac{1}{2}}\nabla\vec{u}_t^*\nabla\philt^{-1}+{\textstyle\frac{1}{2}}\nabla\philt^{-\mathsf{T}}(\nabla\vec{u}_t^*)^\mT\bigr)\cdot\bigl({\textstyle\frac{1}{2}}\nabla\vec{w}_t^*\nabla\philt^{-1}+{\textstyle\frac{1}{2}}\nabla\philt^{-\mathsf{T}}(\nabla\vec{w}_t^*)^\mT\bigr)\det\nabla\philt \\
--\rho(\dot{\vec{u}}_t^*-\dot{l}_t\nabla\vec{u}_t^*\nabla\philt^{-1}\vtheta^*)\cdot(\dot{\vec{w}}_t^*-\dot{l}_t\nabla\vec{w}_t^*\nabla\philt^{-1}\vtheta^*)\det\nabla\philt\Big)-\mathcal{W}_t^*(\vec{w}^*_t) ,
+-\rho(\dot{\vec{u}}_t^*-\dot{l}_t\nabla\vec{u}_t^*\nabla\philt^{-1}\vtheta^*)\cdot(\dot{\vec{w}}_t^*-\dot{l}_t\nabla\vec{w}_t^*\nabla\philt^{-1}\vtheta^*)\det\nabla\philt\Big)\dxx-\mathcal{W}_t^*(\vec{w}^*_t)\,,
 \end{multline*}
 which gives
 \begin{multline} \label{eq:aprime1}
-\mathcal{A}'(\vec{u}^*,l)(\vec{w}^*,0)=\int_I\D{t}\int_\domaint\bigl(\sig_t\cdot\eps(\vec{w}_t)+\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{w}_t\vtheta_t \bigr)-\mathcal{W}_t(\vec{w}_t) \\
-+\underbrace{\int_I\D{t}\int_\domaini\rho\frac{\md}{\md t}\bigl((\dot{\vec{u}}_t^*-\nabla\vec{u}_t^*\nabla\philt^{-1}\,\dot{l}_t\vtheta^*)\det\nabla\philt\bigr)\cdot\vec{w}_t^*}_R.
+\mathcal{A}'(\vec{u}^*,l)(\vec{w}^*,0)=\int_I\D{t}\int_\domaint\bigl(\sig_t\cdot\eps(\vec{w}_t)+\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{w}_t\vtheta_t\bigr)\dx-\mathcal{W}_t(\vec{w}_t) \\
++\underbrace{\int_I\D{t}\int_\domaini\rho\frac{\md}{\md t}\bigl((\dot{\vec{u}}_t^*-\nabla\vec{u}_t^*\nabla\philt^{-1}\,\dot{l}_t\vtheta^*)\det\nabla\philt\bigr)\cdot\vec{w}_t^*\dxx}_R
 \end{multline}
+where $\vec{w}$ denotes the pushforward of $\vec{w}^*$ to the current cracked configuration via \eqref{eq:transportofu}.
+
 To proceed, we observe that the real acceleration $\ddot{\vec{u}}_t$ can be obtained by differentiating \eqref{eq:v}
 \begin{equation} \label{eq:acc}
 \ddot{\vec{u}}_t(\vec{x})=-\nabla\dot{\vec{u}}_t(\vec{x})\dot{l}_t\vtheta^*(\vec{x}^*)+\frac{\md}{\md t}\left(\dot{\vec{u}}_t^*(\vec{x}^*)-\nabla\vec{u}_t^*(\vec{x}^*)\nabla\philt(\vec{x}^*)^{-1}\dot{l}_t\vtheta^*(\vec{x}^*)\right)
@@ -26,36 +264,36 @@ To proceed, we observe that the real acceleration $\ddot{\vec{u}}_t$ can be obta
 where $\nabla\dot{\vec{u}}_t$ is the (Eulerian) velocity gradient. Using \eqref{eq:acc}, the last term above can be written
 \begin{equation} \label{eq:aprime2}
 \begin{aligned}
-R &= \int_I\D{t}\int_\domaini\rho(\ddot{\vec{u}}_t\circ\philt+(\nabla\dot{\vec{u}}_t\circ\philt)\dot{l}_t\vtheta^*)\cdot\vec{w}_t^*\det\nabla\philt+\rho\dot{l}_t(\dot{\vec{u}}_t^*-\nabla\vec{u}_t^*\nabla\philt^{-1}\,\dot{l}_t\vtheta^*)\cdot\vec{w}_t^*\tr(\nabla\philt^{-1}\nabla\vtheta^*)\det\nabla\philt \\
-&= \int_I\D{t}\int_\domaint\rho\ddot{\vec{u}}_t\cdot\vec{w}_t+\rho\dot{l}_t\nabla\dot{\vec{u}}_t\vtheta_t\cdot\vec{w}_t+\rho\dot{l}_t\dot{\vec{u}}_t\cdot\vec{w}_t\div\vtheta_t \\
-&= \int_I\D{t}\int_\domaint\rho\ddot{\vec{u}}_t\cdot\vec{w}_t-\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{w}_t\vtheta_t
+R &= \int_I\D{t}\int_\domaini\bigl(\rho(\ddot{\vec{u}}_t\circ\philt+(\nabla\dot{\vec{u}}_t\circ\philt)\dot{l}_t\vtheta^*)\cdot\vec{w}_t^*\det\nabla\philt+\rho\dot{l}_t(\dot{\vec{u}}_t^*-\nabla\vec{u}_t^*\nabla\philt^{-1}\,\dot{l}_t\vtheta^*)\cdot\vec{w}_t^*\tr(\nabla\philt^{-1}\nabla\vtheta^*)\det\nabla\philt\bigr)\dxx \\
+&= \int_I\D{t}\int_\domaint(\rho\ddot{\vec{u}}_t\cdot\vec{w}_t+\rho\dot{l}_t\nabla\dot{\vec{u}}_t\vtheta_t\cdot\vec{w}_t+\rho\dot{l}_t\dot{\vec{u}}_t\cdot\vec{w}_t\div\vtheta_t)\dx \\
+&= \int_I\D{t}\int_\domaint(\rho\ddot{\vec{u}}_t\cdot\vec{w}_t-\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{w}_t\vtheta_t)\dx
 \end{aligned}
 \end{equation}
 where an integration by parts in $\Omega\setminus\Gamma_t$ has been used on establishing the last equality. Regrouping \eqref{eq:aprime1} and \eqref{eq:aprime2}, we obtain thus the spatially weak dynamic equilibrium
 \begin{equation} \label{eq:spatiallyweakdyneq}
-\mathcal{A}'(\vec{u}^*,l)(\vec{w}^*,0)=\int_I\D{t}\int_\domaint\sig_t\cdot\eps(\vec{w}_t)+\rho\ddot{\vec{u}}_t\cdot\vec{w}_t-\mathcal{W}_t(\vec{w}_t).
+\mathcal{A}'(\vec{u}^*,l)(\vec{w}^*,0)=\int_I\D{t}\int_\domaint\bigl(\sig_t\cdot\eps(\vec{w}_t)+\rho\ddot{\vec{u}}_t\cdot\vec{w}_t\bigr)\dx-\mathcal{W}_t(\vec{w}_t).
 \end{equation}
 An integration by parts then gives the desired wave equation \eqref{eq:actionvariationzerocrackadvance} for the displacement.
 
 We then evaluate the action variation with respect to arbitrary crack increment $\delta l$ but zero displacement variation
 \begin{multline} \label{eq:aprime3}
-\mathcal{A}'(\vec{u}^*,l)(\vec{0},\delta l)=\int_I\gc\cdot\delta l_t\D{t}+\int_I\delta l_t\D{t}\int_\domaint\bigl(\psi\bigl(\eps(\vec{u}_t)\bigr)-\kappa(\dot{\vec{u}}_t)\bigr)\div\vtheta_t-\sig_t\cdot(\nabla\vec{u}_t\nabla\vtheta_t)-\div(\vec{f}_t\otimes\vtheta_t)\cdot\vec{u}_t \\
--\underbrace{\int_I\D{t}\int_\domaini\rho(\dot{\vec{u}}^*_t-\dot{l}_t\nabla\vec{u}^*_t\nabla\philt^{-1}\vtheta^*)\cdot(-\nabla\vec{u}_t^*\nabla\philt^{-1}\vtheta^*\cdot\dot{\overline{\delta l}}_t+\dot{l}_t\nabla\vec{u}_t^*\nabla\philt^{-1}\nabla\vtheta^*\nabla\philt^{-1}\vtheta^*\cdot\delta l_t)\det\nabla\philt}_R.
+\mathcal{A}'(\vec{u}^*,l)(\vec{0},\delta l)=\int_I\gc\cdot\delta l_t\D{t}+\int_I\delta l_t\D{t}\int_\domaint\Bigl(\bigl(\psi\bigl(\eps(\vec{u}_t)\bigr)-\kappa(\dot{\vec{u}}_t)\bigr)\div\vtheta_t-\sig_t\cdot(\nabla\vec{u}_t\nabla\vtheta_t)-\div(\vec{f}_t\otimes\vtheta_t)\cdot\vec{u}_t\Bigr)\dx \\
+-\underbrace{\int_I\D{t}\int_\domaini\bigl(\rho(\dot{\vec{u}}^*_t-\dot{l}_t\nabla\vec{u}^*_t\nabla\philt^{-1}\vtheta^*)\cdot(-\nabla\vec{u}_t^*\nabla\philt^{-1}\vtheta^*\cdot\dot{\overline{\delta l}}_t+\dot{l}_t\nabla\vec{u}_t^*\nabla\philt^{-1}\nabla\vtheta^*\nabla\philt^{-1}\vtheta^*\cdot\delta l_t)\det\nabla\philt\bigr)\dxx}_R.
 \end{multline}
 The last term can be written using integration by parts in the time domain
 \[
-R=\int_I\delta l_t\D{t}\int_\domaini\rho\frac{\md}{\md t}\bigl((\dot{\vec{u}}^*_t-\dot{l}_t\nabla\vec{u}^*_t\nabla\philt^{-1}\vtheta^*)\cdot(\nabla\vec{u}_t^*\nabla\philt^{-1}\vtheta^*)\det\nabla\philt\bigr)+\int_I\delta l_t\D{t}\int_\domaint\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{u}_t\nabla\vtheta_t\vtheta_t,
+R=\int_I\delta l_t\D{t}\int_\domaini\rho\frac{\md}{\md t}\bigl((\dot{\vec{u}}^*_t-\dot{l}_t\nabla\vec{u}^*_t\nabla\philt^{-1}\vtheta^*)\cdot(\nabla\vec{u}_t^*\nabla\philt^{-1}\vtheta^*)\det\nabla\philt\bigr)\dxx+\int_I\delta l_t\D{t}\int_\domaint\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{u}_t\nabla\vtheta_t\vtheta_t\dx\,,
 \]
 which gives
 \begin{multline*}
-R=\int_I\delta l_t\D{t}\int_\domaini\rho(\ddot{\vec{u}}_t\circ\philt+(\nabla\dot{\vec{u}}_t\circ\philt)\dot{l}_t\vtheta^*)\cdot(\nabla\vec{u}_t^*\nabla\philt^{-1}\vtheta^*)\det\nabla\philt \\
-+\rho(\dot{\vec{u}}^*_t-\dot{l}_t\nabla\vec{u}^*_t\nabla\philt^{-1}\vtheta^*)\cdot(\nabla\dot{\vec{u}}^*_t\nabla\philt^{-1}\vtheta^*-\dot{l}_t\nabla\vec{u}^*_t\nabla\philt^{-1}\nabla\vtheta^*\nabla\philt^{-1}\vtheta^*)\det\nabla\philt \\
-+\int_I\delta l_t\D{t}\int_\domaint\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t\div\vtheta_t+\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{u}_t\nabla\vtheta_t\vtheta_t.
+R=\int_I\delta l_t\D{t}\int_\domaini\big(\rho(\ddot{\vec{u}}_t\circ\philt+(\nabla\dot{\vec{u}}_t\circ\philt)\dot{l}_t\vtheta^*)\cdot(\nabla\vec{u}_t^*\nabla\philt^{-1}\vtheta^*)\det\nabla\philt \\
++\rho(\dot{\vec{u}}^*_t-\dot{l}_t\nabla\vec{u}^*_t\nabla\philt^{-1}\vtheta^*)\cdot(\nabla\dot{\vec{u}}^*_t\nabla\philt^{-1}\vtheta^*-\dot{l}_t\nabla\vec{u}^*_t\nabla\philt^{-1}\nabla\vtheta^*\nabla\philt^{-1}\vtheta^*)\det\nabla\philt\big)\dxx \\
++\int_I\delta l_t\D{t}\int_\domaint(\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t\div\vtheta_t+\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{u}_t\nabla\vtheta_t\vtheta_t)\dx.
 \end{multline*}
 We obtain thus
 \begin{multline*}
-R=\int_I\delta l_t\D{t}\int_\domaint\rho\ddot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t+\rho\dot{l}_t\nabla\dot{\vec{u}}_t\vtheta_t\cdot\nabla\vec{u}_t\vtheta_t+\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t\div\vtheta_t  \\
-+\int_I\delta l_t\D{t}\int_\domaini\rho(\dot{\vec{u}}^*_t-\dot{l}_t\nabla\vec{u}^*_t\nabla\philt^{-1}\vtheta^*)\cdot(\nabla\dot{\vec{u}}^*_t\nabla\philt^{-1}\vtheta^*)\det\nabla\philt.
+R=\int_I\delta l_t\D{t}\int_\domaint(\rho\ddot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t+\rho\dot{l}_t\nabla\dot{\vec{u}}_t\vtheta_t\cdot\nabla\vec{u}_t\vtheta_t+\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t\div\vtheta_t)\dx \\
++\int_I\delta l_t\D{t}\int_\domaini\rho(\dot{\vec{u}}^*_t-\dot{l}_t\nabla\vec{u}^*_t\nabla\philt^{-1}\vtheta^*)\cdot(\nabla\dot{\vec{u}}^*_t\nabla\philt^{-1}\vtheta^*)\det\nabla\philt\dxx.
 \end{multline*}
 Differentiating \eqref{eq:grad} to obtain the material time derivative of the deformation gradient $(\md/\md t)(\nabla\vec{u}_t)$
 \[
@@ -67,21 +305,21 @@ and with its definition
 \]
 where $\nabla^2\vec{u}_t$ is the second gradient of the displacement field (a third-order tensor), we obtain
 \begin{multline*}
-R=\int_I\delta l_t\D{t}\int_\domaint\rho\ddot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t+\rho\dot{l}_t\nabla\dot{\vec{u}}_t\vtheta_t\cdot\nabla\vec{u}_t\vtheta_t+\rho\dot{\vec{u}}_t\cdot\nabla\dot{\vec{u}}_t\vtheta_t+\rho\dot{l}_t\dot{\vec{u}}_t\cdot(\nabla^2\vec{u}_t\vtheta_t)\vtheta_t  \\
-+\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{u}_t\nabla\vtheta_t\vtheta_t+\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t\div\vtheta_t.
+R=\int_I\delta l_t\D{t}\int_\domaint\big(\rho\ddot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t+\rho\dot{l}_t\nabla\dot{\vec{u}}_t\vtheta_t\cdot\nabla\vec{u}_t\vtheta_t+\rho\dot{\vec{u}}_t\cdot\nabla\dot{\vec{u}}_t\vtheta_t+\rho\dot{l}_t\dot{\vec{u}}_t\cdot(\nabla^2\vec{u}_t\vtheta_t)\vtheta_t  \\
++\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{u}_t\nabla\vtheta_t\vtheta_t+\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t\div\vtheta_t\big)\dx.
 \end{multline*}
-Using an integration by parts in the domain $\Omega\setminus\Gamma_t$ knowing that $\vtheta_t=\vec{0}$ on $\partial\Omega$ and $\vtheta_t\cdot\vec{n}=0$ on $\Gamma_t$ due to Assumption \ref{assum:velocityfield}
+Using an integration by parts in the domain $\Omega\setminus\Gamma_t$ knowing that $\vtheta_t=\vec{0}$ on $\partial\Omega$ and $\vtheta_t\cdot\vec{n}=0$ on $\Gamma_t$ by definition
 \[
-\int_\domaint\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{u}_t\nabla\vtheta_t\vtheta_t=-\int_\domaint\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t\div\vtheta_t+\rho\dot{l}_t\nabla\dot{\vec{u}}_t\vtheta_t\cdot\nabla\vec{u}_t\vtheta_t+\rho\dot{l}_t\dot{\vec{u}}_t\cdot(\nabla^2\vec{u}_t\vtheta_t)\vtheta_t,
+\int_\domaint\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{u}_t\nabla\vtheta_t\vtheta_t\dx=-\int_\domaint\bigl(\rho\dot{l}_t\dot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t\div\vtheta_t+\rho\dot{l}_t\nabla\dot{\vec{u}}_t\vtheta_t\cdot\nabla\vec{u}_t\vtheta_t+\rho\dot{l}_t\dot{\vec{u}}_t\cdot(\nabla^2\vec{u}_t\vtheta_t)\vtheta_t\bigr)\dx\,,
 \]
 we get finally
 \[
-R=\int_I\delta l_t\D{t}\int_\domaint\rho\ddot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t+\rho\dot{\vec{u}}_t\cdot\nabla\dot{\vec{u}}_t\vtheta_t
+R=\int_I\delta l_t\D{t}\int_\domaint(\rho\ddot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t+\rho\dot{\vec{u}}_t\cdot\nabla\dot{\vec{u}}_t\vtheta_t)\dx
 \]
 which permits with \eqref{eq:aprime3} to deduce the desired equations \eqref{eq:actionvariationzerodisplacement} and \eqref{eq:Gt}.
 
-\section{Local energy balance condition} \label{sec:ebcalc}
-In this section we will use the global energy balance \eqref{eq:eb} to derive the equivalent local condition which gives the desired Griffith's law of motion \eqref{eq:griffithslaw} when combined with the local stability condition \eqref{eq:actionvariationzerodisplacement}. The Lagrangian density defined in \eqref{eq:action} is explicitly dependent on time solely through the external work potential \eqref{eq:externalworki}. Its total derivative can thus be given by
+\section{Local Energy Balance Condition} \label{sec:ebcalc}
+In this section we will derive the equivalent local condition of the global energy balance \eqref{eq:eb}, which gives the desired Griffith's law of motion \eqref{eq:griffithslaw} when combined with the local stability condition \eqref{eq:actionvariationzerodisplacement}. The Lagrangian density defined in \eqref{eq:action} is explicitly dependent on time solely through the external work potential \eqref{eq:externalworki}. Its total derivative can thus be given by
 \begin{equation} \label{eq:lagrangianderivativetime}
 \frac{\md\mathcal{L}}{\md t}=\frac{\partial\mathcal{L}}{\partial\vec{u}_t^*}\dot{\vec{u}}_t^*+\frac{\partial\mathcal{L}}{\partial\dot{\vec{u}}_t^*}\ddot{\vec{u}}_t^*+\frac{\partial\mathcal{L}}{\partial l_t}\dot{l}_t+\frac{\partial\mathcal{L}}{\partial\dot{l}_t}\ddot{l}_t+\frac{\partial\mathcal{L}}{\partial t}.
 \end{equation}
@@ -103,7 +341,7 @@ Comparing \eqref{eq:eblocal1} and \eqref{eq:eblocal2}, we obtain the desired loc
 \left(\frac{\partial\mathcal{L}}{\partial l_t}-\frac{\md}{\md t}\frac{\partial\mathcal{L}}{\partial\dot{l}_t}\right)\cdot\dot{l}_t=0.
 \]
 
-\section{Derivation of the elastodynamic equation at large displacement} \label{sec:elastodyna}
+\section{Derivation of the Elastodynamic Equation at Large Displacement} \label{sec:elastodyna}
 Denoting the variation $\vec{v}-\vec{u}$ by $\vec{w}$ and testing \eqref{eq:vi} with $\beta=\alpha$, we obtain after an integration by parts in the time domain supposing the displacement solution $\vec{u}$ is sufficiently regular in time
 \[
 \mathcal{A}'(\vec{u},\alpha)(\vec{w},0)=\int_I\D{t}\int_\Omega\bigl(\vtau\bigl(\eps(\vec{u}_t),\alpha_t\bigr)\cdot\eps'(\vec{u}_t)\vec{w}_t+\rho\ddot{\vec{u}}_t\cdot\vec{w}_t\bigr)-\overline{\mathcal{W}}_t(\vec{w}_t)=0

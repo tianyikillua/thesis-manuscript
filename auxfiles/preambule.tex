@@ -69,8 +69,10 @@
 \makeindex
 
 \declaretheorem[within=chapter]{theorem}
-\declaretheorem[sibling=theorem]{proposition}
+\declaretheorem[style=plain]{proposition}
 \declaretheorem[sibling=theorem,style=definition]{definition}
+\declaretheorem[sibling=theorem,style=definition]{hypothesis}
+\declaretheorem[sibling=theorem,style=remark]{remark}
 
 %% Definitions
 \def\vec#1{\ensuremath{\mathchoice
@@ -110,3 +112,4 @@
 \newcommand{\ovtheta}{\overline{\vtheta}}
 \newcommand{\dx}{\D{\vec{x}}}
 \newcommand{\ds}{\D{\vec{s}}}
+\newcommand{\dxx}{\D{\vec{x}^*}}
