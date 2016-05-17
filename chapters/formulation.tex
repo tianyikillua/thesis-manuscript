@@ -220,11 +220,11 @@ The phase-field model in the sense of \cite{MieheHofackerWelschinger:2010,MieheW
 \[
 \mathcal{S}(\alpha_t)=\int_\Omega\frac{\gc}{2}\left(\frac{\alpha_t^2}{\eta}+\eta\nabla\alpha_t\cdot\nabla\alpha_t\right)\dx\,,
 \]
-which agrees exactly with that used in \cite{MieheHofackerWelschinger:2010,MieheWelschingerHofacker:2010,HofackerMiehe:2012,HofackerMiehe:2013}. In \cite{BordenVerhooselScottHughesLandis:2012,SchlueterWillenbuecherKuhnMueller:2014}, a non-essential rescaling of the internal length $\eta=2\widetilde{\eta}$ is performed. As stated in \cref{sec:ingredients}, this constitutive law originates from the Ambrosio and Tortorelli regularization model introduced in \cite{BourdinFrancfortMarigo:2000} and enjoys hence the desired $\Gamma$-convergence property. In this respect, these phase-field models correspond to a special case of gradient damage models.
+which agrees exactly with that used in \cite{MieheHofackerWelschinger:2010,MieheWelschingerHofacker:2010,HofackerMiehe:2012,HofackerMiehe:2013,KlinsmannRosatoKamlahMcMeeking:2015}. In \cite{BordenVerhooselScottHughesLandis:2012,SchlueterWillenbuecherKuhnMueller:2014,MayVignolletBorst:2015}, a non-essential rescaling of the internal length $\eta=2\widetilde{\eta}$ is performed. As stated in \cref{sec:ingredients}, this constitutive law originates from the Ambrosio and Tortorelli regularization model introduced in \cite{BourdinFrancfortMarigo:2000} and enjoys hence the desired $\Gamma$-convergence property. In this respect, these phase-field models correspond to a special case of gradient damage models.
 
 Another difference between the gradient damage model and these phase-field approaches lies in the irreversibility condition (cf. a discussion on this point in \cite{AmorMarigoMaurini:2009}). In our approach the damage is assumed to be an irreversible evolution, \emph{i.e.} $\dot{\alpha}_t\geq 0$. This condition is enforced during the energy minimization principle \eqref{eq:crackmin} as an optimization constraint prescribed in the damage admissible space \eqref{eq:Dalphat}. By doing so, \eqref{eq:crackmin} corresponds to a bound-constrained optimization problem which requires specially designed numerical algorithms. On the contrary, in these phase-field approaches the irreversibility condition is only weakly prescribed:
 \begin{itemize}
-\item In \cite{MieheHofackerWelschinger:2010,MieheWelschingerHofacker:2010,BordenVerhooselScottHughesLandis:2012} for instance, the irreversible constraint is dropped during energy minimization and \eqref{eq:crackmin} corresponds to an unconstrained optimization problem, of which the minimizing phase-field corresponds to the solution of the underlying linear system. Instead, the irreversible behaviors of the phase-field is modeled via the introduction of a history field defined by
+\item In \cite{MieheHofackerWelschinger:2010,MieheWelschingerHofacker:2010,BordenVerhooselScottHughesLandis:2012,KlinsmannRosatoKamlahMcMeeking:2015,MayVignolletBorst:2015} for instance, the irreversible constraint is dropped during energy minimization and \eqref{eq:crackmin} corresponds to an unconstrained optimization problem, of which the minimizing phase-field corresponds to the solution of the underlying linear system. Instead, the irreversible behaviors of the phase-field is modeled via the introduction of a history field defined by
 \[
 \mathcal{H}_t=\max_{s\leq t}\psi_0\bigl(\eps(\vec{u}_s)\bigr)
 \]
@@ -309,7 +309,7 @@ Owing to the convexity of $\mathcal{C}$, the \emph{positive} strain $\eps^+$ is 
 \begin{equation} \label{eq:vipos}
 -\tens{A}_0(\eps-\eps^+)\cdot(\vec{e}-\eps^+)\geq0\text{ for all $\vec{e}\in\mathcal{C}$}.
 \end{equation}
-which implies from the definition \eqref{eq:elasdecom} that the negative sound stress $\sig_0^-=\tens{A}\eps^-$ is in the polar cone $\mathcal{C}^*=\set{\vec{e}^*|\vec{e}^*\cdot\vec{e}\leq 0\text{ for all $\vec{e}\in \mathcal{C}$}}$. If the space $\mathcal{C}$ is also a cone, \emph{i.e.} closed with respect to arbitrary positive rescaling $\alpha\vec{e}$ for $\alpha>0$, then testing \eqref{eq:vipos} with $\vec{e}=2\eps^+$ and $\vec{e}=\frac{1}{2}\eps^+$ furnishes along with the symmetry of $\tens{A}_0$ the following orthogonality conditions
+which implies from the definition \eqref{eq:elasdecom} that the negative sound stress $\sig_0^-=\tens{A}_0\eps^-$ is in the polar cone $\mathcal{C}^*=\set{\vec{e}^*|\vec{e}^*\cdot\vec{e}\leq 0\text{ for all $\vec{e}\in \mathcal{C}$}}$. If the space $\mathcal{C}$ is also a cone, \emph{i.e.} closed with respect to arbitrary positive rescaling $\alpha\vec{e}$ for $\alpha>0$, then testing \eqref{eq:vipos} with $\vec{e}=2\eps^+$ and $\vec{e}=\frac{1}{2}\eps^+$ furnishes along with the symmetry of $\tens{A}_0$ the following orthogonality conditions
 \begin{equation} \label{eq:orthogonality}
 \begin{aligned}
 \sig_0^-\cdot\eps^+ &= \tens{A}_0(\eps-\eps^+)\cdot\eps^+=0, \\
@@ -326,7 +326,7 @@ We now turn to the stress tensor derived from \eqref{eq:elasticTC} and \eqref{eq
 \begin{equation} \label{eq:sige}
 \sig(\eps,\alpha)\vec{e}=\mathsf{a}(\alpha)\sig_0^+\cdot\frac{\partial\eps^+}{\partial\eps}(\eps)\vec{e}+\sig_0^-\cdot\frac{\partial\eps^-}{\partial\eps}(\eps)\vec{e}
 \end{equation}
-where derivatives of the decomposed strains $\eps^\pm$ with respect to the total strain appear. Fortunately, as $\partial_{\eps}\eps^+\in\mathcal{C}$ and $\partial_{\eps}\tens{A}\eps^-\in\mathcal{C}^*$, we have due to \eqref{eq:vipos}
+where derivatives of the decomposed strains $\eps^\pm$ with respect to the total strain appear. Fortunately, as $\partial_{\eps}\eps^+\in\mathcal{C}$ and $\partial_{\eps}\sig_0^-\in\mathcal{C}^*$, we have due to \eqref{eq:vipos}
 \begin{equation} \label{eq:crossed}
 \sig_0^-\cdot\frac{\partial\eps^+}{\partial\eps}(\eps)\vec{e}\leq 0\text{ and }\sig_0^+\cdot\frac{\partial\eps^-}{\partial\eps}(\eps)\vec{e}\leq 0.
 \end{equation}
@@ -347,42 +347,67 @@ Using this variational formulation \eqref{eq:variationalepspos}, the modeling of
 \item The masonry-like model of \cite{FreddiRoyer-Carfagni:2010} is obtained when $\mathcal{C}$ is chosen to include all positive semidefinite symmetric tensors. Since $\mathcal{C}$ is a convex cone, the stress tensor can be simplified to \eqref{eq:stressposneg} and hence the stress that can be attained by a totally damaged material point is necessarily negative semidefinite, corresponding in fact to materials that do not support tension \cite{PieroLancioniMarch:2007}. However the model as suggested by \cite{FreddiRoyer-Carfagni:2010} with $\mathcal{C}$ containing all symmetric tensors of which all eigenvalues are greater than -1 may present some difficulties, as the orthogonality condition \eqref{eq:orthogonality} and the simplified stress expression \eqref{eq:stressposneg} no longer apply, $\mathcal{C}$ not being closed with respect to arbitrary positive rescaling.
 \end{itemize}
 
-For the masonry-like model \cite{FreddiRoyer-Carfagni:2010}, an explicit formula of the positive strain $\eps^+$ as a function of the total strain $\eps$ is obtained for both two-dimensional or three-dimensional problems in the isotropic case. The solution is derived from the minimization structure \eqref{eq:variationalepspos} or equivalently the variational inequality \eqref{eq:vipos}. The coaxiality between $\eps^+$ and $\eps$ is also exploited due to isotropy, see \cite{Del:1989,AlfanoRosatiValoroso:2000}. In the three dimensional case, after the spectral decomposition the total strain tensor reads $\eps=(\varepsilon_1,\varepsilon_2,\varepsilon_3)$ in its principal basis where without generality we assume $\varepsilon_1\geq\varepsilon_2\geq\varepsilon_3$. According to \cite{Sacco:1990}, $\eps^+$ in the same principal basis is then given by
-\begin{enumerate}
-\item If $\varepsilon_3\geq 0$, then $\eps^+=\eps$
-\item Else If $\varepsilon_3<0$ and $\varepsilon_2+\nu\varepsilon_3\geq 0$, then $\eps^+=(\varepsilon_1+\nu\varepsilon_3,\varepsilon_2+\nu\varepsilon_3,0)$
-\item If $\varepsilon_1<0$, $\nu\varepsilon_1+\varepsilon_2<0$ et $\nu(\varepsilon_1+\varepsilon_2)+(1-\nu)\varepsilon_3\geq 0$, alors
-\[
-\eps^+=(0, 0, \frac{\nu(\varepsilon_1+\varepsilon_2)}{1-\nu}+\varepsilon_3)
-\]
-\item Si $\varepsilon_1<0$, $\nu\varepsilon_1+\varepsilon_2<0$ et $\nu(\varepsilon_1+\varepsilon_2)+(1-\nu)\varepsilon_3<0$, alors $\eps^+=\vec{0}$
-\end{enumerate}
-
+For the masonry-like model \cite{FreddiRoyer-Carfagni:2010}, an explicit formula of the positive strain $\eps^+$ as a function of the total strain $\eps$ is obtained for both two-dimensional or three-dimensional problems in the isotropic case. The solution is derived from the minimization structure \eqref{eq:variationalepspos} or equivalently the variational inequality \eqref{eq:vipos}. The coaxiality between $\eps^+$ and $\eps$ is also exploited due to isotropy, see \cite{Del:1989,AlfanoRosatiValoroso:2000}. In the three dimensional case $\eps^+$ can be calculated according to \cref{algo:epspos3d}. In the plane strain or plane stress case, \cref{algo:epspos2d} can be used, where the strain space is partitioned into four subdomains, see \cref{fig:epspos2dill}. It can be observed that due to the use of the $\tens{A}_0$-norm during minimization \eqref{eq:variationalepspos}, the function $\eps\mapsto\eps^+$ depends on the Poisson's ratio.
+\begin{algorithm}[htbp]
+\caption{Explicit formula for $\eps^+$ as a function of $\eps$ for the masonry-like model \cite{FreddiRoyer-Carfagni:2010} in the three-dimensional case according to \cite{Sacco:1990}} \label{algo:epspos3d}
+\begin{algorithmic}[1]
+\State Perform a spectral decomposition of the total strain $\eps=(\varepsilon_1,\varepsilon_2,\varepsilon_3)$ with $\varepsilon_1\geq\varepsilon_2\geq\varepsilon_3$
+\If{$\varepsilon_3\geq 0$}
+  \State $\eps^+\gets\eps$
+\ElsIf{$\varepsilon_2+\nu\varepsilon_3\geq 0$}
+  \State $\eps^+\gets(\varepsilon_1+\nu\varepsilon_3,\varepsilon_2+\nu\varepsilon_3,0)$ in the same principal basis as $\eps$
+\ElsIf{$(1-\nu)\varepsilon_1+\nu(\varepsilon_2+\varepsilon_3)\geq 0$}
+  \State $\eps^+\gets(\varepsilon_1+\frac{\nu}{1-\nu}(\varepsilon_2+\varepsilon_3),0,0)$ in the same principal basis as $\eps$
+\Else
+  \State $\eps^+\gets\vec{0}$
+\EndIf
+\State Transform $\eps^+$ back to the canonical basis if necessary
+\end{algorithmic}
+\end{algorithm}
+\begin{algorithm}[htbp]
+\caption{Explicit formula for $\eps^+$ as a function of $\eps$ for the masonry-like model \cite{FreddiRoyer-Carfagni:2010} in the two-dimensional case according to \cite{AlfanoRosatiValoroso:2000}} \label{algo:epspos2d}
+\begin{algorithmic}[1]
+\State Perform a spectral decomposition of the total strain $\eps=(\varepsilon_1,\varepsilon_2)$ with $\varepsilon_1\geq\varepsilon_2$
+\If{Plane strain case}
+  \State $\alpha=\nu/(1-2\nu)$
+\Else
+  \State $\alpha=\nu/(1-\nu)$
+\EndIf
+\If{$\varepsilon_2\geq 0$}
+  \State $\eps^+\gets\eps$
+\ElsIf{$(1+\alpha)\varepsilon_1+\alpha\varepsilon_2\geq 0$}
+  \State $\eps^+\gets(\varepsilon_1+\frac{\alpha}{1+\alpha}\varepsilon_2,0)$ in the same principal basis as $\eps$
+\Else
+  \State $\eps^+\gets\vec{0}$
+\EndIf
+\State Transform $\eps^+$ back to the canonical basis if necessary
+\end{algorithmic}
+\end{algorithm}
 \begin{figure}[htbp]
-\includegraphics[width=0.65\textwidth]{epspos2d.pdf}
-\caption{\scriptsize Décomposition $\eps=\eps^++\eps^-$ en déformation plane}
+\includegraphics[width=0.5\textwidth]{epspos2d.pdf}
+\caption{Calculation of $\eps^+$ for the masonry-like model \cite{FreddiRoyer-Carfagni:2010} in the plane strain case} \label{fig:epspos2dill}
 \end{figure}
 
-It can be noted that the widely used tension-compression asymmetry model of \cite{MieheHofackerWelschinger:2010} adopts the elastic energy density split \eqref{eq:elasticTC} but does not fit into the variational formalism \eqref{eq:variationalepspos}. Denoting $\eps^+$ (resp. $\eps^-$) as the positive (resp. negative) part of the total strain obtained by projecting $\eps$ onto the space of all symmetric positive (resp. negative) semidefinite tensors \emph{with respect to the natural Frobenius norm}, their model reads
+It can be noted that the tension-compression asymmetry model of \cite{MieheHofackerWelschinger:2010}, that is widely used among the phase field community in for instance \cite{HofackerMiehe:2012,BordenVerhooselScottHughesLandis:2012,KlinsmannRosatoKamlahMcMeeking:2015,MayVignolletBorst:2015}, adopts the elastic energy density split \eqref{eq:elasticTC} but does not fit into the variational formalism \eqref{eq:variationalepspos}. Denoting $\eps^+$ (resp. $\eps^-$) as the positive (resp. negative) part of the total strain obtained by projecting $\eps$ onto the space of all symmetric positive (resp. negative) semidefinite tensors \emph{with respect to the natural Frobenius norm}, their model reads
 \begin{equation} \label{eq:miehe}
 \begin{aligned}
 \psi_0^\pm(\eps) &= \frac{1}{2}\lambda\inp{\tr\eps}_\pm^2+\mu\eps_\pm\cdot\eps_\pm, \\
 \sig_0^\pm(\eps) &= \lambda\inp{\tr\eps}_\pm\mathbb{I}+2\mu\eps_\pm
 \end{aligned}
 \end{equation}
-where contrary to the formulation \eqref{eq:elasdecom} there is no more individual constitutive relation separately for the positive or the negative strain. Despite its variational inconsistency, the stress for a totally damaged element is also negative semidefinite as for the model of \cite{FreddiRoyer-Carfagni:2010}. The qualitative differences between these two models will be illustrated in the following section.
+where contrary to the formulation \eqref{eq:elasdecom} there is no more individual constitutive relation separately for the positive or the negative strain. The function $\eps\mapsto\eps^+$ no longer depends on the Poisson's ratio. To orthogonality condition \eqref{eq:orthogonality} is not satisfied, however a partition of the sound elastic energy $\psi_0=\psi_0^++\psi_0^-$ is achieved. It is due to the fact that the positive bracket operator applies to the trace of the strain tensor. Despite its variational inconsistency, the stress for a totally damaged element is also negative semidefinite as for the model of \cite{FreddiRoyer-Carfagni:2010}. The qualitative differences between these two models will be illustrated in the following section.
 
 \subsection{Uniaxial traction and compression experiment} \label{sec:uniaxial}
-Here we will investigate the theoretical behavior of the above outlined models under a very simple loading condition to illustrate their individual particularities. It can be understood that the underlying \emph{local} damage model obtained by suppressing the gradient damage $\nabla\alpha_t$ in the dissipation energy density \eqref{eq:surface} represents the material behavior when no strain or damage localization appears. Hence some general properties of these tension-compression asymmetry models can be extracted under an academic homogeneous 3-dimensional uniaxial traction or compression experiment. Inertia is not essential for this analysis and will be neglected. We suppose that the stress tensor is of form $\sig_t=\sigma_{33}\vec{e}_3\otimes\vec{e}_3$ corresponding to an imposed axial strain $\varepsilon_{33}=t$ viewed as a loading parameter. Since $\tens{A}$ is isotropic, the goal is to find the evolutions of the transversal strain $t\mapsto\varepsilon_{11}=\varepsilon_{22}$, the axial stress $t\mapsto\sigma_{33}$ and the homogeneous damage $t\mapsto \alpha_t$. This amounts to solve the following system when the damage evolves $\dot{\alpha}_t>0$
+Here we will investigate the theoretical behavior of the above outlined models under a very simple loading condition to illustrate their individual particularities. It can be understood that the underlying \emph{local} damage model obtained by suppressing the gradient damage $\nabla\alpha_t$ in the dissipation energy density \eqref{eq:surface} represents the material behavior when no strain or damage localization appears. Hence some general properties of these tension-compression asymmetry models can be extracted under an academic homogeneous 3-dimensional uniaxial traction or compression experiment. Inertia is not essential for this analysis and will be neglected. We suppose that the stress tensor is of form $\sig_t=\sigma_{33}\vec{e}_3\otimes\vec{e}_3$ corresponding to an imposed axial strain $\varepsilon_{33}=t$ viewed as a loading parameter. Since $\tens{A}_0$ is isotropic, the goal is to find the evolutions of the transversal strain $t\mapsto\varepsilon_{11}=\varepsilon_{22}$, the axial stress $t\mapsto\sigma_{33}$ and the homogeneous damage $t\mapsto \alpha_t$. This amounts to solve the following system when the damage evolves $\dot{\alpha}_t>0$
 \begin{subequations} \label{eq:1dsystem}
 \begin{align}
-& \sigma_{11}(t)=\bigl(a(\alpha_t)\sig_0^++\sig_0^-\bigr)\vec{e}_1\cdot\vec{e}_1=0, \label{eq:eps11as33} \\
-& \frac{\partial\psi}{\partial\alpha}(\eps_t,\alpha_t)+w'(\alpha_t)=0 \label{eq:damagecrit}
+& \sigma_{11}(t)=\bigl(\mathsf{a}(\alpha_t)\sig_0^++\sig_0^-\bigr)\vec{e}_1\cdot\vec{e}_1=0, \label{eq:eps11as33} \\
+& \frac{\partial\psi}{\partial\alpha_t}(\eps_t,\alpha_t)+w'(\alpha_t)=0 \label{eq:damagecrit}
 \end{align}
 \end{subequations}
-where $\eps_t=\varepsilon_{11}(\vec{e}_1\otimes\vec{e}_1+\vec{e}_2\otimes\vec{e}_2)+t\vec{e}_3\otimes\vec{e}_3$. The second equation \eqref{eq:damagecrit} is the local interpretation of the energy balance condition \eqref{eq:dyngdeb}, see \cite{SicsicMarigo:2013}.
+where $\eps_t=\varepsilon_{11}(\vec{e}_1\otimes\vec{e}_1+\vec{e}_2\otimes\vec{e}_2)+t\vec{e}_3\otimes\vec{e}_3$. The second equation \eqref{eq:damagecrit} corresponds to the consistency condition \eqref{eq:damageconsis}.
 
-We remark that in order to solve \eqref{eq:1dsystem} a particular set of damage constitutive laws also has to be chosen. Strictly speaking the functions $\alpha\mapsto a(\alpha)$ and $\alpha\mapsto w(\alpha)$ should influence the exact behavior of the tension-compression asymmetry models. Nevertheless we discover that the solutions obtained with two particular damage constitutive laws \eqref{eq:at1} and \eqref{eq:at2} share many qualitative properties.
+We remark that in order to solve \eqref{eq:1dsystem} a particular set of damage constitutive laws also has to be chosen. Strictly speaking the functions $\alpha\mapsto \mathsf{a}(\alpha)$ and $\alpha\mapsto w(\alpha)$ should influence the exact behavior of the tension-compression asymmetry models. Nevertheless we discover that the solutions obtained with two particular damage constitutive laws \eqref{eq:at1} and \eqref{eq:at2} share many qualitative properties.
 
 The model of \cite{AmorMarigoMaurini:2009} has been already studied in this uniaxial traction and compression setting with the damage model \eqref{eq:at2}. The material undergoes a softening behavior both under tension or compression when a certain \emph{finite} threshold $\sigma_0^\pm$ is reached. The ratio between these two maximal stresses is given by
 \[
@@ -398,11 +423,11 @@ We then turn to the tension-compression separation proposed in \cite{MieheHofack
 It can be seen that the critical stress $\sigma_0^+$ increases with the Poisson ratio but stays bounded in tension. The compressive threshold $\sigma_0^-$ goes to infinity when $\nu$ is near zero, hence no damage will occur in this case. We use the tensile threshold $\sigma_0^+$ as well as its corresponding strain $\varepsilon_0^+$ both evaluated at $\nu=0.2$ to normalize the results shown in Fig. \ref{fig:miehe}.
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.98\textwidth]{TC5.pdf}
+\includegraphics[width=\textwidth]{TC5.pdf}
 \caption{Uniaxial traction $\varepsilon_{33}\geq 0$ and compression $\varepsilon_{33}\leq 0$ experiment for the tension-compression asymmetry proposed in \cite{MieheHofackerWelschinger:2010}. The damage constitutive law \eqref{eq:at1} is used.} \label{fig:miehe}
 \end{figure}
 
-Remark that under a uniaxial tensile loading, the material undergoes a classical softening behavior when the threshold stress is reached. For quasi-incompressible materials $\nu\approx\frac{1}{2}$ a snap-back is present and hence the evolution of the stress $\sigma_{33}$ and the strain $\varepsilon_{11}$ may experience a temporal discontinuity. However this behavior is only limited to the law \eqref{eq:at1} whereas for \eqref{eq:at2} no snap-back is observed. Unexpectedly, under compression the material may experience a two-phase softening-hardening (with an initial snap-back for $0\leq \nu\leq 3/8$ limited to the \eqref{eq:at1} case), while the damage increases. As $\alpha$ approaches 1, \emph{i.e.} as the material point becomes totally damaged, the uniaxial stress is not bounded and is given by $\sigma_{33}=2\mu\varepsilon_{33}$. Moreover, an apparent incompressible behavior is observed $\tr\eps_t=0$. These properties can be readily derived using the definitions \eqref{eq:miehe}. Due to a non-vanishing stress inside a completely damaged element, one may expect large diffusive ``damage'' for highly compressive zones. This may complicate the physical interpretation of the model of \cite{MieheHofackerWelschinger:2010} in this situation.
+Remark that under a uniaxial tensile loading, the material undergoes a classical softening behavior when the threshold stress is reached. For quasi-incompressible materials $\nu\approx\frac{1}{2}$ a snap-back is present and hence the evolution of the stress $\sigma_{33}$ and the strain $\varepsilon_{11}$ may experience a temporal discontinuity. However this behavior is only limited to the law \eqref{eq:at1} whereas for \eqref{eq:at2} no snap-back is observed. Unexpectedly, under compression the material may experience a two-phase softening-hardening (with an initial snap-back for $0\leq \nu\leq 3/8$ limited to the \eqref{eq:at1} case), while the damage increases. As $\alpha_t$ approaches 1, \emph{i.e.} as the material point becomes totally damaged, the uniaxial stress is not bounded and is given by $\sigma_{33}=2\mu\varepsilon_{33}$. Moreover, an apparent incompressible behavior is observed $\tr\eps_t=0$. These properties can be readily derived using the definitions \eqref{eq:miehe}. Due to a non-vanishing stress inside a completely damaged element, one may expect large diffusive ``damage'' for highly compressive zones. This may complicate the physical interpretation of the model of \cite{MieheHofackerWelschinger:2010} in this situation.
 
 In contrast, for any damage constitutive laws the model proposed in \cite{FreddiRoyer-Carfagni:2010} does not permit any damage under uniaxial compression. The positive strain contributing to damage after projection \eqref{eq:variationalepspos} is given by $\eps^+=(\varepsilon_{11}+\nu\varepsilon_{33})(\vec{e}_1\otimes\vec{e}_1+\vec{e}_2\otimes\vec{e}_2)$, which vanishes due to the uniaxial stress state $\sig_t=\sigma_{33}\vec{e}_3\otimes\vec{e}_3$ implying $\varepsilon_{11}=-\nu\varepsilon_{33}$. Under traction and when using the damage law \eqref{eq:at1}, a stress threshold under which no damage appears is given by
 \[
@@ -416,11 +441,11 @@ so cracks cannot appear for incompressible materials. We again use the tensile s
 \end{figure}
 
 \subsection{How to choose among different models} \label{sec:howtochoose}
-Following the previous review and analyses of several existing models on tension-compression asymmetry, a natural question arises as to how to choose the \emph{best} or the \emph{right} one for a particular problem. If the variational formulation \eqref{eq:variationalepspos} is used, the problem can be reduced to choose a \emph{good} convex cone $\mathcal{S}$ of the 2nd-order symmetric tensors. As the elastic energy density split \eqref{eq:elasticTC} influences both the displacement and the damage problems through the first order stability condition \eqref{eq:vi}, these two aspects will be separately discussed.
+Following the previous review and analyses of several existing models on tension-compression asymmetry, a natural question arises as to how to choose the \emph{best} or the \emph{right} one for a particular problem. If the variational formulation \eqref{eq:variationalepspos} is used, the problem can be reduced to choose a \emph{good} convex cone $\mathcal{C}$ of the 2nd-order symmetric tensors. As the elastic energy density split \eqref{eq:elasticTC} influences both the displacement and the damage problems through the first order stability condition \eqref{eq:vi}, these two aspects will be separately discussed.
 \begin{itemize}
 \item For the $\vec{u}$-problem, the tension-compression asymmetry model is widely recognized to \emph{approximate} the material non-interpenetration condition \cite{LancioniRoyer-Carfagni:2009,AmorMarigoMaurini:2009,AmbatiGerasimovLorenzis:2015}. However we would like to recall that this approximation is merely heuristic. Taking into account the actual non-interpenetration condition at finite strains in the sense of \cite{CiarletNecas:1987}, \emph{i.e.} local orientation preservation and global injectivity, is a difficult task both from a theoretical or numerical point of view, and hence is often merely checked \emph{a posteriori}. Nevertheless we could expect that the tension-compression decomposition \emph{itself} should depend on the local damage state and the damage gradient $\nabla\alpha_t$ approximating the local crack normal in the reference frame. A better elastic energy density split of \eqref{eq:elasticTC} could be
 \begin{equation}
-\psi(\eps,\alpha,\nabla\alpha)=a(\alpha)\psi_0^+(\eps,\alpha,\nabla\alpha)+\psi_0^-(\eps,\alpha,\nabla\alpha).
+\psi(\eps,\alpha,\nabla\alpha)=\mathsf{a}(\alpha)\psi_0^+(\eps,\alpha,\nabla\alpha)+\psi_0^-(\eps,\alpha,\nabla\alpha).
 \end{equation}
 When the crack is created, the elastic energy split \emph{itself} should become orientation dependent so that only non-positive normal stress can be applied on crack lips if friction is not considered. 
 
@@ -428,12 +453,12 @@ When the crack is created, the elastic energy split \emph{itself} should become 
 \end{itemize}
 
 \section{Griffith's Law in Gradient Damage Models} \label{sec:linkDF}
-We propose in this section to investigate the link between the dynamic gradient damage model and the classical Griffith's theory of dynamic fracture during the crack propagation phase. The major difficulty lies in the proper definition of an energy release rate and an equivalent material fracture resistance in gradient damage models. These concepts involve, generally speaking, the derivative of a certain energy with respect to the crack length, hence the damage zone evolution should be assumed to follow a specific path parametrized by the arc length. Based on an Eulerian approach, authors of \cite{SicsicMarigo:2013} then identify a generalized damage-dependent Rice's $J$-integral automatically induced by the variational formulation of quasi-static gradient damage models. To accomplish our objective in dynamics, we first revisit the Griffith's linear elastic dynamic fracture mechanics theory and rigorously provide a variational interpretation of the dynamic $J$-integral obtained classically from an energy flux integral entering into the crack tip which balances the energy dissipated due to crack propagation \cite{Freund:1990}. We propose in Sect. \ref{sec:griffith} a Lagrangian energetic approach to the dynamic energy release rate using calculus of variations and shape optimization. The desired evolution laws for the cracked body and the crack itself automatically follow by considering variations of a space-time action integral.
+We propose in this section to investigate the link between the dynamic gradient damage model and the classical Griffith's theory of dynamic fracture \eqref{eq:gtgc} during the crack propagation phase. The major difficulty lies in the proper definition of an energy release rate and an equivalent material fracture resistance in gradient damage models. These concepts involve, generally speaking, the derivative of a certain energy with respect to the crack length, hence the damage zone evolution should be assumed to follow a specific path parametrized by the arc length. Based on an Eulerian approach, authors of \cite{SicsicMarigo:2013} identify a generalized damage-dependent Rice's $J$-integral automatically induced by the variational formulation of quasi-static gradient damage models. To accomplish our objective in dynamics, we propose to revisit first the Griffith's linear elastic dynamic fracture mechanics theory and rigorously provide a variational interpretation of the dynamic $J$-integral \eqref{eq:Jdyn} obtained classically from an energy flux integral entering into the crack tip which balances the energy dissipated due to crack propagation \cite{Freund:1990}. A Lagrangian approach to the dynamic energy release rate is adopted using calculus of variations and shape optimization. The desired evolution laws for the cracked body and the crack itself automatically follow by considering variations of a space-time action integral. Since this investigation constitutes a justification of the methodology, it will be detailed in \cref{chap:griffithrevis}.
 
-It turns out this off-course journey furnishes precisely an adequate framework for deriving the crack tip equation of motion in dynamic gradient damage models. Under the same assumption in \cite{SicsicMarigo:2013} concerning the damage band structuration and applying the same shape derivative techniques as before to the generalized space-time action integral, we identify automatically a generalization of the dynamic $J$-integral and the dynamic energy release rate. The equation of motion of the crack tip predicted by the dynamic gradient damage model is then governed by a Griffith-like scalar equation involving these concepts. This property can thus be seen as a generalization of the results obtained in \cite{SicsicMarigo:2013}. With the help of a similar separation of scales in Sect. \ref{sec:asymptotic}, the former derived generalized Griffith criterion admits also an asymptotic interpretation. Assuming that the internal length $\ell$ is small compared to the dimension of the body, we retrieve the classical Griffith's law of cracks involving the dynamic energy release rate of the outer problem and the material toughness defined as the amount of energy dissipated across the damage process zone.
+It turns out this off-course journey furnishes precisely an adequate framework for deriving the crack tip equation of motion in dynamic gradient damage models. Under the same assumption in \cite{SicsicMarigo:2013} concerning the damage band structuration and applying the same shape derivative techniques as before to the generalized space-time action integral, we identify automatically a generalization of the dynamic $J$-integral and the dynamic energy release rate. The equation of motion of the crack tip predicted by the dynamic gradient damage model is then governed by a Griffith-like scalar equation involving these concepts. This property can thus be seen as a generalization of the results obtained in \cite{SicsicMarigo:2013}. With the help of a similar separation of scales, the former derived generalized Griffith criterion admits also an asymptotic interpretation. Assuming that the internal length $\ell$ is small compared to the dimension of the body, we retrieve the classical Griffith's law of cracks involving the dynamic energy release rate of the outer problem and the material toughness defined as the amount of energy dissipated across the damage process zone. The thematic subjects covered here are thus summarized in \cref{tab:summgriffith}.
 \begin{table}[htbp]
 \centering
-\caption{}
+\caption{Thematic subjects covered in this section} \label{tab:summgriffith}
 \begin{tabular}{ccccc} \toprule
 & Going dynamical & $\alpha\leftrightarrow\phi$ & $\nabla\alpha\to\Gamma$ & Experimental validation \\ \midrule
 Theoretics & \rightthumbsup & & \rightthumbsup & \\
@@ -442,20 +467,21 @@ Numerics & & & & \\ \bottomrule
 \end{table}
 
 \subsection{Generalized Griffith Criterion for a Propagating Damage Band}
-This section is devoted to the application of the shape derivative methods developed for the variational approach to dynamic fracture in Sect. \ref{sec:griffith} to the dynamic gradient damage model. Thanks to their formally similar variational framework, an evolution law similar to that of the Griffith's law \eqref{eq:griffithslaw} will be obtained which governs the \emph{crack tip} equation of motion in the gradient damage model. As in \cite{SicsicMarigo:2013}, we are interested in the smooth dynamic propagation phase of a damage band concentrated along a certain path. An example of such damage evolution is illustrated in Fig. \ref{fig:kalthoff} where numerical simulations results \cite{LiMarigoGuilbaudPotapov:2016} of an edge-cracked plate under dynamic shearing impact are indicated.
+This section is devoted to the application of the shape derivative methods developed for the variational approach to dynamic fracture in \cref{chap:griffithrevis} to the dynamic gradient damage model outlined in \cref{def:dynagraddamanew}. Thanks to their formally similar variational framework, an evolution law similar to that of the Griffith's law \eqref{eq:griffithslaw} will be obtained which governs the \emph{crack tip} equation of motion in the gradient damage model. As in \cite{SicsicMarigo:2013}, we are interested in the smooth dynamic propagation phase of a damage band concentrated along a certain path. An example of such damage evolution is illustrated in Fig. \ref{fig:kalthoff} where numerical simulations results of an edge-cracked plate under dynamic shearing impact are indicated.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.3\textwidth]{kalthoff_damage.pdf}
-\caption{Numerical simulation of an edge-cracked plate under dynamic shearing impact \cite{LiMarigoGuilbaudPotapov:2016}. The damage is concentrated inside a band and varies from 0 (blue zones) to 1 (red zones). It serves as a phase-field indicator of the crack propagating currently in the direction of $\vtau_t$ with its tip located at $\vec{P}_t$} \label{fig:kalthoff}
+\caption{Numerical simulation of an edge-cracked plate under dynamic shearing impact that will be considered in \cref{sec:kalthoff}. The damage is concentrated inside a band and varies from 0 (blue zones) to 1 (red zones). It serves as a phase-field indicator of the crack propagating currently in the direction of $\vtau_t$ with its tip located at $\vec{P}_t$} \label{fig:kalthoff}
 \end{figure}
-We observe initiation of the edge crack and subsequent propagation of the damage band representing the crack. The objective here is to understand the current crack tip $\vec{P}_t$ evolution during such \emph{simple} propagation phase. Complex topology changes such as crack kinking, branching or coalescence indicated by the phase-field $\alpha_t$ remain beyond the scope of the present paper. Formally, we admit the following
+We observe initiation of the edge crack and subsequent propagation of the damage band representing the crack. The objective here is to understand the current crack tip $\vec{P}_t$ evolution during such \emph{simple} propagation phase. Complex topology changes such as crack kinking, branching or coalescence indicated by the phase-field $\alpha_t$ remain beyond the scope of the present section. Formally, we admit the following
 \begin{hypothesis}[Damage Band Structuration] \label{hypo:damageband}
 \begin{enumerate}
+\item[]
 \item The time-dependent totally damaged zone can be described by a curve $l\mapsto\vec{\gamma}(l)$ parametrized by its arc-length $l_t$
 \begin{equation} \label{eq:graddamalt}
 \Gamma_t=\set{\vec{x}\in\Omega|\alpha_t(\vec{x})=1}=\set{\vec{\gamma}(l_s)\in\mathbb{R}^2|0\leq s\leq t}
 \end{equation}
-with the current propagation direction given by $\vtau_t=\vec{\gamma}'(l_t)$. Similarly to Sect. \ref{sec:griffith}, we only consider a straight crack path with a constant propagation tangent $\vtau_t=\vtau_0$, however generalization to smoothly curved crack path is possible (cf. the end of Sect. \ref{sec:griffith}). We focus on the propagation phase when the crack length is much larger than the internal length $\ell\ll l_0\leq l_t$.
+with the current propagation direction given by $\vtau_t=\vec{\gamma}'(l_t)$. Similarly to \cref{chap:griffithrevis}, we only consider a straight crack path with a constant propagation tangent $\vtau_t=\vtau_0$, however generalization to smoothly curved crack path is possible (cf. the end of \cref{chap:griffithrevis}). We focus on the propagation phase when the crack length is much larger than the internal length $\ell\ll l_0\leq l_t$.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.4\textwidth]{damage_structuration.pdf}
@@ -508,6 +534,7 @@ In practice, it means that if crack length variation is not considered, then the
 Associated with an admissible triplet of displacement, damage profile and crack length evolutions $(\vec{u}^*,\alpha^*,l)\in\mathcal{C}(\vec{u}^*)\times\mathcal{D}_l(\alpha^*)\times\mathcal{Z}(l)$, we can now reformulate the dynamic gradient damage model under Hypothesis \ref{hypo:damageband} by the following
 \begin{definition}[Dynamic Gradient Damage Evolution Law for a Propagating Crack] \label{def:dynagraddamanew}
 \begin{enumerate}
+\item[]
 \item \textbf{Irreversibility}: the damage $t\mapsto\alpha_t$ and the crack length $t\mapsto l_t$ are a non-decreasing function of time.
 \item \textbf{First-order stability}: the first-order action variation is non-negative with respect to arbitrary admissible displacement, damage profile and crack evolutions
 \begin{equation} \label{eq:vi2}
