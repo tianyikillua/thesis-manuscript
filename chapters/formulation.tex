@@ -5,7 +5,7 @@
 In this chapter the author first proposes a variational framework of the gradient damage models in the dynamic setting. Its ingredients and physical principles are presented in \cref{sec:formulation}. The author then reviews and analyzes in \cref{sec:TC} several approaches in an attempt to account for the tension-compression asymmetry of damage behavior of materials. In \cref{sec:linkDF} the dynamic gradient damage evolution is theoretically compared with the Griffith's theory of fracture. It is found that the crack evolution is governed by an asymptotic Griffith's law as long as the internal length is small compared to the dimension of the body.
 
 \section{Variational Framework Based on Physical Principles} \label{sec:formulation}
-In this section the author extends the original quasi-static gradient damage models as formulated in \cite{PhamMarigo:2010-1} to the dynamic setting. A variationally consistent framework for dynamic gradient damage models thanks to the definition of a generalized space-time action integral is obtained. A comparison with other phase-field approaches is then carried out. An extension to inhomogeneous materials and large-displacement situations is also discussed. The thematic subjects covered are summarized in \cref{tab:summvaria}.
+In this section the author extends the original quasi-static gradient damage models as formulated in \cite{PhamMarigo:2010-1} to the dynamic setting. A variationally consistent framework for dynamic gradient damage models thanks to the definition of a generalized space-time action integral is obtained. A comparison with other phase-field approaches is then carried out. An extension to large-displacement situations is also discussed. The thematic subjects covered are summarized in \cref{tab:summvaria}.
 \begin{table}[htbp]
 \centering
 \caption{Thematic subjects covered in this section} \label{tab:summvaria}
@@ -17,7 +17,7 @@ Numerics & & & & \\ \bottomrule
 \end{table}
 
 \subsection{Variational ingredients} \label{sec:ingredients}
-For the sake of simplicity, let us consider first a homogeneous and isotropic body $\Omega$ under the small strain hypothesis. Anisotropy is not the object of the present study and we assume that the local elastic material behavior can be characterized by two constants: the Young's modulus $E$ and the Poisson's ratio $\nu$ for instance. A discussion on an extension to inhomogeneous materials and to large displacement situations is provided at the end of this section, since they should not influence the variational formulation proposed here.
+For the sake of simplicity, let us consider first a homogeneous and isotropic body $\Omega$ under the small strain hypothesis. Anisotropy is not the object of the present study and we assume that the local elastic material behavior can be characterized by two constants: the Young's modulus $E$ and the Poisson's ratio $\nu$ for instance. A discussion on an extension to large displacement situations is provided at the end of this section, since they should not influence the variational formulation proposed here.
 
 The construction of the dynamic model are based on that of the quasi-static gradient damage model \cite{PhamMarigo:2010-1,PhamAmorMarigoMaurini:2011}. Its physical background and motivation have been discussed in \cref{sec:graddamage} and are not reproduced here. An element in the phase space of the dynamic gradient damage model regarded as a dynamical system corresponds to a state tuple $(\vec{u}_t,\dot{\vec{u}}_t,\alpha_t)$ consisting of the displacement field $\vec{u}_t$, the velocity field $\dot{\vec{u}}_t$ and the damage field $\alpha_t$. They are scalar or vector fields defined on the body $\Omega$, \emph{i.e.} a snapshot of the dynamic evolution at a certain time $t$. The modeling parameters are embedded into the introduction of several energetic quantities that are defined as follows. The elastic energy as well as the damage dissipation energy retain their quasi-static definitions, since they are unaffected by dynamics.
 \begin{itemize}
@@ -34,9 +34,9 @@ where $\alpha\mapsto\mathsf{a}(\alpha)$ is an adimensional function of damage ch
 \sig_t=\tens{A}(\alpha_t)\eps(\vec{u}_t).
 \end{equation}
 It can be observed that here the damage acts symmetrically on the undamaged elastic energy $\psi_0\bigl(\eps(\vec{u}_t)\bigr)=\psi\bigl(\eps(\vec{u}_t),0\bigr)$ such that
-\[
-\psi(\eps,\alpha)=\psi(-\eps,\alpha)=\mathsf{a}(\alpha)\psi_0(\eps,\alpha).
-\]
+\begin{equation} \label{eq:psi0}
+\psi\bigl(\eps(\vec{u}_t),\alpha_t\bigr)=\psi\bigl(-\eps(\vec{u}_t),\alpha_t\bigr)=\mathsf{a}(\alpha)\psi_0\bigl(\eps(\vec{u}_t)\bigr).
+\end{equation}
 An extension to tension-compression asymmetry will be discussed in \cref{sec:TC}.
 
 \item \textbf{Kinetic energy} is defined as usual by
@@ -51,7 +51,7 @@ The material density $\rho$ is independent of the damage, which implies total ma
 \end{equation}
 where $\alpha\mapsto w(\alpha)$ describes local damage dissipation during a homogeneous damage evolution and its maximal value $w(1)=w_1$ is the energy completely dissipated during such process when damage attains 1. For numerical implementation purposes, see \cite{BourdinMarigoMauriniSicsic:2014,MesgarnejadBourdinKhonsari:2014}, a non-essential rescaling of the internal length $\ell=\sqrt{2}\eta$ is usually performed in and \eqref{eq:surface} is rewritten as follows
 \begin{equation} \label{eq:surfaceGc}
-\mathcal{S}(\alpha_t)=\int_\Omega\varsigma(\alpha_t,\nabla\alpha_t)\dx=\int_\Omega\frac{\gc}{c_w}\left(\frac{\mathsf{w}(\alpha_t)}{\eta}+\eta\nabla\alpha_t\cdot\nabla\alpha_t\right)\dx\,,\tag{\ref*{eq:surface}'}.
+\mathcal{S}(\alpha_t)=\int_\Omega\varsigma(\alpha_t,\nabla\alpha_t)\dx=\int_\Omega\frac{\gc}{c_w}\left(\frac{\mathsf{w}(\alpha_t)}{\eta}+\eta\nabla\alpha_t\cdot\nabla\alpha_t\right)\dx\,,\tag{\ref*{eq:surface}${}^\prime$}.
 \end{equation}
 To ensure equivalence between these two definitions, we have necessarily $w(\alpha)=w_1\mathsf{w}(\alpha)$ and $\gc=c_ww_1\eta$, where $\alpha\mapsto\mathsf{w}(\alpha)$ denotes the adimensional damage dissipation function.
 \end{itemize}
@@ -119,7 +119,7 @@ Parameters & $\rho$, $E$ and $\nu$ & $\gc$ and $\sigma_\mathrm{m}$ &  $\mathsf{a
 The damage constitutive functions $\mathsf{a}(\alpha)$ and $\mathsf{w}(\alpha)$ contribute to the quantitative behaviors of gradient damage models used to approximate brittle fracture. Remark that no additional parameters are introduced in the \eqref{eq:at1} and the \eqref{eq:at2} models. In particular, the internal length $\ell$ can be determined as long as the two fracture parameters $\gc$ and $\sigma_\mathrm{m}$ as known. More modeling parameters can be introduced via the use of more sophisticated constitutive functions such as that defined in \cite{LorentzCuvilliezKazymyrenko:2012,AlessiMarigoVidoli:2015}.
 
 \subsection{Dynamic evolution laws}
-In this work we propose to formulate the variational dynamic evolution problem using Hamilton's principle, cf. \cite{Hamilton:1834}. In the quasi-static case the meta-stability condition \eqref{eq:qsstability} is a physically feasible principle due to the minimization structure of static equilibrium. In dynamics however, we merely have a \emph{stationary} action integral, since the temporal minimality is not always guaranteed, see \cite{Gray:2007aa}. From a mathematical modeling point of view, Hamilton's principle applies to temporal boundary value problems defined on an interval $[0,T]$, since the state at both time ends is fixed during arbitrary variations of the action. More sophisticated variational principles can be designed to take into account only the initial displacement $\vec{u}_0$ and the initial velocity $\dot{\vec{u}}_0$ conditions, see for example \cite{Gurtin:1964aa}. We admit that the use of Hamilton's principle may not be an optimal one from a formulation point of view. Nevertheless it is not the object of the present work. Here Hamilton's principle is mainly used to derive the equations to solve the physical initial value problem.
+In this work we propose to formulate the variational dynamic evolution problem using an extension of Hamilton's principle, cf. \cite{Hamilton:1834}. In the quasi-static case the meta-stability condition \eqref{eq:qsstability} is a physically feasible principle due to the minimization structure of static equilibrium. In dynamics however, we merely have a \emph{stationary} action integral, since the temporal minimality is not always guaranteed, see \cite{Gray:2007aa}. From a mathematical modeling point of view, Hamilton's principle applies to temporal \emph{boundary value problems} defined on an interval $[0,T]$, since the state at both time ends is fixed during arbitrary variations of the action. More sophisticated variational principles can be designed to take into account only the initial displacement $\vec{u}_0$ and the initial velocity $\dot{\vec{u}}_0$ conditions, see for example \cite{Gurtin:1964aa}. We admit that the use of Hamilton's principle may not be an optimal one from a formulation point of view. Nevertheless it is not the object of the present work. Here Hamilton's principle is mainly used to derive the equations to solve the physical \emph{initial value problem}.
 
 The loading conditions and the admissible function spaces are now specified. Body forces $\vec{f}_t$ and surface tractions $\vec{F}_t$ applied to the body through a subset $\partial\Omega_F$ of the boundary are characterized by an external work potential $\mathcal{W}_t$ given by
 \begin{equation} \label{eq:power}
@@ -143,9 +143,9 @@ It can be seen that a virtual damage field $\beta_t$ is admissible, if and only 
 Informally, we assume that the displacement $\vec{u}$ and the damage $\alpha$ are sufficiently regular in time and in space such that all the energetic quantities defined in \cref{sec:ingredients} make sense. Since the temporal derivative of the damage is not involved in the variational formulation, for every $t\in I$ the damage $\alpha_t$ belongs at least to $H^1(\Omega)\cap L^\infty(\Omega)$. Due to the kinetic energy \eqref{eq:kineticG}, the current velocity $\dot{\vec{u}}_t$, regarded as the temporal derivative of the displacement in the distributional sense, should be an element of $L^2(\Omega,\mathbb{R}^\mathrm{dim})$. A precise statement of the function spaces in the most general case remains beyond the scope of this work.
 \end{remark}
 
-With all the variational ingredients set, we are now in a position to introduce the following space-time action integral associated with an admissible pair of displacement and damage evolutions $(\vec{u},\alpha)\in\mathcal{C}(\vec{u})\times\mathcal{D}(\alpha)$
+With all the variational ingredients set, we are now in a position to introduce the following space-time action integral associated with an admissible pair of displacement and damage evolutions $(\vec{u},\alpha)\in\mathcal{C}(\vec{u})\times\mathcal{D}(\alpha)$, which involves an augmented Lagrangian density
 \begin{equation} \label{eq:actionG}
-\mathcal{A}(\vec{u},\alpha)=\int_I\mathcal{L}_t(\vec{u}_t,\dot{\vec{u}}_t,\alpha_t)\,\mathrm{d}t=\int_I\mathcal{E}(\vec{u}_t,\alpha_t)+\mathcal{S}(\alpha_t)-\mathcal{K}(\dot{\vec{u}}_t)-\mathcal{W}_t(\vec{u}_t)\D{t}  
+\mathcal{A}(\vec{u},\alpha)=\int_I\mathcal{L}_t(\vec{u}_t,\dot{\vec{u}}_t,\alpha_t)\,\mathrm{d}t=\int_I\mathcal{E}(\vec{u}_t,\alpha_t)+\mathcal{S}(\alpha_t)-\mathcal{K}(\dot{\vec{u}}_t)-\mathcal{W}_t(\vec{u}_t)\D{t}.
 \end{equation}
 The coupled two-field time-continuous dynamic gradient damage problem can then be formulated by the following
 \begin{definition}[Dynamic Gradient Damage Evolution Law] \label{def:dynagraddama}
@@ -157,22 +157,38 @@ The coupled two-field time-continuous dynamic gradient damage problem can then b
 \mathcal{A}'(\vec{u},\alpha)(\vec{v}-\vec{u},\beta-\alpha)\geq 0\text{ for all $\vec{v}\in\mathcal{C}(\vec{u})$ and all $\beta\in\mathcal{D}(\alpha)$}.
 \end{equation}
 \item \textbf{Energy balance}: the only energy dissipation is due to damage
-\begin{equation} \label{eq:dyngdeb}
-\mathcal{H}_t=\mathcal{H}_0+\int_0^t\left(\int_\Omega\bigl(\sig_s\cdot\eps(\dot{\vec{U}}_s)+\rho\ddot{\vec{u}}_s\cdot\dot{\vec{U}}_s\bigr)\dx-\mathcal{W}_s(\dot{\vec{U}}_s)-\dot{\mathcal{W}}_s(\vec{u}_s)\right)\D{s}
-\end{equation}
+\begin{multline} \label{eq:dyngdeb}
+\mathcal{H}_t=\mathcal{H}_0+\int_0^t\left(\int_\Omega\bigl(\sig_s\cdot\eps(\dot{\vec{U}}_s)-\rho\dot{\vec{u}}_s\cdot\ddot{\vec{U}}_s\bigr)\dx-\mathcal{W}_s(\dot{\vec{U}}_s)-\dot{\mathcal{W}}_s(\vec{u}_s)\right)\D{s} \\
++\int_\Omega\rho(\dot{\vec{u}}_t\cdot\dot{\vec{U}}_t-\dot{\vec{u}}_0\cdot\dot{\vec{U}}_0)\dx
+\end{multline}
 where the total energy is defined by
-\begin{equation}
+\[
 \mathcal{H}_t=\mathcal{E}(\vec{u}_t,\alpha_t)+\mathcal{S}(\alpha_t)+\mathcal{K}(\dot{\vec{u}}_t)-\mathcal{W}_t(\vec{u}_t).
-\end{equation}
+\]
 \end{enumerate}
 \end{definition}
 
+In the first-order stability condition \eqref{eq:vi}, we evaluate the directional (Gâteaux) derivative of the action integral at $(\vec{u},\alpha)$, a possible solution to the dynamic evolution problem, in the direction $(\vec{v}-\vec{u},\beta-\alpha)$ which corresponds to a perturbation. Formally, using the Lagrangian density $\mathcal{L}_t$, we have
+\[
+\mathcal{A}'(\vec{u},\alpha)(\vec{w},\beta-\alpha)=\int_I\left(\frac{\partial \mathcal{L}_t}{\partial\vec{u}_t}(\vec{s}_t)(\vec{w}_t)+\frac{\partial \mathcal{L}_t}{\partial\dot{\vec{u}}_t}(\vec{s}_t)(\dot{\vec{w}}_t)+\frac{\partial \mathcal{L}_t}{\partial\alpha_t}(\vec{s}_t)(\beta_t-\alpha_t)\right)\D{t}\,,
+\]
+where $\vec{w}=\vec{v}-\vec{u}$ denotes a displacement evolution variation and $\vec{s}_t=(\vec{u}_t,\dot{\vec{u}}_t,\alpha_t)$ corresponds to a state of the dynamical system. Remark that \eqref{eq:vi} is written as a variational inequality to take into account the unilateral effects introduced by the irreversibility condition in the definition of the damage admissible space \eqref{eq:Dalphat}. It can be regarded as an extension of Hamilton's principle applied to systems with irreversible dissipation.
+
+The energy balance condition \eqref{eq:dyngdeb} characterizes the energy flow into the system: the external work is balanced by the mechanical energy variation of the system consisting of the elastic energy \eqref{eq:elasticG} and the kinetic energy \eqref{eq:kineticG}, and the energy dissipated in the process of crack production \eqref{eq:surface}. Observe that \eqref{eq:dyngdeb} also applies to non-smooth evolutions such as velocity shocks, since no higher spatial or temporal derivatives of the displacement and the damage are involved other than that needed for the definition of the Lagrangian density. With the help of integration by parts, the regularity is transferred to the boundary conditions $t\mapsto \vec{U}_t$ and the external work potential $t\mapsto \mathcal{W}_t$. If in particular the acceleration field $\ddot{\vec{u}}_t$ is sufficiently regular, the energy balance condition admits an equivalent formulation which reads after an integration by parts in the time domain
+\begin{equation} \label{eq:dyngdeb2}
+\mathcal{H}_t=\mathcal{H}_0+\int_0^t\left(\int_\Omega\bigl(\sig_s\cdot\eps(\dot{\vec{U}}_s)+\rho\ddot{\vec{u}}_s\cdot\dot{\vec{U}}_s\bigr)\dx-\mathcal{W}_s(\dot{\vec{U}}_s)-\dot{\mathcal{W}}_s(\vec{u}_s)\right)\D{s}. \tag{\ref*{eq:dyngdeb}${}^\prime$}
+\end{equation}
+
 \subsection{Equivalent local interpretations}
-By developing the Gâteaux derivative of the action integral, further physical insights into the first-order stability condition \eqref{eq:vi} can be obtained if sufficient spatial and temporal regularities of the involved fields are assumed. Denoting the variation $\vec{v}-\vec{u}$ by $\vec{w}$ and testing \eqref{eq:vi} with $\beta=\alpha$, we obtain after an integration by parts in the time domain
+By developing the Gâteaux derivative of the action integral, further physical insights into the first-order stability condition \eqref{eq:vi} can be obtained if sufficient spatial and temporal regularities of the involved fields are assumed. Writing the variation $\vec{v}-\vec{u}$ by $\vec{w}$ and testing \eqref{eq:vi} with $\beta=\alpha$, we obtain after an integration by parts in the time domain
 \[
 \mathcal{A}'(\vec{u},\alpha)(\vec{w},0)=\int_I\D{t}\int_\Omega\bigl(\sig_t\cdot\eps(\vec{w}_t)+\rho\ddot{\vec{u}}_t\cdot\vec{w}_t\bigr)\dx-\mathcal{W}_t(\vec{w}_t)=0\text{ for all $\vec{w}_t\in\mathcal{C}_0$}
 \]
-where the equality $\mathcal{A}'(\vec{u},\alpha)(\vec{w},0)=0$ follows given that the associated linear space $\mathcal{C}_0$ of $\mathcal{C}_t$ is a vector space. By virtue of classical arguments of the calculus of variations, one deduces the following elastic-damage dynamic wave equation in its strong form
+where the equality $\mathcal{A}'(\vec{u},\alpha)(\vec{w},0)=0$ follows given that the associated linear space $\mathcal{C}_0$ of $\mathcal{C}_t$ is a vector space. The arbitrariness of the temporal variation of $\vec{w}$ leads thus to the weak elastic-damage dynamic wave equation
+\begin{equation} \label{eq:weakform}
+\int_\Omega\bigl(\sig_t\cdot\eps(\vec{w}_t)+\rho\ddot{\vec{u}}_t\cdot\vec{w}_t\bigr)\dx-\mathcal{W}_t(\vec{w}_t)=0\text{ for all $\vec{w}_t\in\mathcal{C}_0$}.
+\end{equation}
+If further spatial regularity is assumed, one deduces the strong form
 \begin{equation} \label{eq:wavedyn}
 \rho\ddot{\vec{u}}_t-\div\sig_t=\vec{f}_t\quad\text{in }\Omega\quad\text{and}\quad\sig_t\vec{n}=\vec{F}_t\quad\text{on }\partial\Omega_F
 \end{equation}
@@ -197,37 +213,71 @@ They can be interpreted as the energy release rate density with respect to damag
 Hence damage growth is possible until a certain non-local threshold is reached. Similarly here the local consistency condition holds only in the uncracked part of the body, since $\dot{\alpha}_t=0$ on $\Gamma_t$ by definition. These local interpretations \eqref{eq:localdamagefirstorder} and \eqref{eq:damageconsis} are also formally the same with that derived in the quasi-static model \cite{PhamMarigo:2010-1,SicsicMarigo:2013}.
 
 \subsection{Comparison with phase-field approaches} \label{sec:phasefields}
-The phase-field model studied in \cite{KarmaKesslerLevine:2001,HakimKarma:2009} constitutes another continuum and regularized approach for quasi-static and dynamic fracture problems. A specific damage-like\footnote{Indeed, the function $1-\phi$ can be seen as the damage using their definition of the phase field $\phi$.} scalar \emph{phase} field $\phi$ is introduced to continously separate the broken state $\phi=0$ and the sound one $\phi=1$. In a quasi-static setting, the governing equations for the displacement $\vec{u}$ and the phase fields $\phi$ can be obtained in a semi-variational way from the total energy $\mathcal{E}(\vec{u},\phi)$, which, using notations used in \cite{HakimKarma:2009}, gives
-\begin{align}
-0 &= \frac{\partial\mathcal{E}}{\partial\vec{u}}(\vec{u},\phi) \label{eq:PF_u} \\
-\chi^{-1}\dot{\phi} &= -\frac{\partial\mathcal{E}}{\partial\phi}(\vec{u},\phi) \label{eq:PF_phi}
-\end{align}
-where \eqref{eq:PF_u} describes the static equilibrum of the body with potential diffuse or localized damage zones and \eqref{eq:PF_phi} is the standard Ginzburg-Landau equation with $\chi>0$ a kinetic or mobility \cite{KuhnMuller:2010} coefficient controlling the (physical) additional total energy disspation in the form of heat during the crack propagation, as can be seen by following (corrected) equation based on (13) in \cite{HakimKarma:2009}
-\begin{equation} \label{eq:PF_dissipation}
-\dot{\mathcal{E}}=-\chi\left(\frac{\partial\mathcal{E}}{\partial\phi}(\vec{u},\phi)\right)^2\leq 0.
+Two essentially different phase-field models co-exist in the literature: one that originated from the mechanics community initiated by the work of \cite{MieheHofackerWelschinger:2010,MieheWelschingerHofacker:2010}, and the other independently proposed by physicist in the work of \cite{KarmaKesslerLevine:2001,HakimKarma:2009}. They will be separately compared with the gradient damage approach outlined in the previous sections.
+
+\paragraph{Phase-field model originated from the mechanics community}
+The phase-field model in the sense of \cite{MieheHofackerWelschinger:2010,MieheWelschingerHofacker:2010} is initially stated for rate-independent evolutions but has been quickly extended to the dynamic setting in \cite{HofackerMiehe:2012,HofackerMiehe:2013}. Since then, phase-field models have been used to study various real-world dynamic fracture problems, see for example the work of \cite{BordenVerhooselScottHughesLandis:2012,SchlueterWillenbuecherKuhnMueller:2014}. The governing equations are similar to that derived from the variational principles for the gradient damage model. In particular, the evolution law of the phase-field  lies in on the definition of a \emph{regularized crack functional} which measures the Griffith's surface energy of the phase-field crack. It turns out that this functional can be regarded as a damage dissipation energy \eqref{eq:surface} in the gradient-damage terminology with a particular damage constitutive law: the \eqref{eq:at2} model. Using \eqref{eq:gcingdcw}, the damage dissipation energy associated with the \eqref{eq:at2} model reads
+\[
+\mathcal{S}(\alpha_t)=\int_\Omega\frac{\gc}{2}\left(\frac{\alpha_t^2}{\eta}+\eta\nabla\alpha_t\cdot\nabla\alpha_t\right)\dx\,,
+\]
+which agrees exactly with that used in \cite{MieheHofackerWelschinger:2010,MieheWelschingerHofacker:2010,HofackerMiehe:2012,HofackerMiehe:2013}. In \cite{BordenVerhooselScottHughesLandis:2012,SchlueterWillenbuecherKuhnMueller:2014}, a non-essential rescaling of the internal length $\eta=2\widetilde{\eta}$ is performed. As stated in \cref{sec:ingredients}, this constitutive law originates from the Ambrosio and Tortorelli regularization model introduced in \cite{BourdinFrancfortMarigo:2000} and enjoys hence the desired $\Gamma$-convergence property. In this respect, these phase-field models correspond to a special case of gradient damage models.
+
+Another difference between the gradient damage model and these phase-field approaches lies in the irreversibility condition (cf. a discussion on this point in \cite{AmorMarigoMaurini:2009}). In our approach the damage is assumed to be an irreversible evolution, \emph{i.e.} $\dot{\alpha}_t\geq 0$. This condition is enforced during the energy minimization principle \eqref{eq:crackmin} as an optimization constraint prescribed in the damage admissible space \eqref{eq:Dalphat}. By doing so, \eqref{eq:crackmin} corresponds to a bound-constrained optimization problem which requires specially designed numerical algorithms. On the contrary, in these phase-field approaches the irreversibility condition is only weakly prescribed:
+\begin{itemize}
+\item In \cite{MieheHofackerWelschinger:2010,MieheWelschingerHofacker:2010,BordenVerhooselScottHughesLandis:2012} for instance, the irreversible constraint is dropped during energy minimization and \eqref{eq:crackmin} corresponds to an unconstrained optimization problem, of which the minimizing phase-field corresponds to the solution of the underlying linear system. Instead, the irreversible behaviors of the phase-field is modeled via the introduction of a history field defined by
+\[
+\mathcal{H}_t=\max_{s\leq t}\psi_0\bigl(\eps(\vec{u}_s)\bigr)
+\]
+which records for every material point the maximal undamaged elastic energy density in the history. The growth criterion for the phase field adapted from \eqref{eq:damageconsis} is then given by
+\begin{equation} \label{eq:unconstrained}
+-\mathsf{a}'(\alpha_t)\mathcal{H}_t-w'(\alpha_t)+\div\vec{q}_t=0\,,
 \end{equation}
+where the history field $\mathcal{H}_t$ is regarded as the driving force of damage. According to the analyses in \cite{Amor:2008}, this method can only be applied to the \eqref{eq:at2} model, since in that case the unconstrained solution $\alpha_t$ to \eqref{eq:crackmin} or solved by \eqref{eq:unconstrained} is necessarily bounded by the interval $[0,1]$. When other sophisticated models are used such as the \eqref{eq:at1} model, one has to introduce the bound constraints during the minimization procedure.
 
-Note that the Griffith-like crack creation is the only dissipation mechanism in our gradient damage model and an energy balance condition is added in the formulation to ensure that all the elastic energy released will be used to supplement crack propagation. This is the major formulational difference between our model and the \emph{dissipative} phase field models because of \eqref{eq:PF_dissipation}. A parallel consequence of the appearance of a kinetic coefficient $0<\chi<\infty$ in \eqref{eq:PF_phi}, as discussed in \cite{Bourdin:2011}, is that an evolutionary parabolic equation \eqref{eq:PF_phi} governing the phase field is coupled with the elliptic static equilibrium problem \eqref{eq:PF_u}. Physically it means that the crack can evolve solely with a rate determined by $\chi$, even if the structure is in static equilibrium at $t=T$ with all external loading frozen for all $t>T$. With a physical time being introduced into the model (the dimension of the kinetic coefficient is $[\mathrm{T}]^{-1}$), the coupled system \eqref{eq:PF_u}-\eqref{eq:PF_phi} isn't well suited for quasi-static computations, as numerically the static equilibrium  $\vec{K}\vec{u}=\vec{F}$ should be combined with a specific time-stepping scheme (the explicit Euler scheme in \cite{HakimKarma:2009}) to integrate the evolution problem for the phase field.
+\item In \cite{BourdinFrancfortMarigo:2000,SchlueterWillenbuecherKuhnMueller:2014}, one only prescribes irreversibility for totally damaged material points, \emph{i.e.} where $\alpha_t(\vec{x})=1$. According to \cite{AmorMarigoMaurini:2009}, it can be regarded as a purely numerical approximation of the constrained minimization problem \eqref{eq:crackmin}. On the other hand, this is also physics-motivated according to \cite{SchlueterWillenbuecherKuhnMueller:2014}. Nevertheless, the physical motivation behind this weakly reinforced irreversibility originates from an undesired property of the \eqref{eq:at2} model: that of strain-hardening in the phase-field interval $[0,\frac{1}{4}]$. This property has already been illustrated theoretically in \cite{PhamAmorMarigoMaurini:2011} and numerically in \cite{BordenVerhooselScottHughesLandis:2012} for instance. In this interval \emph{damage} does not take place since the stress increases with the phase-field, and hence the material behavior should be reversible. However a more natural requirement, that the \eqref{eq:at1} model satisfies, is the strain-softening behavior for every phase field in the internal $\alpha\in(0,1)$. In this case the phase-field retrieves its physical meaning of \emph{damage}, and one necessarily should introduce the irreversible condition and solves a constrained minimization problem \eqref{eq:crackmin}.
+\end{itemize}
 
-Other differences exist and concern mainly the dependence of the total energy on the phase field $\phi\mapsto\mathcal{E}(\vec{u},\phi)$. Our formulation is general in the sense that the stiffness degradation $\alpha\mapsto a(\alpha)$ and the local damage dissipation $\alpha\mapsto w(\alpha)$ are only required to verify some physical properties based on which three particular constitutive laws are studied in this paper. As can be been in the subsequent numerical experiments, all these models are similar in essence and can be used to investigate brittle fracture problems. On the contrary, the dissipative phase field models \cite{KarmaKesslerLevine:2001,HakimKarma:2009} seem to favour a particular set of constitutive functions. As long as these functions verify the properties, they can be seen to be contained in our general gradient damage model.
+\paragraph{Phase-field model originated from the physics community}
+The phase-field model studied in \cite{KarmaKesslerLevine:2001,HakimKarma:2009} constitutes another continuum and regularized approach for quasi-static and dynamic fracture problems. Compared to the gradient damage approach, in these models the phase field evolution is \emph{viscous} in nature. The governing equations for the phase fields $\phi$ can be obtained in a semi-variational way from a potential energy $\mathcal{P}(\vec{u}_t,\phi_t)$ defined as the sum of the elastic energy similar to \eqref{eq:elasticG} and the dissipation energy similar to \eqref{eq:surface}. Using the notations given in \cite{HakimKarma:2009}, one has
+\begin{equation} \label{eq:PF_phi}
+\chi^{-1}\dot{\phi}_t=-\frac{\partial\mathcal{P}}{\partial\phi_t}(\vec{u}_t,\phi_t)\,,
+\end{equation}
+which corresponds to the standard Ginzburg-Landau equation with $\chi>0$ a kinetic or mobility \cite{KuhnMuller:2010} coefficient. This parameter controls an \emph{additional} energy dissipation in the form of heat during the crack propagation, as can be seen by following (corrected) equation based on (13) in \cite{HakimKarma:2009}
+\begin{equation} \label{eq:PF_dissipation}
+\dot{\mathcal{H}}_t=-\chi\left(\frac{\partial\mathcal{P}}{\partial\phi_t}(\vec{u}_t,\phi_t)\right)^2\leq 0.
+\end{equation}
+Recall that Damage is the only dissipation mechanism in the gradient damage model and an energy balance condition \eqref{eq:dyngeb} is added in the formulation. 
 
-\subsection{Some possible extensions} \label{sec:extensions}
-Under quasi-static hypothesis authors of \cite{PieroLancioniMarch:2007,MieheSchaenzelUlmer:2015} use a Lagrangian strain measure based on the right Cauchy-Green tensor $\vec{F}_t^\mT\vec{F}_t$ for the finite-strain extension of phase-field models. It is a natural choice since the current configuration $\Omega_t$ is not known in advance for quasi-static calculations and the static equilibrium is written either in the initial reference configuration $\Omega=\Omega_0$ (total Lagrangian formulation) or in the last known reference configuration (updated Lagrangian formulation). In explicit dynamics however, dynamic momentum balance can be directly prescribed in the current configuration $\Omega_t$ which is calculated from the last iteration following the temporal discretization scheme. For this reason in this work we will use the Eulerian Hencky logarithmic strain tensor \cite{XiaoBruhnsMeyers:1997}
+A parallel consequence of the appearance of a kinetic coefficient $0<\chi<\infty$ in \eqref{eq:PF_phi}, as discussed in \cite{Bourdin:2011}, is that an evolutionary parabolic equation \eqref{eq:PF_phi} governing the phase field is coupled with the elliptic static equilibrium problem or the hyperbolic dynamic wave equation. Physically it means that the crack can evolve solely with a rate determined by $\chi$, even if the structure is in static equilibrium at $t=T$ with all external loading frozen for all $t>T$. With a physical time being introduced into the model (the dimension of the kinetic coefficient is $[\mathrm{T}]^{-1}$), the coupled system isn't well suited for quasi-static computations, as numerically the static problem should be combined with a specific time-stepping scheme (the explicit Euler scheme in \cite{HakimKarma:2009}) to integrate the evolution problem for the phase field.
+
+\subsection{Extension to large displacement situations} \label{sec:extensions}
+We discuss a large-displacement extension of the original gradient damage model in an explicit dynamics case. The small displacement condition (small rotation and small strain) is a plausible hypothesis for brittle materials when finite rotations are also not expected in the body. Otherwise geometrical nonlinearities should be taken into account in the definition of the elastic energy \eqref{eq:elasticG} or more specifically the undamaged elastic energy density \eqref{eq:psi0}, through the introduction of a nonlinear strain measure. 
+
+In the literature, a Lagrangian strain measure based on the right Cauchy-Green tensor $\vec{F}_t^\mT\vec{F}_t$ is used for the geometrically nonlinear or finite-strain extension of phase-field models, both in the quasi-static case, see \cite{PieroLancioniMarch:2007,ClaytonKnap:2014,MieheSchaenzel:2014,MieheSchaenzelUlmer:2015} and in the implicit dynamic case, cf. \cite{HeschWeinberg:2014,MieheHofackerSchaenzelAldakheel:2015}. It is a natural choice since the current configuration $\Omega_t$ is not known in advance for implicit calculations and the momentum equilibrium is written either in the initial reference configuration $\Omega=\Omega_0$ (total Lagrangian formulation) or in the last known reference configuration (updated Lagrangian formulation). In explicit dynamics however, dynamic momentum balance can be directly prescribed in the current known configuration $\Omega_t$ updated from the last iteration following the explicit temporal discretization scheme. For this reason here we will use the Eulerian Hencky logarithmic strain tensor \cite{XiaoBruhnsMeyers:1997} defined by
 \begin{equation} \label{eq:logstrain}
 \eps(\vec{u}_t)=\vec{h}_t=\log\vec{V}_t=\sum_i(\log\lambda_i)\vec{n}_i\otimes\vec{n}_i
 \end{equation}
-where $\vec{V}_t$ is the left stretch tensor from the polar decomposition $\vec{F}_t=\mathbb{I}+\nabla\vec{u}_t=\vec{V}_t\vec{R}_t$. Based on this strain measure, a simple Hookean type hyperelastic model \cite{XiaoChen:2002} is adopted
-\begin{align}
-\psi_0(\vec{h}_t) &= \frac{1}{2}\lambda(\tr\vec{h}_t)^2+\mu\vec{h}_t\cdot\vec{h}_t, \label{eq:soundpsi} \\
-\vtau_0(\vec{h}_t) &= \frac{\partial\psi_0}{\partial\vec{h}}(\vec{h}_t)=\lambda(\tr\vec{h}_t)\mathbb{I}+2\mu\vec{h}_t \label{eq:henckystress}
-\end{align}
-where we emphasize that it is the Kirchhoff stress $\vtau_0(\vec{h}_t)=J_t\sig_0(\vec{h}_t)$ with $J_t=\det\vec{F}_t$ the Jacobian determinant and not the Cauchy stress $\sig_0$ that is derived from this strain energy $\psi_0$.
+where $\vec{V}_t$ is the left stretch tensor from the polar decomposition of the deformation gradient $\vec{F}_t=\mathbb{I}+\nabla\vec{u}_t=\vec{V}_t\vec{R}_t$ and $(\lambda_i,\vec{n}_i)$ denotes a pair of the principal stretch and the corresponding spatial principal directions. Based on this strain measure, a simple Hookean type hyperelastic model \cite{XiaoChen:2002} is adopted to account for geometric nonlinearities
+\begin{equation}
+\psi_0(\vec{h}_t)=\frac{1}{2}\lambda(\tr\vec{h}_t)^2+\mu\vec{h}_t\cdot\vec{h}_t. \label{eq:soundpsi}
+\end{equation}
+We emphasize that the stress measure conjugate to the Hencky logarithmic strain is the Kirchhoff stress, which implies the following definition of the Cauchy stress
+\begin{equation}
+\sig_t=\frac{1}{J_t}\frac{\partial\psi_0}{\partial\vec{h}_t}(\vec{h}_t)=\frac{1}{J_t}\bigl(\lambda(\tr\vec{h}_t)\mathbb{I}+2\mu\vec{h}_t\bigr)\,,
+\end{equation}
+where $J_t=\det\vec{F}_t$ is the Jacobian determinant.
+
+It should be note that the variational framework as summarized by \cref{def:dynagraddama} remains the same. By developing the directional derivative of the action integral and supposing that the displacement field is sufficiently regular in time and in space, the elastic-damage dynamic wave equation can be derived \emph{in the deformed configuration}, which reads
+\begin{equation} \label{eq:waveeq}
+\rho_t\ddot{\vec{u}}_t-\div\sig_t=\vec{f}_t\quad\text{in $\Omega_t$}\quad\text{and}\quad\sig_t\vec{n}=\vec{F}_t\quad\text{on $\vphi_t(\partial\Omega_F)$}.
+\end{equation}
+On the other hand, the same energy minimization principle \eqref{eq:crackmin} can be derived, since the damage problem is naturally defined in the initial reference configuration.
 
 \section{Tension-Compression Asymmetry} \label{sec:TC}
-In this section we will discuss several approaches in an attempt to account for the tension-compression asymmetry of damage behavior of materials. The objective is to provide a better understanding of the existing models following a theoretical approach and to point out some improvements that can be done in the future.
+In this section we will discuss several approaches in an attempt to account for the tension-compression asymmetry of damage behavior of materials. The objective is to provide a better understanding of the existing models following a theoretical approach and to point out some improvements that can be done in the future. Both approaches from the gradient damage community and the phase-field community will be analyzed. The thematic subjects covered here are thus summarized in \cref{tab:summTC}.
 \begin{table}[htbp]
 \centering
-\caption{}
+\caption{Thematic subjects covered in this section} \label{tab:summTC}
 \begin{tabular}{ccccc} \toprule
 & Going dynamical & $\alpha\leftrightarrow\phi$ & $\nabla\alpha\to\Gamma$ & Experimental validation \\ \midrule
 Theoretics & & \rightthumbsup & & \\
@@ -236,66 +286,82 @@ Numerics & & & & \\ \bottomrule
 \end{table}
 
 \subsection{Review of existing models}
-In general two possibilities can be considered: modification of damage-dependence of the elastic energy \eqref{eq:elasticG}, and/or modification of the variational principles (of irreversibility, stability and energy balance) outlined in \cref{def:dynagraddama}. The second approach has been discussed in \cite{LorentzKazymyrenko:2014,MieheSchaenzelUlmer:2015} where the damage driving force $\partial_\alpha\psi(\eps_t,\alpha_t)$ deduced from the energy minimization principle \eqref{eq:crackmin} is replaced by, for example, some stress-based criteria in presence of a damage threshold function. However it is known from \cite{SicsicMarigo:2013} that the variational formulation plays an essential role in establishing the link between damage and fracture and in the definition of a generalized energy release rate with respect to the crack extension. That's why only the first possibility will be discussed in this paper. For notational simplicity, we place ourselves at a particular material point $\vec{x}$ characterized by a strain tensor $\eps=\eps(\vec{u}_t)(\vec{x})$ and a current damage state $\alpha=\alpha_t(\vec{x})$.
+In general two possibilities can be considered: modification of damage-dependence of the elastic energy density \eqref{eq:psi0}, and/or modification of the variational principles (of irreversibility, stability and energy balance) outlined in \cref{def:dynagraddama}. The second approach has been discussed in \cite{LorentzKazymyrenko:2014,MieheSchaenzelUlmer:2015} where the damage driving force in the sense of $\mathcal{H}_t$ in \eqref{eq:unconstrained} deduced from the energy minimization principle \eqref{eq:crackmin} is replaced by, for example, some stress-based criteria. However it is known from \cite{SicsicMarigo:2013} that the variational formulation plays an essential role in establishing the link between damage and fracture and in the definition of a generalized energy release rate with respect to the crack extension. That's why only the first possibility will be discussed in this paper. For notational simplicity, we place ourselves at a particular material point $\vec{x}$ characterized by a strain tensor $\eps=\eps(\vec{u}_t)(\vec{x})$ and a current damage state $\alpha=\alpha_t(\vec{x})$.
 
-Several existing approaches consist of \emph{additively} partitioning the sound elastic energy density $\psi_0(\eps)$ in \eqref{eq:elasticG} into two part: a \emph{positive} part $\psi_0^+(\eps)$ which is considered to contribute to damage, and the \emph{negative} part $\psi_0^-(\eps)$ which resists to damage. The elastic energy density in \eqref{eq:elastic} being acted symmetrically in tension and compression by damage is then replaced by the expression
+Several existing approaches consist of \emph{additively} partitioning the sound elastic energy density $\psi_0$ in \eqref{eq:psi0} into two parts: a \emph{positive} part $\psi_0^+(\eps)$ which is assumed to contribute to damage, and the \emph{negative} part $\psi_0^-(\eps)$ which resists damage. The elastic energy density in \eqref{eq:psi0} being acted symmetrically in tension and compression by damage is then replaced by the expression
 \begin{equation} \label{eq:elasticTC}
-\psi(\eps,\alpha)=a(\alpha)\psi_0^+(\eps)+\psi_0^-(\eps)
+\psi(\eps,\alpha)=\mathsf{a}(\alpha)\psi_0^+(\eps)+\psi_0^-(\eps)
 \end{equation}
-where the damage degradation function $a(\alpha)$ only acts on the \emph{positive} part $\psi_0^+(\eps)$. By doing so, damage evolution is then driven by the \emph{positive} elastic energy according to \eqref{eq:crackmin}. In this contribution we will adopt this additive partition approach since only small strains are expected for brittle materials. In the finite strain regime, a multiplicative decomposition of the deformation gradient $\vec{F}_t$ could be a more suitable alternative \cite{HeschWeinberg:2014} for allowing fracture only under tension.
+where the damage degradation function $\mathsf{a}(\alpha)$ only acts on the \emph{positive} part $\psi_0^+(\eps)$. By doing so, damage evolution is then driven by the \emph{positive} elastic energy according to \eqref{eq:crackmin}. In this contribution we will adopt this additive partition approach since only small strains are expected for brittle materials. In the finite strain regime, a multiplicative decomposition of the deformation gradient $\vec{F}_t$ could be a more suitable alternative \cite{HeschWeinberg:2014} for allowing fracture only under tension.
 
 Furthermore, if the partition of the sound elastic energy $\psi_0(\eps)$ is based on that of the strain tensor $\eps=\eps^++\eps^-$, \emph{i.e.} the constitutive behaviors
 \begin{equation} \label{eq:elasdecom}
 \begin{aligned}
-\eps^\pm &\mapsto \psi_0^\pm(\eps^\pm)=\frac{1}{2}\tens{A}\eps^\pm\cdot\eps^\pm, \\
-\eps^\pm &\mapsto \sig_0^\pm(\eps^\pm)=\tens{A}\eps^\pm
+\eps^\pm &\mapsto \psi_0^\pm(\eps^\pm)=\frac{1}{2}\tens{A}_0\eps^\pm\cdot\eps^\pm, \\
+\eps^\pm &\mapsto \sig_0^\pm(\eps^\pm)=\tens{A}_0\eps^\pm
 \end{aligned}
 \end{equation}
-are characterized by the same elasticity tensor $\tens{A}$ both for the \emph{positive} and \emph{negative} strains, then there exists in fact a local variational principle from which several existing tension-compression asymmetry models can be derived. This formulation is adapted from \cite{FreddiRoyer-Carfagni:2010} where the framework of \emph{structured deformations} is used to decompose the strain tensor into an elastic part and an inelastic one related to microstructures which in our notation is given by $\alpha\eps^+$. However here we confine ourselves to macroscopic modeling and interpret the \emph{positive} strain $\eps^+$ as the part that merely contributes to local material degradation. The mechanical modeling of such \emph{positive} strains will be encapsulated into a \emph{convex} subset $\mathcal{C}$ of the symmetrized 2nd-order tensor. The actual computation of $\eps^+\in\mathcal{C}$ is determined by the following local variational requirement for every material point
+are characterized by the same elasticity tensor $\tens{A}_0$ both for the \emph{positive} and \emph{negative} strains, then there exists in fact a local variational principle from which several existing tension-compression asymmetry models can be derived. This formulation is adapted from \cite{FreddiRoyer-Carfagni:2010} where the framework of \emph{structured deformations} is used to decompose the strain tensor into an elastic part and an inelastic one related to microstructures which in our notation is given by $\alpha\eps^+$. However here we confine ourselves to macroscopic modeling and interpret the \emph{positive} strain $\eps^+$ as the part that merely contributes to local material degradation. The mechanical modeling of such \emph{positive} strains will be encapsulated into a \emph{convex} subset $\mathcal{C}$ of all symmetric 2nd-order tensors. The effective computation of $\eps^+\in\mathcal{C}$ is determined by the following local variational requirement for every material point
 \begin{equation} \label{eq:variationalepspos}
-\norm{\eps^+-\eps}_\tens{A}=\min_{\vec{e}\in\mathcal{S}}\norm{\vec{e}-\eps}_\tens{A}=\min_{\vec{e}\in\mathcal{S}}\tens{A}(\eps-\vec{e})\cdot(\eps-\vec{e}).
+\norm{\eps^+-\eps}_{\tens{A}_0}=\min_{\vec{e}\in\mathcal{C}}\norm{\vec{e}-\eps}_{\tens{A}_0}=\min_{\vec{e}\in\mathcal{C}}\tens{A}_0(\eps-\vec{e})\cdot(\eps-\vec{e}).
 \end{equation}
-Owing to the convexity of $\mathcal{C}$, the \emph{positive} strain $\eps^+$ is unique and is defined as the orthogonal projection of the total strain $\eps$ onto the space $\mathcal{C}$ with respect to the energy norm defined by the elasticity tensor $\tens{A}$. From convex analysis it is known that $\eps^+$ that satisfies \eqref{eq:variationalepspos} can be equivalently characterized by
+Owing to the convexity of $\mathcal{C}$, the \emph{positive} strain $\eps^+$ is unique and is defined as the orthogonal projection of the total strain $\eps$ onto the space $\mathcal{C}$ with respect to the energy norm defined by the elasticity tensor $\tens{A}_0$. From convex analysis it is known that $\eps^+$ that satisfies \eqref{eq:variationalepspos} can be equivalently characterized by
 \begin{equation} \label{eq:vipos}
--\tens{A}(\eps-\eps^+)\cdot(\vec{e}-\eps^+)\geq0\text{ for all $\vec{e}\in\mathcal{S}$}.
+-\tens{A}_0(\eps-\eps^+)\cdot(\vec{e}-\eps^+)\geq0\text{ for all $\vec{e}\in\mathcal{C}$}.
 \end{equation}
-which implies from the definition \eqref{eq:elasdecom} that the negative sound stress $\sig_0^-=\tens{A}\eps^-$ is in the polar cone $\mathcal{S}^*=\set{\vec{e}^*|\vec{e}^*\cdot\vec{e}\leq 0\text{ for all $\vec{e}\in S$}}$. If the space $\mathcal{C}$ is also a cone, \emph{i.e.} closed with respect to arbitrary positive rescaling $\alpha\vec{e}$ for $\alpha>0$, then testing \eqref{eq:vipos} with $\vec{e}=2\eps^+$ and $\vec{e}=\frac{1}{2}\eps^+$ furnishes along with the symmetry of $\tens{A}$ the following orthogonality conditions
+which implies from the definition \eqref{eq:elasdecom} that the negative sound stress $\sig_0^-=\tens{A}\eps^-$ is in the polar cone $\mathcal{C}^*=\set{\vec{e}^*|\vec{e}^*\cdot\vec{e}\leq 0\text{ for all $\vec{e}\in \mathcal{C}$}}$. If the space $\mathcal{C}$ is also a cone, \emph{i.e.} closed with respect to arbitrary positive rescaling $\alpha\vec{e}$ for $\alpha>0$, then testing \eqref{eq:vipos} with $\vec{e}=2\eps^+$ and $\vec{e}=\frac{1}{2}\eps^+$ furnishes along with the symmetry of $\tens{A}_0$ the following orthogonality conditions
 \begin{equation} \label{eq:orthogonality}
 \begin{aligned}
-\sig_0^-\cdot\eps^+ &= \tens{A}(\eps-\eps^+)\cdot\eps^+=0, \\
-\sig_0^+\cdot\eps^- &= \tens{A}(\eps-\eps^-)\cdot\eps^-=0.  
+\sig_0^-\cdot\eps^+ &= \tens{A}_0(\eps-\eps^+)\cdot\eps^+=0, \\
+\sig_0^+\cdot\eps^- &= \tens{A}_0(\eps-\eps^-)\cdot\eps^-=0.  
 \end{aligned}
 \end{equation}
 This implies that $\psi_0^+$ and $\psi_0^-$ defined in \eqref{eq:elasdecom} constitute indeed a partition of the sound elastic energy density
 \[
-2\psi_0(\eps)=\tens{A}\eps\cdot\eps=\sig_0^+\cdot\eps^++\sig_0^-\cdot\eps^-
+2\psi_0(\eps)=\tens{A}_0\eps\cdot\eps=\sig_0^+\cdot\eps^++\sig_0^-\cdot\eps^-
 \]
 where the crossed terms disappear thanks to \eqref{eq:orthogonality}. This provides another interpretation of \eqref{eq:variationalepspos} from a mechanical point of view: the \emph{positive} part of the strain minimizes the \emph{negative} part of the elastic energy $\sig_0^-\cdot\eps^-$ that resists to damage.
 
 We now turn to the stress tensor derived from \eqref{eq:elasticTC} and \eqref{eq:elasdecom}. In general we should have by definition
 \begin{equation} \label{eq:sige}
-\sig(\eps,\alpha)\vec{e}=a(\alpha)\sig_0^+\cdot\frac{\partial\eps^+}{\partial\eps}(\eps)\vec{e}+\sig_0^-\cdot\frac{\partial\eps^-}{\partial\eps}(\eps)\vec{e}
+\sig(\eps,\alpha)\vec{e}=\mathsf{a}(\alpha)\sig_0^+\cdot\frac{\partial\eps^+}{\partial\eps}(\eps)\vec{e}+\sig_0^-\cdot\frac{\partial\eps^-}{\partial\eps}(\eps)\vec{e}
 \end{equation}
-where derivatives of the decomposed strains $\eps^\pm$ with respect to the total strain appear. Fortunately, as $\partial_{\eps}\eps^+\in\mathcal{S}$ and $\partial_{\eps}\tens{A}\eps^-\in\mathcal{S}^*$, we have due to \eqref{eq:vipos}
+where derivatives of the decomposed strains $\eps^\pm$ with respect to the total strain appear. Fortunately, as $\partial_{\eps}\eps^+\in\mathcal{C}$ and $\partial_{\eps}\tens{A}\eps^-\in\mathcal{C}^*$, we have due to \eqref{eq:vipos}
 \begin{equation} \label{eq:crossed}
 \sig_0^-\cdot\frac{\partial\eps^+}{\partial\eps}(\eps)\vec{e}\leq 0\text{ and }\sig_0^+\cdot\frac{\partial\eps^-}{\partial\eps}(\eps)\vec{e}\leq 0.
 \end{equation}
 By differentiating the orthogonality condition \eqref{eq:orthogonality} with respect to the total strain $\eps$, we find that the sum of the above two non-positive inner products equals to zero, which implies individually that these two expressions in \eqref{eq:crossed} vanish. Recalling $\eps=\eps^++\eps^-$, the stress tensor is readily identified from \eqref{eq:sige}
 \begin{equation} \label{eq:stressposneg}
-\sig_t=\sig(\eps,\alpha)=a(\alpha)\sig_0^++\sig_0^-.
+\sig_t=\sig(\eps,\alpha)=\mathsf{a}(\alpha)\sig_0^++\sig_0^-.
 \end{equation}
-This is the stress expression $\sig_t$ which will be used in the weak elastodynamic equation \eqref{eq:weakform} when tension-compression asymmetry is considered. It can be noted that this expression is reduced to its negative part $\sig(\eps,1)=\sig_0^-\in\mathcal{S}^*$ for a totally damaged element. 
+This is the stress expression $\sig_t$ which will be used in the elastic-damage dynamic wave equation \eqref{eq:weakform} or \eqref{eq:wavedyn} when tension-compression asymmetry is considered. It can be noted that this expression is reduced to its negative part $\sig(\eps,1)=\sig_0^-\in\mathcal{C}^*$ for a totally damaged element. 
 
-Using this variational formulation \eqref{eq:variationalepspos}, the modeling of material tension-compression asymmetry is thus reduced to the setting of such convex cone $\mathcal{S}$ destined to represent the strains that contribute to damage. Several existing phase-field like models of fracture can be derived within this framework \cite{FreddiRoyer-Carfagni:2010}.
+Using this variational formulation \eqref{eq:variationalepspos}, the modeling of material tension-compression asymmetry is thus reduced to the setting of such convex cone $\mathcal{C}$ destined to represent the strains that contribute to damage. Several existing phase-field like models of fracture can be derived within this framework \cite{FreddiRoyer-Carfagni:2010}.
 \begin{itemize}
 \item The original symmetric model of \cite{BourdinFrancfortMarigo:2000} can be trivially obtained by choosing $\mathcal{C}$ to all symmetric 2nd-order tensors. From \eqref{eq:vipos} it can be deduced that $\eps^+=\eps$, \emph{i.e.} the total strain contributes to damage irrespective of whether it corresponds to traction or compression.
 
-\item The deviatoric model of \cite{LancioniRoyer-Carfagni:2009} is retrieved when $\mathcal{C}$ represents all symmetric 2nd-order tensors that have a zero trace (and the condition that $\tens{A}$ is isotropic). Only the deviatoric part of the strain $\dev\eps$ participates to damage. The negative stress $\sig_0^-$ belongs to the polar cone of $\mathcal{C}$ which is characterized by a zero deviatoric part. Thus for a totally damaged material point the stress is hydrostatic and has the form $p\mathbb{I}$ for $p\in\mathbb{R}$.
+\item The deviatoric model of \cite{LancioniRoyer-Carfagni:2009} is retrieved when $\mathcal{C}$ represents all symmetric 2nd-order tensors that have a zero trace (and the condition that $\tens{A}_0$ is isotropic). Only the deviatoric part of the strain participates to damage, \emph{i.e.} $\eps^+=\dev\eps$. The negative stress $\sig_0^-$ belongs to the polar cone of $\mathcal{C}$ which is characterized by a zero deviatoric part. Thus for a totally damaged material point the stress is hydrostatic and has the form $p\mathbb{I}$ for $p\in\mathbb{R}$.
 
-\item The model of \cite{AmorMarigoMaurini:2009} is a combination of the previous two models. If the total strain corresponds to an expansion $\tr\eps\geq 0$, the damage mechanism is completely active and $\mathcal{C}$ corresponds to all symmetric 2nd-order tensors. However if a compressive strain is present $\tr\eps< 0$, only the deviatoric part of the strain $\dev\eps$ participates to damage and $\mathcal{C}$ corresponds to all symmetric 2nd-order tensors that have a zero trace. In this case a totally damaged material point experiences a compressive hydrostatic pressure $p\mathbb{I}$ for $p\leq 0$.
+\item The model of \cite{AmorMarigoMaurini:2009} is a combination of the previous two models. If the total strain corresponds to an expansion $\tr\eps\geq 0$, the damage mechanism is completely active and $\mathcal{C}$ corresponds to all symmetric 2nd-order tensors. However if a compressive strain is present $\tr\eps< 0$, only the deviatoric part of the strain participates to damage ($\eps^+=\dev\eps$) and $\mathcal{C}$ corresponds to all symmetric 2nd-order tensors that have a zero trace. In this case a totally damaged material point experiences a compressive hydrostatic pressure $p\mathbb{I}$ for $p\leq 0$.
 
-\item The masonry-like model of \cite{FreddiRoyer-Carfagni:2010} is obtained when $\mathcal{C}$ is chosen to include all positive semidefinite symmetric tensors. As $\mathcal{S}$ is a convex cone, the stress tensor can be simplified to \eqref{eq:stressposneg} and hence the stress that can be attained by a totally damaged material point is necessarily negative semidefinite, corresponding in fact to materials that do not support tension \cite{PieroLancioniMarch:2007}. However the model as suggested by \cite{FreddiRoyer-Carfagni:2010} with $\mathcal{C}$ containing all symmetric tensors of which all eigenvalues are greater than -1 may present some difficulties, as the orthogonality condition \eqref{eq:orthogonality} and the simplified stress expression \eqref{eq:stressposneg} no longer apply, $\mathcal{C}$ not being closed with respect to arbitrary positive rescaling.
+\item The masonry-like model of \cite{FreddiRoyer-Carfagni:2010} is obtained when $\mathcal{C}$ is chosen to include all positive semidefinite symmetric tensors. Since $\mathcal{C}$ is a convex cone, the stress tensor can be simplified to \eqref{eq:stressposneg} and hence the stress that can be attained by a totally damaged material point is necessarily negative semidefinite, corresponding in fact to materials that do not support tension \cite{PieroLancioniMarch:2007}. However the model as suggested by \cite{FreddiRoyer-Carfagni:2010} with $\mathcal{C}$ containing all symmetric tensors of which all eigenvalues are greater than -1 may present some difficulties, as the orthogonality condition \eqref{eq:orthogonality} and the simplified stress expression \eqref{eq:stressposneg} no longer apply, $\mathcal{C}$ not being closed with respect to arbitrary positive rescaling.
 \end{itemize}
+
+For the masonry-like model \cite{FreddiRoyer-Carfagni:2010}, an explicit formula of the positive strain $\eps^+$ as a function of the total strain $\eps$ is obtained for both two-dimensional or three-dimensional problems in the isotropic case. The solution is derived from the minimization structure \eqref{eq:variationalepspos} or equivalently the variational inequality \eqref{eq:vipos}. The coaxiality between $\eps^+$ and $\eps$ is also exploited due to isotropy, see \cite{Del:1989,AlfanoRosatiValoroso:2000}. In the three dimensional case, after the spectral decomposition the total strain tensor reads $\eps=(\varepsilon_1,\varepsilon_2,\varepsilon_3)$ in its principal basis where without generality we assume $\varepsilon_1\geq\varepsilon_2\geq\varepsilon_3$. According to \cite{Sacco:1990}, $\eps^+$ in the same principal basis is then given by
+\begin{enumerate}
+\item If $\varepsilon_3\geq 0$, then $\eps^+=\eps$
+\item Else If $\varepsilon_3<0$ and $\varepsilon_2+\nu\varepsilon_3\geq 0$, then $\eps^+=(\varepsilon_1+\nu\varepsilon_3,\varepsilon_2+\nu\varepsilon_3,0)$
+\item If $\varepsilon_1<0$, $\nu\varepsilon_1+\varepsilon_2<0$ et $\nu(\varepsilon_1+\varepsilon_2)+(1-\nu)\varepsilon_3\geq 0$, alors
+\[
+\eps^+=(0, 0, \frac{\nu(\varepsilon_1+\varepsilon_2)}{1-\nu}+\varepsilon_3)
+\]
+\item Si $\varepsilon_1<0$, $\nu\varepsilon_1+\varepsilon_2<0$ et $\nu(\varepsilon_1+\varepsilon_2)+(1-\nu)\varepsilon_3<0$, alors $\eps^+=\vec{0}$
+\end{enumerate}
+
+\begin{figure}[htbp]
+\includegraphics[width=0.65\textwidth]{epspos2d.pdf}
+\caption{\scriptsize Décomposition $\eps=\eps^++\eps^-$ en déformation plane}
+\end{figure}
 
 It can be noted that the widely used tension-compression asymmetry model of \cite{MieheHofackerWelschinger:2010} adopts the elastic energy density split \eqref{eq:elasticTC} but does not fit into the variational formalism \eqref{eq:variationalepspos}. Denoting $\eps^+$ (resp. $\eps^-$) as the positive (resp. negative) part of the total strain obtained by projecting $\eps$ onto the space of all symmetric positive (resp. negative) semidefinite tensors \emph{with respect to the natural Frobenius norm}, their model reads
 \begin{equation} \label{eq:miehe}

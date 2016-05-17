@@ -25,6 +25,7 @@
 \usepackage[framemethod=tikz]{mdframed}
 \usepackage{minted}
 \usepackage{dingbat}
+\usepackage[square]{natbib}
 
 %% Maths packages
 \let\openbox\relax
@@ -56,6 +57,8 @@
 \or Cited on page #2.
 \else Cited on pages #2.
 \fi}
+
+\renewcommand{\cite}{\citep}
 
 \fancyhf{}
 \fancyhead[LE,RO]{\thepage}
