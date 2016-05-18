@@ -16,28 +16,26 @@
 \usepackage{newtxtext}
 \usepackage{multicol}
 \usepackage{listings}
-\usepackage[capitalise,noabbrev]{cleveref}
 \usepackage{minitoc}
 \usepackage{makeidx}
 \usepackage{blindtext}
 \usepackage{silence}
 \usepackage{microtype}
-\usepackage[framemethod=tikz]{mdframed}
-\usepackage{minted}
+%\usepackage[framemethod=tikz]{mdframed}
+%\usepackage{minted}
 \usepackage{dingbat}
 \usepackage[square]{natbib}
 
-%% Maths packages
 \let\openbox\relax
 \usepackage{amsmath}
 \usepackage{amssymb,amscd}
 \usepackage{amsthm,thmtools}
-\usepackage{empheq}
 \usepackage{algpseudocode}
 \usepackage{algorithm}
 \usepackage{siunitx}
 \usepackage{braket}
 \usepackage{newtxmath}
+\usepackage[capitalise,noabbrev]{cleveref}
 
 %% Settings
 \setcounter{minitocdepth}{2}
@@ -77,6 +75,9 @@
 \declaretheorem[sibling=theorem,style=definition]{hypothesis}
 \declaretheorem[style=remark,numbered=no]{remark}
 
+%\crefname{hypothesis}{hypothesis}{hypotheses}
+%\Crefname{hypothesis}{Hypothesis}{Hypotheses}
+
 %% Definitions
 \def\vec#1{\ensuremath{\mathchoice
 {\mbox{\boldmath$\displaystyle\mathbf{#1}$}}
@@ -104,7 +105,7 @@
 \newcommand{\dev}{\operatorname{dev}}
 \newcommand{\vtheta}{\vec{\theta}}
 \newcommand{\vtau}{\vec{\tau}}
-\newcommand{\vphi}{\vec{\phi}}
+\newcommand{\vphi}{\vec{\varphi}}
 \newcommand{\RN}[1]{\textup{\uppercase\expandafter{\romannumeral#1}}}
 \newcommand{\symgrad}{\nabla^\mathrm{s}}
 \newcommand{\uvec}{\underline{\vec{u}}}
