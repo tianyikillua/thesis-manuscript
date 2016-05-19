@@ -225,9 +225,9 @@ which agrees exactly with that used in \cite{MieheHofackerWelschinger:2010,Miehe
 Another difference between the gradient damage model and these phase-field approaches lies in the irreversibility condition (cf. a discussion on this point in \cite{AmorMarigoMaurini:2009}). In our approach the damage is assumed to be an irreversible evolution, \emph{i.e.} $\dot{\alpha}_t\geq 0$. This condition is enforced during the energy minimization principle \eqref{eq:crackmin} as an optimization constraint prescribed in the damage admissible space \eqref{eq:Dalphat}. By doing so, \eqref{eq:crackmin} corresponds to a bound-constrained optimization problem which requires specially designed numerical algorithms. On the contrary, in these phase-field approaches the irreversibility condition is only weakly prescribed:
 \begin{itemize}
 \item In \cite{MieheHofackerWelschinger:2010,MieheWelschingerHofacker:2010,BordenVerhooselScottHughesLandis:2012,KlinsmannRosatoKamlahMcMeeking:2015,MayVignolletBorst:2015} for instance, the irreversible constraint is dropped during energy minimization and \eqref{eq:crackmin} corresponds to an unconstrained optimization problem, of which the minimizing phase-field corresponds to the solution of the underlying linear system. Instead, the irreversible behaviors of the phase-field is modeled via the introduction of a history field defined by
-\[
+\begin{equation} \label{eq:historyfield}
 \mathcal{H}_t=\max_{s\leq t}\psi_0\bigl(\eps(\vec{u}_s)\bigr)
-\]
+\end{equation}
 which records for every material point the maximal undamaged elastic energy density in the history. The growth criterion for the phase field adapted from \eqref{eq:damageconsis} is then given by
 \begin{equation} \label{eq:unconstrained}
 -\mathsf{a}'(\alpha_t)\mathcal{H}_t-w'(\alpha_t)+\div\vec{q}_t=0\,,
