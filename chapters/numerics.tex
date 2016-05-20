@@ -77,7 +77,7 @@ The use of the effective stress $\sig_\mathrm{eff}$ improves computational effic
 
 For tensor product finite elements, a loop on the Gauss points is necessary and our experience suggests that 4 Gauss points for quadrilateral elements and 8 for hexagonal elements are sufficient. An effective stress can no longer be defined and the stress evaluated at these Gauss points will be used as the output variable.
 
-\begin{remark}[Extension to large-displacement situations]
+\begin{remark}[Extension to large-displacements]
 Numerical implications of the large-displacement extension proposed in \cref{sec:extensions} are discussed here. It is based on the explicit dynamics situations, where at the beginning of every time step the current configuration $\vphi_t(\Omega)$ is known and is updated from the last iteration. The Eulerian elastic-damage dynamic wave equation \eqref{eq:waveeq} will be naturally solved in the current deformed mesh obtained by constantly updating the mesh coordinates $\vec{x}_t=\vec{x}+\vec{u}_t(\vec{x})\in\Omega_t$.
 
 This implies that the interpolation of the displacement and the damage \eqref{eq:interpolation}, as well as the calculation of the global internal force vector \eqref{eq:Fint} should be performed in the deformed element $\vphi_t(\Omega_\mathrm{e})$ and the interpolation and differentiation matrices $\vec{N}$'s and $\vec{B}$'s are constantly updated.
@@ -114,7 +114,7 @@ The Hessian matrix $\vec{H}$ and the second member vector $\vec{b}$ depend solel
 \end{itemize}
 These quantities can be evaluated exactly for simplex finite elements. For quadrilateral and hexahedral elements, an approximated using a numerical integration with respectively 4 and 8 Gauss points will be used.
 
-\begin{remark}[Extension to large-displacement situations]
+\begin{remark}[Extension to large-displacements]
 According to \eqref{eq:crackmin}, the damage minimality condition is naturally formulated in the initial reference configuration. From a physical point of view, this corresponds to the fact that the damage dissipation energy is destined to measure the length or the area of cracks defined in the reference configuration. Technically the concerned energetic functional can be written in the deformed mesh (at the expense of additional unpleasant $\vec{F}_t$ and $J_t$ terms), however it is not necessary \cite{PieroLancioniMarch:2007}.
 
 From a implementation point of view, it implies that the interpolation and differentiation matrices $\vec{N}$'s and $\vec{B}$'s that corresponds to the initial configuration should be stored and will be used throughout the calculation.
