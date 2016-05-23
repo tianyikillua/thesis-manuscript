@@ -1,6 +1,23 @@
 %!TEX root=../main.tex
-\chapter{Simulation results}
+\chapter{Simulation Results} \label{chap:simulation}
 \minitoc
+
+In this chapter the numerical discrete dynamic gradient damage model summarized in \cref{algo:implicit,algo:explicit} is applied to investigate numerous academic or real-world fracture problems. Since this part constitutes an essential part of the present work, the organization of these simulation results is described as follows:
+\begin{itemize}
+\item \textbf{Ordering}: the fracture problems considered are ordered in terms of \emph{computational complexity}. In other words, lower dimensional problems (1-d and 2-d) are presented before higher dimensional problems (3-d). The FEniCS implementation is used first to analyze some academic problems under the small displacement hypothesis: the crack nucleation problem in a one-dimensional bar (\cref{sec:1d}), the 2-d scalar antiplane tearing problem (\cref{sec:antiplane}) and the 2-d plane crack kinking problem (\cref{sec:kinking}). Afterwards, real-world dynamic fracture problems are considered in the EPX software environment, which includes the 2-d plane crack branching problem (\cref{sec:branching}), the Kalthoff experiment (\cref{sec:kalthoff}), the crack arrest problem (\cref{sec:gregoire}), the 3-d Brazilian test on a cylinder (\cref{sec:brazilian}), the 3-d dynamic fracture problem of a L-shaped concrete specimen (\cref{sec:L-specimen} and the CEA impact test on beams (\cref{sec:beam}).
+
+\item \textbf{Objectives}: using the classification given in \cref{sec:scope}, the scope of these simulations is to carry out an investigation of several damage constitutive laws and tension-compression asymmetry formulations (link with phase-field approaches represented by $\alpha\leftrightarrow\phi$), to provide a better understanding of gradient-damage modeling of fracture $\nabla\alpha\to\Gamma$) and to compare the simulation results with the experimental data (simulation validation). The precise objectives and the thematic subjects covered will be as usual recalled at the beginning of each section.
+\end{itemize}
+
+According to the definition of the thematic subjects given in \cref{sec:scope}, these numerical simulations can be classified in \cref{tab:summsim}.
+\begin{table}[htbp]
+\centering
+\caption{Thematic subjects covered in the numerical simulations of this chapter} \label{tab:summsim}
+\begin{tabular}{cccc} \toprule
+& $\alpha\leftrightarrow\phi$ & $\nabla\alpha\to\Gamma$ & Experimental validation \\ \midrule
+Numerics & \cref{sec:branching,sec:kalthoff} & \cref{sec:1d,sec:antiplane,sec:kinking,sec:branching,sec:kalthoff,sec:brazilian} & \cref{sec:gregoire,sec:L-specimen,sec:beam} \\ \bottomrule
+\end{tabular}
+\end{table}
 
 \section{Crack Nucleation in a Bar under Impact} \label{sec:1d}
 Objective: initiaiton is governed by the stress criterion $2\psi_0^+=w_1$.
@@ -113,8 +130,8 @@ A slow convergence can be observed in the $L^2$-norm of the normalized displacem
 \caption{Convergence rate in $\ell/L$.}
 \end{figure}
 
-\section{Antiplane tearing} \label{sec:antiplane}
-In this section we will present and discuss a particular numerical experiment tailored to highlight the properties of the dynamic gradient damage model while focusing on the \emph{initiation} and \emph{propagation} phases of defect evolution. Specifically, we will investigate the fracture mechanics criterion for an existing phase-field crack to \emph{initiate}, and then to \emph{propagate} along a certain path. The thematic subjects covered here are thus summarized in \cref{tab:summanti}.
+\section{Antiplane Tearing} \label{sec:antiplane}
+This section discusses a particular numerical experiment tailored to highlight the properties of the dynamic gradient damage model while focusing on the \emph{initiation} and \emph{propagation} phases of defect evolution. Specifically, we will investigate the fracture mechanics criterion for an existing phase-field crack to \emph{initiate}, and then to \emph{propagate} along a certain path. This experiment constitutes a numerical verification of the generalized Griffith criterion given in \cref{prop:Ggriffithlaw} and its asymptotic interpretation outlined in \cref{prop:whenellpetit}. Recall that these properties can also be considered as a dynamic extension of the theoretic results established in \cite{SicsicMarigo:2013} for quasi-static gradient damage models. Another objective is to investigate the quasi-static limit of the dynamic model summarized in \cref{def:dynagraddama}. The thematic subjects covered here are thus summarized in \cref{tab:summanti}.
 \begin{table}[htbp]
 \centering
 \caption{Thematic subjects covered in this section} \label{tab:summanti}
@@ -125,25 +142,26 @@ Numerics & \rightthumbsup & & \rightthumbsup & \\ \bottomrule
 \end{tabular}
 \end{table}
 
-We consider a mode-\RN{3} antiplane tearing of a two dimensional plate $\Omega=(0,L)\times(-H,H)$ subject to a hard device $\vec{U}_t=\operatorname{sgn}(y)kt\,\vec{e}_3$ on its left border $x=0$, see Fig. \ref{fig:antiplane}.
+\paragraph{Problem setting} We consider a mode-\RN{3} antiplane tearing of a two dimensional plate $\Omega=(0,L)\times(-H,H)$ subject to a hard device $\vec{U}_t=\operatorname{sgn}(y)kt\,\vec{e}_3$ on its left border $x=0$, see \cref{fig:antiplane}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.45\textwidth]{antiplane.pdf}
 \caption{Mode III antiplane tearing of a two dimensional plate $\Omega=(0,L)\times(-H,H)$ with a loading speed parametrized by $k$. An initial crack $[0,l_0]\times\set{0}$ is present in the domain. The crack is enforced to propagate along the constant direction $\vec{e}_1$.} \label{fig:antiplane}
 \end{figure}
-An initial damage field corresponding to an preexisting crack $\Gamma_0=\set{\vec{x}\in\mathbb{R}^2|\alpha_0(\vec{x})=1}=[0,l_0]\times\set{0}$ is present in the domain. For that we prescribe naturally $\dvec^{-1}=1$ on $\Gamma_0$. The loading velocity $k$ will be varied and its effect on the crack propagation speed will be studied. With a modification of the damage dependence of the elastic energy $\mathcal{E}(\vec{u}_t,\alpha_t)$ proposed in \cite{Bourdin:2011}, the crack tip $t\mapsto\vec{P}_t$ is enforced to propagate along the constant direction $\vec{e}_1$, which prohibits consequently crack kinking or branching. Denoting $u$ as the out-of-plane displacement, the elastic energy density in this particular situation reads
+An initial damage field corresponding to an preexisting crack $\Gamma_0=\set{\vec{x}\in\mathbb{R}^2|\alpha_0(\vec{x})=1}=[0,l_0]\times\set{0}$ is present in the domain. For that we prescribe naturally $\dvec^{-1}=1$ on $\Gamma_0$ using \cref{algo:init}. The loading velocity $k$ will be varied and its effect on the crack propagation speed will be studied. With a modification of the damage dependence of the elastic energy $\mathcal{E}(\vec{u}_t,\alpha_t)$ proposed in \cite{Bourdin:2011}, the crack tip $t\mapsto\vec{P}_t$ is enforced to propagate along the constant direction $\vec{e}_1$, which prohibits consequently crack kinking or branching. Denoting $u$ as the out-of-plane displacement, the elastic energy density \eqref{eq:elasticG} in this particular situation reads
 \begin{equation} \label{eq:straightmode3}
-\psi(\nabla u_t,\alpha_t)=\frac{1}{2}\mu\left(a(\alpha_t)\left(\frac{\partial u_t}{\partial x_2}\right)^2+\left(\frac{\partial u_t}{\partial x_1}\right)^2\right).
+\psi(\nabla u_t,\alpha_t)=\frac{1}{2}\mu\left(a(\alpha_t)\left(\frac{\partial u_t}{\partial x_2}\right)^2+\left(\frac{\partial u_t}{\partial x_1}\right)^2\right)\,,
 \end{equation}
-where damage acts only on the $\partial_2 u$ component of the displacement gradient. We assume that this modification \eqref{eq:straightmode3} can be regarded as a particular case of the original model \eqref{eq:elastic} when the crack actually propagates along a specific path without kinking or branching. It allows us to focus on the crack propagation stage.
+where damage acts only on the $\partial_2 u$ component of the displacement gradient. We assume that this modification \eqref{eq:straightmode3} can be regarded as a particular case of the original model \eqref{eq:elasticG} when the crack actually propagates along a specific path without kinking or branching. It allows us to focus on the crack propagation stage.
 
-This problem is initially raised in \cite{Bourdin:2011}. In their model the crack surface energy is approximated by the Ambrosio and Tortorelli elliptic regularization $w(\alpha)=\alpha^2$, whereas here the damage constitutive law \eqref{eq:at1} is used. The objective is to compare the crack evolution obtained in the dynamic gradient damage model with that predicted by Griffith's law which determines initiation and propagation of cracks. Two experiments will be considered:
+This problem is initially raised in \cite{Bourdin:2011}. In their model the crack surface energy is approximated by the Ambrosio and Tortorelli elliptic regularization (the \eqref{eq:at2} model), whereas here the damage constitutive law \eqref{eq:at1} is used. The objective is to compare the crack evolution obtained in the dynamic gradient damage model with that predicted by Griffith's law which determines initiation and propagation of cracks. Two experiments will be considered:
 \begin{enumerate}
-\item In the first case, the fracture toughness $\gc$ is assumed to be homogeneous throughout the domain. The loading speed is of the same order of the material sound speed $c=\sqrt{\mu/\rho}$ and we will use the explicit Newmark time-stepping method.
-\item In the second case, $\gc$ may admit a spatial discontinuity in the propagation direction. We also prescribe a relatively small loading speed in order to investigate the quasi-static limit of the dynamic model. Depending on whether the crack propagation speed itself is smaller with respect to the sound speed or not (the term \emph{unstable} propagation often refers to this case), the implicit or the explicit Newmark method will be used.
+\item In the first case, the fracture toughness $\gc$ is assumed to be homogeneous throughout the domain. The loading speed is of the same order of the material sound speed $c=\sqrt{\mu/\rho}$ and we will use the explicit Newmark time-stepping method, \emph{i.e.} \cref{algo:explicit}.
+
+\item In the second case, $\gc$ may admit a spatial discontinuity in the propagation direction. We also prescribe a relatively small loading speed in order to investigate the quasi-static limit of the dynamic model. Depending on whether the crack propagation speed itself is smaller with respect to the sound speed or not (the term \emph{unstable} propagation often refers to this case), the implicit (\cref{algo:implicit}) or the explicit Newmark method will be used.
 \end{enumerate}
 
-A structured crossed triangular mesh with a uniform discretization spacing $\Delta x=\Delta y=h$ is generated and the parameters adopted for all subsequent calculations are summarized in Tab. \ref{tab:paraanti}.
+A structured crossed triangular mesh with a uniform discretization spacing $\Delta x=\Delta y=h$ is generated and the parameters adopted for all subsequent calculations are summarized in \cref{tab:paraanti}.
 \begin{table}[htbp]
 \centering
 \caption{Geometric, material and numerical parameters for the antiplane tearing experiment.} \label{tab:paraanti}
@@ -152,61 +170,71 @@ $L$ & $H$ & $l_0$ & $\mu$ & $\rho$ & $\gc$ & $\ell$ & $h$ & $\Delta t$\\ \midrul
 5 & 1 & 1 & 0.2 & 1 & 0.01 & 0.05 & 0.01 & $\Delta t_\mathrm{CFL}$ \\ \bottomrule
 \end{tabular}
 \end{table}
-A typical damage field obtained in this simulation is illustrated in Fig. \ref{fig:antiplane_2d_new}, where the damage varies from 0 (blue zones) to 1 (red zones). Thanks to the $\Gamma$-convergence theory in the Variational Approach to Fracture, the current crack length $l_t$ can be approximately derived from the damage dissipation energy
-\begin{equation} \label{eq:ltapprox}
-\mathcal{S}\bigl(\alpha_t\bigr)\approx(\gc)_\mathrm{eff}\,l_t
-\end{equation}
-with $(\gc)_\mathrm{eff}=\bigl(1+3h/(8\ell)\bigr)\gc$ the numerical amplified fracture toughness due to spatial discretization, see \cite{BourdinFrancfortMarigo:2008,HossainHsuehBourdinBhattachary:2014}. This is the value that a phase-field crack actually dissipates per unit extension in the gradient damage model. The crack speed can thus be obtained by a linear regression analysis during the steady propagation phase. In the case where $\gc$ admits a spatial discontinuity, the current crack tip $\vec{P}_t=(l_t,0)$ is located on the contour $\alpha=0.5$.
+A typical damage field obtained in this simulation is illustrated in Fig. \ref{fig:antiplane_2d_new}, where the damage varies from 0 (blue zones) to 1 (red zones). Thanks to the $\Gamma$-convergence result summarized in \cref{sec:fm98,sec:graddamage}, the current crack length $l_t$ can be approximately derived from the damage dissipation energy using the estimation \eqref{eq:gammaconvergence}. For the \eqref{eq:at1} model, the coefficient $c$ in \eqref{eq:gceff} reads $c=3/8$ (see \cite{HossainHsuehBourdinBhattachary:2014}), hence the following effective fracture toughness is used
+\[
+(\gc)_\mathrm{eff}=\left(1+\frac{3h}{8\ell}\right)\gc.
+\]
+The crack speed can thus be obtained by a linear regression analysis during the steady propagation phase. In the case where $\gc$ admits a spatial discontinuity, the current crack tip $\vec{P}_t=(l_t,0)$ is located on the contour $\alpha=0.5$.
 \begin{figure}[htbp]
+\centering
 \includegraphics[width=0.65\textwidth]{antiplane_2d_new.pdf}
 \caption{Typical damage field obtained in the antiplane tearing example. The damage varies from 0 (blue zones) to 1 (red zones).} \label{fig:antiplane_2d_new}
 \end{figure}
 
-\subsection{Homogeneous fracture toughness case} \label{sec:homo}
-In the first case a homogeneous plate will be considered. This antiplane tearing example is physically similar to the 1-d film peeling problem which can be studied using the classical Griffith's theory of dynamic fracture. According to \cite{DumouchelMarigoCharlotte:2008} and \cite{BourdinFrancfortMarigo:2008}, the crack speed, with respect to the loading displacement $U=kt$ or to the physical time $t$, as a function of the loading velocity $k$ is given by
+\subsection{Link between damage and fracture in dynamics} \label{sec:homo}
+\paragraph{Comparison with the Griffith's theory of dynamic fracture} In the first case a homogeneous plate will be considered. This antiplane tearing example is physically similar to the 1-d film peeling problem which can be studied using the classical Griffith's theory of dynamic fracture. According to \cite{DumouchelMarigoCharlotte:2008} and \cite{BourdinFrancfortMarigo:2008}, the crack speed, with respect to the loading displacement $U=kt$ or to the physical time $t$, as a function of the loading velocity $k$ is given by
 \begin{equation} \label{eq:dumouchel}
 \frac{\mathrm{d} l}{\mathrm{d} U}(k)=\sqrt{\frac{\mu H}{\gc+\rho Hk^2}}\quad\text{or}\quad\frac{\mathrm{d} l}{\mathrm{d} t}(k)=\sqrt{\frac{\mu Hk^2}{\gc+\rho Hk^2}}
 \end{equation}
-from which we retrieve the quasi-static limit $\mathrm{d} l/\mathrm{d} U(0)=\sqrt{\mu H/\gc}$ announced in \cite{BourdinFrancfortMarigo:2008} and the dynamic limit as the shearing wave speed $\mathrm{d} l/\mathrm{d} t(\infty)=\sqrt{\mu/\rho}$, classical result of the Griffith's theory of dynamic fracture \cite{Freund:1990}. We also observe that for low loading speeds $k\approx 0$, the dynamic crack speed $\mathrm{d} l/\mathrm{d} t\approx k\sqrt{\mu H/\gc}$ scales linearly in $k$, which agrees with the remarks given in \cite{Bourdin:2011}. The current crack tip $\vec{P}_t$ is numerically located by using the approximation \eqref{eq:ltapprox}. Comparisons between the numerical results using the dynamic gradient model and this theoretic result \eqref{eq:dumouchel} with $\gc$ replaced by $(\gc)_\mathrm{eff}$ are illustrated in Fig. \ref{fig:mode3}.
+from which we retrieve the quasi-static limit $\mathrm{d} l/\mathrm{d} U(0)=\sqrt{\mu H/\gc}$ announced in \cite{BourdinFrancfortMarigo:2008} and the dynamic limit as the shearing wave speed $\mathrm{d} l/\mathrm{d} t(\infty)=\sqrt{\mu/\rho}$, classical result of the Griffith's theory of dynamic fracture, see \cref{sec:griffithfreund}. We also observe that for low loading speeds $k\approx 0$, the dynamic crack speed $\mathrm{d} l/\mathrm{d} t\approx k\sqrt{\mu H/\gc}$ scales linearly in $k$, which agrees with the remarks given in \cite{Bourdin:2011}. The current crack tip $\vec{P}_t$ is numerically located by using the approximation \eqref{eq:ltapprox}. Comparisons between the numerical results using the dynamic gradient model and this theoretic result \eqref{eq:dumouchel} with $\gc$ replaced by $(\gc)_\mathrm{eff}$ are illustrated in Fig. \ref{fig:mode3}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{crack_speed.pdf}
 \caption{Crack speeds as a function of the loading velocity. The crack speed respect to $t$ is indicated in (a), while in (b) the crack speed with respect to $U$ is used. Comparison with the 1-d analytical solution \eqref{eq:dumouchel} based on the Griffith's criterion.} \label{fig:mode3}
 \end{figure}
-Despite the transverse wave reflection present in the two-dimensional numerical model, a very good quantitative agreement is found between them. In particular, as it is also observed in \cite{Bourdin:2011}, the numerically obtained crack speed indeed approaches the limiting shear wave speed when the loading speed increases. The explicit Algorithm \ref{algo:explicit} as well as its implementation work fine even at supersonic loading speeds.
+Despite the transverse wave reflection present in the two-dimensional numerical model, a very good quantitative agreement is found between them. In particular, as it is also observed in \cite{Bourdin:2011}, the numerically obtained crack speed indeed approaches the limiting shear wave speed when the loading speed increases. The explicit time-stepping described in \cref{algo:explicit} as well as its FEniCS implementation work fine even at supersonic loading speeds.
 
-The conventional dynamic energy release rate \eqref{eq:GtC} is numerically computed and the validity of the asymptotic Griffith's law is analyzed by varying the inner radius $r$ of virtual perturbations defined in Fig. \ref{fig:theta}. During the propagation phase $\dot{l}_t>0$, three arbitrary time instants are taken when the crack length attains respectively $l_t\approx 1.6$, $l_t\approx 2$ and $l_t\approx 2.4$. An evident $r$-dependence of $G^\alpha_t$ is illustrated in Fig. \ref{fig:indvelocity}, where the ratio $R/r=\frac{5}{2}$ is fixed.
+\paragraph{Verification of Griffith's law} Next we investigate how exactly the crack propagates in the dynamic gradient damage model, \emph{i.e.} provide a fracture mechanics interpretation of the three physical principles given in \cref{def:dynagraddama}. We propose hence to verify the generalized Griffith criterion (\cref{prop:Ggriffithlaw}) and the asymptotic interpretation (\cref{prop:whenellpetit}), by comparing the conventional dynamic energy release rate $G^\alpha_t$ and the damage dissipation rate $\gamma_t$. Written in the form of \eqref{eq:GtC}, $G^\alpha_t$ involves an integral in the cells and hence is more convenient and accurate compared to a path integral ($J$-integral for instance) in a finite element calculation. The use of traditional $J$-integrals in a gradient damage or phase-field modeling of fracture can be found in \cite{HossainHsuehBourdinBhattachary:2014,KlinsmannRosatoKamlahMcMeeking:2015} for instance.
+
+A widely used definition of the virtual perturbation \cite{DestuynderDjaouaLescure:1983} is recalled as follows. Suppose that the crack $\Gamma_t$ lies on the $x$-axis and its current crack tip $\vec{P}_t=(l_t,0)$ is propagating along the $\vec{e}_1$ direction. The virtual perturbation $\vtheta_t$ which introduces a fictive crack advance admits the form $\vtheta_t=\theta_t\vec{e}_1$. The construction of the continuous scalar field $0\leq\theta_t\leq 1$ parametrized by two radii $r<R$ is given in \cref{fig:theta}.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.7\textwidth]{theta_field.pdf}
+\caption{A particular virtual perturbation $\vtheta_t=\theta_t\vec{e}_1$ parametrized by two radii $r<R$. We have $\theta_t=1$ inside the ball $B_r(\vec{P}_t)$, $\theta_t=0$ outside the ball $B_R(\vec{P}_t)$, and a linear interpolation in between.} \label{fig:theta}
+\end{figure}
+
+The conventional dynamic energy release rate \eqref{eq:GtC} is numerically computed and the validity of the asymptotic Griffith's law (\cref{prop:whenellpetit}) is analyzed by varying the inner radius $r$ of virtual perturbations defined in \cref{fig:theta}. During the propagation phase $\dot{l}_t>0$, three arbitrary time instants are taken when the crack length attains respectively $l_t\approx 1.6$, $l_t\approx 2$ and $l_t\approx 2.4$. An evident $r$-dependence of $G^\alpha_t$ is illustrated in \cref{fig:indvelocity}, where the ratio $R/r=\frac{5}{2}$ is fixed.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.5\textwidth]{Gtheta_of_r.pdf}
-\caption{Conventional dynamic energy release rate $G^\alpha$ as a function of the inner radius $r$ of the virtual perturbation $\vtheta_t$. Three arbitrary instants when the crack propagates $\dot{l}_t>0$ are chosen.} \label{fig:indvelocity}
+\caption{Conventional dynamic energy release rate $G^\alpha$ as a function of the inner radius $r$ of the virtual perturbation $\vtheta_t$ with a fixed ratio $R/r=\frac{5}{2}$. Three arbitrary instants when the crack propagates $\dot{l}_t>0$ are chosen.} \label{fig:indvelocity}
 \end{figure}
-In LEFM in absence of body forces, it is known that the $J$-integral is path-invariant since it is related directly to the dynamic stress intensity factors at the crack tip. In gradient damage models however, there is no more stress singularities. When $r$ is small, we go directly into the process zone dominated by damage-induced strain softening and $G^\alpha_t\to 0$ is expected as $r\to 0$ However, as $r$ increases, $G^\alpha_t$ captures well the outer mechanical fields. An equivalent energy release rate can thus be defined, and according to the asymptotic behaviors of $\gamma_t$, we have the desired result $G^\alpha_t=\gamma_t\to (\gc)_\mathrm{eff}$.
+In the Griffith's theory of linear elastic dynamic fracture, according to \cref{prop:J}, the energy release rate $G_t$ is independent of the virtual perturbation field $\vtheta_t$ since it is related directly to the dynamic stress intensity factors at the crack tip. In gradient damage models however, there is no more stress singularities. When $r$ is small, we go directly into the process zone (crack tip problem) dominated by damage-induced strain softening and $G^\alpha_t\to 0$ is expected as $r\to 0$ However, as $r$ increases, $G^\alpha_t$ captures well the outer mechanical fields of the outer Griffith's fracture problem. An equivalent energy release rate can thus be defined, and according to \cref{prop:whenellpetit}, we have the desired result $G^\alpha_t=\gamma_t\to (\gc)_\mathrm{eff}$.
 
-We will then turn to the evolution of the conventional dynamic energy release rate when the existing crack initiates and further propagates. From the above $r$-dependence analysis, a fixed inner radius $r=2\ell$ is used which should already correctly captures the far mechanical fields. The crack length $l_t$ given by \eqref{eq:ltapprox} as well as the calculated $G^\alpha_t$ are given as a function of the loading displacement in Fig. \ref{fig:evoGtGc}, where three separate calculations corresponding to three loading speeds $k$ are reported.
+We will then turn to the evolution of the conventional dynamic energy release rate when the existing crack initiates and further propagates. From the above $r$-dependence analysis, a fixed inner radius $r=2\ell$ is used which should already correctly captures the far mechanical fields. The crack length $l_t$ given by \eqref{eq:gammaconvergence} as well as the calculated $G^\alpha_t$ are given as a function of the loading displacement in \cref{fig:evoGtGc}, where three separate calculations corresponding to three loading speeds $k$ are reported.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.55\textwidth]{dyn_Gtheta_k.pdf}
 \caption{Conventional dynamic energy release rate $G^\alpha$ as a function of the loading displacement. Three loading speeds $k$ are used.} \label{fig:evoGtGc}
 \end{figure}
-Recall that an initial crack of length 1 is present in the body and we observe $G^\alpha_t=0$ before the waves arrive at the initial crack tip. When the energy release rate $G^\alpha_t$ at the initial crack tip attains the fracture toughness $(\gc)_\mathrm{eff}$, the existing crack initiates and starts to propagate with the equality $G^\alpha_t=(\gc)_\mathrm{eff}$. We may conclude that the crack-tip evolution (initiation and propagation) is well governed by the asymptotic Griffith's law \eqref{eq:Gasym} in the dynamic gradient damage model, when outer fields are considered.
+Recall that an initial crack of length 1 is present in the body and we observe $G^\alpha_t=0$ before the waves arrive at the initial crack tip. When the energy release rate $G^\alpha_t$ at the initial crack tip attains the fracture toughness $(\gc)_\mathrm{eff}$, the existing crack initiates and starts to propagate with the equality $G^\alpha_t=(\gc)_\mathrm{eff}$. We may conclude that the crack-tip evolution (initiation and propagation) is well governed by the asymptotic Griffith's law (\cref{prop:whenellpetit}) in the dynamic gradient damage model, when outer fields are considered.
 
-The internal length $\ell$ plays a rather subtle role during the propagation phase. The crack tip is governed by the asymptotic Griffith's law \eqref{eq:Gasym} if and only if a separation of scales between the inner damage problem and the outer LEFM is possible, \emph{i.e.} only when the internal length is sufficiently small compared to any other structural length \cite{SicsicMarigo:2013}. Although $\ell$ is indeed hidden in \eqref{eq:Gasym}, the validity of the latter depends directly on it. Below we present the simulation results with a fixed loading speed $k=0.2$ and three small enough internal lengths. As can be seen from Fig. \ref{fig:evoGtGcell}, the crack evolution is globally conforming with Griffith's law, as long as the involved quantities are calculated with a virtual perturbation $\vtheta_t$ capturing correctly the far fields. Here according to Fig. \ref{fig:indvelocity}, we use an inner radius adapted with the internal length $r=2\ell$, which should produce an error less than $3\%$.
+The internal length $\ell$ (hence the maximal material stress \eqref{eq:sigc0}) plays a rather subtle role during the propagation phase. The crack tip is governed by the asymptotic Griffith's law (\cref{prop:whenellpetit}) if and only if a separation of scales between the inner damage problem and the outer LEFM is possible, \emph{i.e.} only when the internal length is sufficiently small compared to any other structural length. Although $\ell$ is indeed hidden in \cref{prop:whenellpetit}, the validity of the latter depends directly on it. Below we present the simulation results with a fixed loading speed $k=0.2$ and three small enough internal lengths. As can be seen from \cref{fig:evoGtGcell}, the crack evolution is globally conforming with Griffith's law, as long as the involved quantities are calculated with a virtual perturbation $\vtheta_t$ capturing correctly the far fields. Here according to \cref{fig:indvelocity}, we use an inner radius adapted with the internal length $r=2\ell$, which should produce an error less than $3\%$.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.55\textwidth]{dyn_Gtheta_ell.pdf}
 \caption{Crack evolution as a function of the loading displacement. Three small enough internal lengths are used.} \label{fig:evoGtGcell}
 \end{figure}
 
-The stress distribution along a vertical slice $\set{(x,y)\in\mathbb{R}^2|x=l_t}$ passing by the current crack tip $\vec{P}_t$ should illustrate and highlight the separation of scales when $\ell$ is small. For the sake of simplicity, we consider a stationary crack $[0,2]\times\set{0}$ and solve the static problem with the gradient damage model and the LEFM model. We can verify from Fig. \ref{fig:stress} that the LEFM develops a well-known inverse square root singularities for the two stress components $\sigma_{13}$ and $\sigma_{23}$ and their near-tip fields are well approximated by the theoretic asymptotic solutions.
+The stress distribution along a vertical slice $\set{(x,y)\in\mathbb{R}^2|x=l_t}$ passing by the current crack tip $\vec{P}_t$ should illustrate and highlight the separation of scales when $\ell$ is small. For the sake of simplicity, we consider a stationary crack $[0,2]\times\set{0}$ and solve the static problem with the gradient damage model and the LEFM model. We can verify from \cref{fig:stress} that the LEFM develops a well-known inverse square root singularities for the two stress components $\sigma_{13}$ and $\sigma_{23}$ and their near-tip fields are well approximated by the theoretic asymptotic solutions.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{asymptotic-sig.pdf}
 \caption{Stress distribution along a vertical slice $\set{(x,y)\in\mathbb{R}^2|x=l_t}$ passing by the current crack tip $\vec{P}_t$. The $\sigma_{13}$ (a) and the $\sigma_{23}$ (b) components are indicated. The gradient damage model and the LEFM model are compared.} \label{fig:stress}
 \end{figure}
-On the other hands, the gradient damage model provides a better modeling of the stress fields near the crack tip as their values are bounded. A good matching can be observed far from the crack tip and the discrepancy with the outer LEFM model is concentrated within a process zone proportionally dependent on the internal length. When $\ell$ is very large, the process zone could cover the whole structural domain and a separation of scales is no longer possible. In this case the asymptotic Griffith's law \eqref{eq:Gasym} is not applicable since we are no longer dealing with a fracture mechanics problem.
+On the other hands, the gradient damage model provides a better modeling of the stress fields near the crack tip as their values are bounded. A good matching can be observed far from the crack tip and the discrepancy with the outer LEFM model is concentrated within a process zone proportionally dependent on the internal length. When $\ell$ is very large, the process zone could cover the whole structural domain and a separation of scales is no longer possible. In this case the asymptotic Griffith's law (\cref{prop:whenellpetit}) is not applicable since we are no longer dealing with a fracture mechanics problem.
 
-\subsection{Discontinuous fracture toughness cases}
+\subsection{Quasi-static limit of the dynamic model}
 As another illustration of the Griffith-conforming crack evolution obtained with the dynamic gradient damage model, we consider the quasi-static limits of the model in presence of a possible fracture toughness discontinuity in the previous plate
 \[
 \gc=\begin{cases}
@@ -214,32 +242,34 @@ As another illustration of the Griffith-conforming crack evolution obtained with
 \Gamma_2 & x>x_0
 \end{cases}
 \]
-with $\Gamma_1<\Gamma_2$ the hardening case and $\Gamma_1>\Gamma_2$ the softening case. A preexisting crack is always present and is introduced via an initial damage field. According to \cite{Versieux:2015}, when the loading speed $k$ is decreased the dynamic gradient damage model converges to the following first-order quasi-static gradient damage evolution model:
+with $\Gamma_1<\Gamma_2$ the hardening case and $\Gamma_1>\Gamma_2$ the softening case. A preexisting crack is always present and is introduced via an initial damage field.
+
+A theoretic convergence investigation of the dynamic gradient damage model with a vanishing loading speed $k\to 0$ is performed in \cite{Versieux:2015}. The analysis is based on the hypothesis that the crack evolution $t\mapsto l_t$ is at least continuous in time (as in the classical Griffith's theory). This implies that in presence of brutal or unstable crack propagation, the convergence may not be observed. Nevertheless in absence of these situations, the dynamic gradient damage model (\cref{def:dynagraddama}) should converge to the following
+\begin{definition}[First-Order Quasi-Static Gradient Damage Evolution Law] \label{def:firstorderqs}
 \begin{enumerate}
+\item[]
 \item \textbf{Irreversibility}: the damage $t\mapsto\alpha_t$ is a non-decreasing function of time.
+
 \item \textbf{First-order stability}: the first-order variation of the potential energy is non-negative with respect to arbitrary admissible displacement and damage fields
 \begin{equation} \label{eq:viqs}
 \mathcal{P}'(\vec{u}_t,\alpha_t)(\vec{v}_t-\vec{u}_t,\beta_t-\alpha_t)\geq 0\text{ for all $\vec{v}_t\in\mathcal{C}_t$ and all $\beta_t\in\mathcal{D}(\alpha_t)$}.
 \end{equation}
-where in absence of external forces the potential energy is given by 
-\[
-\mathcal{P}(\vec{u}_t,\alpha_t)=\mathcal{E}(\vec{u}_t,\alpha_t)+\mathcal{S}(\alpha_t)
-\]
-\item \textbf{Energy balance}: the only energy dissipation is due to damage
-\begin{equation} \label{eq:qsgdeb}
-\mathcal{P}_t=\mathcal{P}_0+\int_0^t\left(\int_\Omega\sig_s\cdot\eps(\dot{\vec{U}}_s)\dx\right)\D{s}.
-\end{equation}
-\end{enumerate}
-In addition, the proof of convergence is made under the hypothesis that the crack evolution $t\mapsto l_t$ is at least continuous in time (as in the classical Griffith theory). Numerically, it is the first-order stability condition \eqref{eq:viqs} that is effectively implemented by the alternate minimization procedure \cite{PhamAmorMarigoMaurini:2011} while the energy balance condition \eqref{eq:qsgdeb} can only be at best checked \emph{a posteriori}.
 
-The homogeneous antiplane tearing problem is firstly solved by the dynamic gradient damage model and the above first-order quasi-static gradient damage model. In the dynamic calculation a small loading speed $k=0.001\approx 0.2\%c$ is assumed and we use the unconditionally stable implicit Newmark scheme as described in Algorithm \ref{algo:implicit}, with $\beta=\frac{1}{4}$. The time step is set to $\Delta t=10\Delta t_\mathrm{CFL}$. In Fig. \ref{fig:homoGcqs} we plot the crack length evolution as well as the conventional energy release rate $G^\alpha_t$ both for the dynamic model and the first-order quasi-static model.
+\item \textbf{Energy balance}: the only energy dissipation is due to damage such that the energy balance condition \eqref{eq:qseb} is satisfied.
+\end{enumerate}
+\end{definition}
+
+Compared to the original quasi-static model (\cref{def:qsgraddama}),  the more general meta-stability principle \eqref{eq:qsstability} is replaced by its first-order condition \eqref{eq:viqs}. However as it is noted in \cref{sec:ellipticregul}, numerically it is the first-order stability condition \eqref{eq:viqs} that is effectively implemented by the alternate minimization procedure, while the energy balance condition \eqref{eq:qseb} can only be at best checked \emph{a posteriori}. From this viewpoint, \cref{def:firstorderqs} can thus be considered as the effective quasi-static gradient-damage model.
+
+\paragraph{Homogeneous fracture toughness case} The homogeneous antiplane tearing problem is firstly solved by the dynamic gradient damage model and the above first-order quasi-static gradient damage model. In the dynamic calculation a small loading speed $k=0.001\approx 0.2\%c$ is assumed and we use the unconditionally stable implicit Newmark scheme as described in \cref{algo:implicit}, with $\beta=\frac{1}{4}$. The time step is set to $\Delta t=10\Delta t_\mathrm{CFL}$. In \cref{fig:homoGcqs} we plot the crack length evolution as well as the conventional energy release rate $G^\alpha_t$ both for the dynamic model and the first-order quasi-static model.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.55\textwidth]{dyn_qs.pdf}
 \caption{Crack length and conventional energy release rate $G^\alpha$ for the homogeneous fracture toughness plate at a very slow loading speed. Comparison between the dynamic model and the first-order quasi-static model.} \label{fig:homoGcqs}
 \end{figure}
-It is recalled that the static $G^\alpha_t$ can be simply obtained by setting $\dot{\vec{u}}_t$ and $\ddot{\vec{u}}_t$ to zero in \eqref{eq:GtC}. We observe that these two solutions coincide, and both present a time-continuous crack evolution (initiation and propagation) conforming to the asymptotic Griffith's law \eqref{eq:Gasym}. The numerically computed quasi-static crack speed (with respect to $U=kt$) is compared in Tab. \ref{tab:compqsv} to the analytical value $\sqrt{\mu H/\gc}$ announced in \cite{BourdinFrancfortMarigo:2008}. A very good agreement can be found if the numerically amplified fracture toughness $(\gc)_\mathrm{eff}$ is used in the formula.
+It is recalled that the static $G^\alpha_t$ can be simply obtained by setting $\dot{\vec{u}}_t$ and $\ddot{\vec{u}}_t$ to zero in \eqref{eq:GtC}. We observe that these two solutions coincide, and both present a time-continuous crack evolution (initiation and propagation) conforming to the asymptotic Griffith's law (\cref{prop:whenellpetit}). The numerically computed quasi-static crack speed (with respect to $U=kt$) is compared in \cref{tab:compqsv} to the analytical value $\sqrt{\mu H/\gc}$ announced in \cite{BourdinFrancfortMarigo:2008}. A very good agreement can be found if the numerically amplified fracture toughness $(\gc)_\mathrm{eff}$ is used in the formula.
 \begin{table}[htbp]
+\centering
 \caption{Comparison of the numerically computed quasi-static crack speed in the homogeneous case with the theoretic one $\sqrt{\mu H/\gc}$ given in \cite{BourdinFrancfortMarigo:2008}.} \label{tab:compqsv}
 \begin{tabular}{lllll} \toprule
 & Numerical & Theoretic & Error \\ \midrule
@@ -247,20 +277,20 @@ Quasi-static crack speed & 4.326 & 4.391 & 1.5\% \\ \bottomrule
 \end{tabular}
 \end{table}
 
-We then turn to the hardening case where the fracture toughness jumps suddenly from a lower value $\Gamma_1=0.01$ to a higher one $\Gamma_2=2\Gamma_1=0.02$ at $x=2$. The unconditionally stable implicit Newmark scheme with $\beta=\frac{1}{4}$ is used again with a time increment $\Delta t=10\Delta t_\mathrm{CFL}$. As can be observed from Fig. \ref{fig:hardGcqs} the convergence of the dynamic model toward the quasi-static one is verified and the crack initiates and propagates following Griffith's law. A temporary arrest phase is present shortly after the crack reaches the hardening interface at $x=2$. Due to continuous loading the energy release rate increases and the crack then restarts and begins to propagate in the second material when the energy release rate $G^\alpha_t$ attains the stiffer fracture toughness $\Gamma_2$.
+\paragraph{Hardening fracture toughness case} We then turn to the hardening case where the fracture toughness jumps suddenly from a lower value $\Gamma_1=0.01$ to a higher one $\Gamma_2=2\Gamma_1=0.02$ at $x=2$. The unconditionally stable implicit Newmark scheme with $\beta=\frac{1}{4}$ is used again with a time increment $\Delta t=10\Delta t_\mathrm{CFL}$. As can be observed from \cref{fig:hardGcqs} the convergence of the dynamic model toward the quasi-static one is verified and the crack initiates and propagates following Griffith's law. A temporary arrest phase is present shortly after the crack reaches the hardening interface at $x=2$. Due to continuous loading the energy release rate increases and the crack then restarts and begins to propagate in the second material when the energy release rate $G^\alpha_t$ attains the stiffer fracture toughness $\Gamma_2$.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.55\textwidth]{dyn_hardening.pdf}
 \caption{Crack length and conventional energy release rate $G^\alpha$ for the hardening fracture toughness plate at a very slow loading speed. Comparison between the dynamic model and the first-order quasi-static model. The numerically amplified fracture toughness $(\gc)_\mathrm{eff}$ is calculated based on $\Gamma_1=0.01$.} \label{fig:hardGcqs}
 \end{figure}
 
-However for the toughness-softening case where the material toughness $\Gamma_1=2\Gamma_2=0.02$ suddenly drops to a smaller value $\Gamma_2=0.01$ at $x=1$ (exceptionally here the initial crack length is $\frac{1}{4}$), a relatively good matching can only be found before and after the jump phase produced at the discontinuity, both in terms of the crack length evolution and the energy release rate. It is exactly at the jump phase that these two models strongly disagree, cf. Fig. \ref{eq:ressoftening}.
+\paragraph{Softening fracture toughness case} However for the toughness-softening case where the material toughness $\Gamma_1=2\Gamma_2=0.02$ suddenly drops to a smaller value $\Gamma_2=0.01$ at $x=1$ (exceptionally here the initial crack length is $\frac{1}{4}$), a relatively good matching can only be found before and after the jump phase produced at the discontinuity, both in terms of the crack length evolution and the energy release rate. It is exactly at the jump phase that these two models strongly disagree, cf. \cref{eq:ressoftening}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.55\textwidth]{dyn_softening.pdf}
 \caption{Crack length and the conventional energy release rate $G^\alpha$ for the softening fracture toughness plate at a very slow loading speed. Comparison between the dynamic model and the first-order quasi-static model. The numerically amplified fracture toughness $(\gc)_\mathrm{eff}$ is calculated based on $\Gamma_2=0.01$.} \label{eq:ressoftening}
 \end{figure}
-Here due to the unstable crack propagation during the jump, the explicit Newmark scheme is used for the dynamic calculation with $\Delta t=\Delta t_\mathrm{CFL}$. When the crack arrives at the discontinuity, the \emph{first-order} quasi-static \emph{numerical} model underestimates the crack jump and predicts no further crack arrest, by relating directly the static energy release rate $G^\alpha_t$ to the fracture toughness $\Gamma_2$ just after the jump. For the dynamic model, the jump length is bigger and a subsequent temporary crack arrest is observed, as the dynamic energy release rate oscillates with a high frequency but remains smaller than the fracture toughness $\Gamma_2$ after the jump. We observe that in both cases the jump takes place at $x\approx 0.9$ somewhat prior to the fracture toughness discontinuity $x=1$. We suspect that this is due to the damage regularization of cracks with a half-band $D=2\ell=0.1$ using the constitutive laws of \eqref{eq:at1}. If this effect is ignored, the crack length after the jump is recorded in Tab. \ref{tab:compljump} for each case. From the static energy release rate evolution, we see that the crack length $l_\mathrm{m}$ after the jump predicted in the \emph{first-order} quasi-static \emph{numerical} model is governed by $G(l_\mathrm{m})=\gc(l_\mathrm{m})$ from which authors of \cite{DumouchelMarigoCharlotte:2008} find $l_\mathrm{m}=\sqrt{\Gamma_1/\Gamma_2}=\sqrt{2}$. However their full dynamic analysis shows that the crack length after the jump $l_\mathrm{c}$ should instead be given by the total (quasi-static) energy conservation principle $\mathcal{P}(1)=\mathcal{P}(l_\mathrm{c})$, which results in $l_\mathrm{c}=\Gamma_1/\Gamma_2=2$. We see from Tab. \ref{tab:compljump} that our dynamic gradient damage model indeed reproduces this correct value.
+Here due to the unstable crack propagation during the jump, the explicit Newmark scheme is used for the dynamic calculation with $\Delta t=\Delta t_\mathrm{CFL}$. When the crack arrives at the discontinuity, the \emph{first-order} quasi-static \emph{numerical} model underestimates the crack jump and predicts no further crack arrest, by relating directly the static energy release rate $G^\alpha_t$ to the fracture toughness $\Gamma_2$ just after the jump. For the dynamic model, the jump length is bigger and a subsequent temporary crack arrest is observed, as the dynamic energy release rate oscillates with a high frequency but remains smaller than the fracture toughness $\Gamma_2$ after the jump. We observe that in both cases the jump takes place at $x\approx 0.9$ somewhat prior to the fracture toughness discontinuity $x=1$. We suspect that this is due to the damage regularization of cracks with a half-band $D=2\ell=0.1$ using the constitutive laws of \eqref{eq:at1}. If this effect is ignored, the crack length after the jump is recorded in Tab. \ref{tab:compljump} for each case. From the static energy release rate evolution, we see that the crack length $l_\mathrm{m}$ after the jump predicted in the \emph{first-order} quasi-static \emph{numerical} model is governed by $G(l_\mathrm{m})=\gc(l_\mathrm{m})$ from which authors of \cite{DumouchelMarigoCharlotte:2008} find $l_\mathrm{m}=\sqrt{\Gamma_1/\Gamma_2}=\sqrt{2}$. However their full dynamic analysis shows that the crack length after the jump $l_\mathrm{c}$ should instead be given by the total (quasi-static) energy conservation principle $\mathcal{P}(1)=\mathcal{P}(l_\mathrm{c})$, which results in $l_\mathrm{c}=\Gamma_1/\Gamma_2=2$. We see from \cref{tab:compljump} that our dynamic gradient damage model indeed reproduces this correct value.
 \begin{table}[htbp]
 \centering
 \caption{Comparison of the numerical crack lengths after the jump with the theoretic predictions.} \label{tab:compljump}
@@ -272,25 +302,25 @@ Error & 3.6\% & 0.25\% \\ \bottomrule
 \end{tabular}
 \end{table}
 
-To better analyze the jump phase, energy evolutions are investigated against the crack length in Fig. \ref{fig:evoRNJjump}.
+To better analyze the jump phase, energy evolutions are investigated against the crack length in \cref{fig:evoRNJjump}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.5\textwidth]{dynqsET_softening.pdf}
 \caption{Energy variation as a function of the crack length for the softening fracture toughness plate at a very slow loading speed. Comparison between the dynamic model and the first-order quasi-static model.} \label{fig:evoRNJjump}
 \end{figure}
-In the quasi-static case we pick the total energy $\mathcal{P}=\mathcal{E}+\mathcal{S}$ while in the dynamic case we plot separately the static energy $\mathcal{P}=\mathcal{E}+\mathcal{S}$ and the kinetic one $\mathcal{K}$. Before and sufficiently after the jump a good agreement between these two potential energies can be found. We observe that the (incorrect) quasi-static jump (\emph{i.e.}, an \emph{unstable} or \emph{brutal} crack propagation) is accompanied by a slight loss of the total energy $\Delta \mathcal{P}_\mathrm{stat.}$, contradicting the balance condition \eqref{eq:qsgdeb}. This phenomenon has already been observed by several authors such as \cite{BourdinFrancfortMarigo:2008,AmorMarigoMaurini:2009,PhamAmorMarigoMaurini:2011,Bourdin:2011}. On the one hand, it can be regarded as a numerical issue as the effective implementation of the quasi-static model is solely based on the first-order stability condition \eqref{eq:viqs}. For this particular problem based on quasi-static energy conservation we could predict a correct quasi-static crack evolution toward which the dynamic solution converges when the loading speed becomes small, see \cite{DumouchelMarigoCharlotte:2008}. On the other hand, from a theoretic point of view, it is already known in \cite{Pham:2010} that there may not exist an energy-conserving evolution which also respects the stability criterion at every time. Moreover even equipped with the energy balance condition, the quasi-static model may still differ from the dynamic analysis \cite{LazzaroniBargelliniDumouchelMarigo:2012}. A natural and physical remedy for all general unstable crack propagation cases is to introduce inertial effects. In Fig. \ref{fig:evoRNJjump} the dynamic jump process is \emph{continuous} (the crack propagates at a finite speed bounded by the shear wave speed) compared to the quasi-static one where the jump occurs necessarily in a discontinuous fashion between two iterations. We verify the conclusions drawn in \cite{DumouchelMarigoCharlotte:2008} that the kinetic energy $\mathcal{K}$ plays only a transient role in this problem, as it attains a finite value during the jump and becomes again negligible after. The dynamic potential energy $\mathcal{P}=\mathcal{E}+\mathcal{S}$ after the jump is slightly bigger that its value before the jump, due to the fact that the loading speed $k=0.001$ is small but not zero.
+In the quasi-static case we pick the total energy $\mathcal{P}=\mathcal{E}+\mathcal{S}$ while in the dynamic case we plot separately the static energy $\mathcal{P}=\mathcal{E}+\mathcal{S}$ and the kinetic one $\mathcal{K}$. Before and sufficiently after the jump a good agreement between these two potential energies can be found. We observe that the (incorrect) quasi-static jump (\emph{i.e.}, an \emph{unstable} or \emph{brutal} crack propagation) is accompanied by a slight loss of the total energy $\Delta \mathcal{P}_\mathrm{stat.}$, contradicting the balance condition \eqref{eq:qsgdeb}. This phenomenon has already been observed by several authors such as \cite{BourdinFrancfortMarigo:2008,AmorMarigoMaurini:2009,PhamAmorMarigoMaurini:2011,Bourdin:2011}. On the one hand, it can be regarded as a numerical issue as the effective implementation of the quasi-static model is solely based on the first-order stability condition \eqref{eq:viqs}. For this particular problem based on quasi-static energy conservation we could predict a correct quasi-static crack evolution toward which the dynamic solution converges when the loading speed becomes small, see \cite{DumouchelMarigoCharlotte:2008}. On the other hand, from a theoretic point of view, it is already known in \cite{Pham:2010} that there may not exist an energy-conserving evolution which also respects the stability criterion at every time. Moreover even equipped with the energy balance condition, the quasi-static model may still differ from the dynamic analysis \cite{LazzaroniBargelliniDumouchelMarigo:2012}. A natural and physical remedy for all general unstable crack propagation cases is to introduce inertial effects. In \cref{fig:evoRNJjump} the dynamic jump process is \emph{continuous} (the crack propagates at a finite speed bounded by the shear wave speed) compared to the quasi-static one where the jump occurs necessarily in a discontinuous fashion between two iterations. We verify the conclusions drawn in \cite{DumouchelMarigoCharlotte:2008} that the kinetic energy $\mathcal{K}$ plays only a transient role in this problem, as it attains a finite value during the jump and becomes again negligible after. The dynamic potential energy $\mathcal{P}=\mathcal{E}+\mathcal{S}$ after the jump is slightly bigger that its value before the jump, due to the fact that the loading speed $k=0.001$ is small but not zero.
 
 During the jump, the crack propagates at a speed comparable to the material sound speed which, according to \cite{DumouchelMarigoCharlotte:2008}, is given by
 \begin{equation} \label{eq:vjump}
 v_\mathrm{jump}=\frac{\left(\sqrt{\gamma_1+\epsilon^2}+\epsilon\right)^2-\gamma_2}{\left(\sqrt{\gamma_1+\epsilon^2}+\epsilon\right)^2+\gamma_2}\cdot c
 \end{equation}
-with the adimensional fracture toughness $\gamma_i=\Gamma_i/(2\mu H)$ and the normalized loading speed $\epsilon=k/c$. The crack length evolution during the jump is illustrated in Fig. \ref{fig:softGcqs_jump}.
+with the adimensional fracture toughness $\gamma_i=\Gamma_i/(2\mu H)$ and the normalized loading speed $\epsilon=k/c$. The crack length evolution during the jump is illustrated in \cref{fig:softGcqs_jump}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.5\textwidth]{jump.pdf}
 \caption{Zoom in time at the crack length jump due to sudden toughness softening for the dynamic model.} \label{fig:softGcqs_jump}
 \end{figure}
-Due to transverse wave reflection in this 2-d problem, the crack propagates during this interval with a small fluctuation of period $T$ approximately corresponding to the first standing wave between the boundary and the crack $T\approx 2H/c\approx 4.5$. That's why we calculate from Fig. \ref{fig:softGcqs_jump} only the initial crack speed at jump for comparison in Tab. \ref{tab:compjumpv}. A good agreement can be found between the numerical and the theoretic ones.
+Due to transverse wave reflection in this 2-d problem, the crack propagates during this interval with a small fluctuation of period $T$ approximately corresponding to the first standing wave between the boundary and the crack $T\approx 2H/c\approx 4.5$. That's why we calculate from \cref{fig:softGcqs_jump} only the initial crack speed at jump for comparison in \cref{tab:compjumpv}. A good agreement can be found between the numerical and the theoretic ones.
 \begin{table}[htbp]
 \centering
 \caption{Comparison of the numerically computed crack jump speed with the theoretic one \eqref{eq:vjump} given in \cite{DumouchelMarigoCharlotte:2008}.} \label{tab:compjumpv}
@@ -300,73 +330,112 @@ Relative jump speed $v_\mathrm{jump}/c$ & 0.3325 & 0.3396 & 2\% \\ \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Conclusion}
+\subsection*{Conclusion}
 In this paper further physical insights into the dynamic gradient damage model are provided via a simple antiplane tearing experiment. As a phase-field approach to brittle fracture, it can indeed be regarded as a generalization or a superset of the LEFM theory, since the crack evolution is shown to be Griffith-conforming in several situations:
 \begin{itemize}
-\item In the dynamic tearing example of a homogeneous plate, it is verified that the crack evolution is governed by the asymptotic Griffith's law \eqref{eq:Gasym}, as long as the material internal length is sufficiently small to establish a separation of scales between the inner damage problem and the outer LEFM problem. The conventional dynamic energy release rate is numerically computed and verified as a tool to translate gradient damage mechanics results in fracture mechanics terminology. We conduct a comparison with the 1-d peeling problem \cite{DumouchelMarigoCharlotte:2008} analytically studied with the classical Griffith's theory of dynamic fracture. A good agreement between them can be found in terms of the crack speeds prediction as a function of the loading speed.
+\item In the dynamic tearing example of a homogeneous plate, it is verified that the crack evolution is governed by the asymptotic Griffith's law (\cref{prop:whenellpetit}), as long as the material internal length is sufficiently small to establish a separation of scales between the inner damage problem and the outer LEFM problem. The conventional dynamic energy release rate is numerically computed and verified as a tool to translate gradient damage mechanics results in fracture mechanics terminology. We conduct a comparison with the 1-d peeling problem \cite{DumouchelMarigoCharlotte:2008} analytically studied with the classical Griffith's theory of dynamic fracture. A good agreement between them can be found in terms of the crack speeds prediction as a function of the loading speed.
 
 \item We then investigate the quasi-static limits of the dynamic gradient damage model. In absence of \emph{brutal} or \emph{unstable} crack propagation where the classical static Griffith's theory fails, the dynamic model converges to the first-order quasi-static gradient damage model, when the loading speed decreases. However when the crack may propagate at a speed comparable to the material sound speed, the dynamic model should be preferred to correctly account for inertial effects. The crack evolution in the dynamic gradient damage model is in quantitative accordance with the LEFM predictions on the 1-d peeling problem.
 \end{itemize}
 
-These numerical experiments provide hence a justification of the dynamic gradient damage model along with its current implementation, when it is used as a phase-field model for complex real-world dynamic fracture problems. Furthermore, the gradient damage model could also be used as a tool to explore and explain numerous dynamic fracture phenomena. Our future work will be devoted to this point.
+These numerical experiments provide hence a justification of the dynamic gradient damage model along with its current implementation, when it is used as a genuine physical model for complex real-world dynamic fracture problems.
 
-\section{Kinking} \label{sec:kinking}
-The stability condition \eqref{eq:vi} determines when and how the crack propagates. In particular, it should be able to predict the spatial and temporel crack path which may present some discontinuities due to the quasi-static assumption \cite{BourdinFrancfortMarigo:2008,ChambolleFrancfortMarigo:2009}. We will investigate in this subsection how the crack kinks under mixed loading and compare the apparent kinking angle with some theoretic criteria commonly used in fracture mechanics to supplement the Griffith's law.
+\section{Plane Crack Kinking} \label{sec:kinking}
+The three physical principles of \cref{def:dynagraddama} determine \emph{when} and \emph{how} the crack propagates. In \cref{sec:antiplane} the initiation and propagation phases of defect evolution are considered. According to \cref{sec:dynafrac}, it focuses on \emph{when} cracks propagate. In this section, we will focus on the path along which the crack follows, \emph{i.e.} \emph{how} cracks evolve. Specifically, this section is devoted to a numerical analysis of plane crack kinking predicted by the gradient damage model. The thematic subjects covered here are thus summarized in \cref{tab:summanti}.
+\begin{table}[htbp]
+\centering
+\caption{Thematic subjects covered in this section} \label{tab:summanti}
+\begin{tabular}{ccccc} \toprule
+& Going dynamical & $\alpha\leftrightarrow\phi$ & $\nabla\alpha\to\Gamma$ & Experimental validation \\ \midrule
+Theoretics & & & & \\
+Numerics & & & \rightthumbsup & \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Problem setting} The problem setting is adapted from \cite{HakimKarma:2005,HakimKarma:2009}. At time $t=0$ a hard device $\vec{U}$ is prescribed on the boundary $\partial\Omega$ of a unit ball centered at the origin $\Omega=B_1(\vec{0})$, see \cref{fig:kinking}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.5\textwidth]{kinking_pb.pdf}
+\caption{Plane crack kinking problem in a pre-cracked unit ball centered at the origin $\Omega=B_1(\vec{0})$. A hard device $\vec{U}(\overline{G},K_2/K_1)$ is prescribed on the boundary $\partial\Omega$} \label{fig:kinking}
 \end{figure}
-
-The problem setting is adapted from \cite{HakimKarma:2005,HakimKarma:2009}. A hard device $\vec{U}$ is imposed on the boundary $\partial\Omega$ of an unit squared domain $\Omega=(-\frac{1}{2},\frac{1}{2})\times (-\frac{1}{2},\frac{1}{2})$ containing an initial straight crack $\Gamma_t=(-\frac{1}{2},0)$ modelled by a Dirichlet condition of damage $\alpha=1$ on $\Gamma_t$. Similar to the crack propagation simulation, the imposed displacement is nothing but the asymptotic expansion of the displacement field near the crack tip $\vec{P}_0=(0,0)$ with the opening and sliding intensity factors $K_1>0$ and $K_2\geq 0$. The problem is again posed under plane stress condition and by virtue of Irwin's formula the imposed energy release rate is given by
+An existing \emph{stationary} plane crack $\Gamma_t=[-1,0]\times\set{0}$ modeled by an initial damage field is subject to the mixed-mode loading condition $\vec{U}$ and the objective is to compare the apparent kinking angle $\theta$ with some theoretic criteria commonly used in fracture mechanics to supplement Griffith's law, cf. \cref{sec:theoexpcrit}. The imposed displacement $\vec{U}$ corresponds to the asymptotic expansion of the displacement field near the crack tip $\vec{P}_0=(0,0)$ with the opening and sliding intensity factors $K_1>0$ and $K_2\geq 0$, see \eqref{eq:singularform}. The plane stress condition is assumed. By virtue of Irwin's formula \eqref{eq:GasafunctionofK} the imposed energy release rate is given by
 \[
 \overline{G}=\frac{K_1^2+K_2^2}{E}.
 \]
-To ensure that the crack will indeed propagate under this particular loading, this value should be slightly larger than the material toughness $G_0>\gc$.
+Thanks to Griffith's law (\cref{prop:Ggriffithlaw,prop:whenellpetit}) in the gradient damage model as well as its numerical verification in \cref{sec:antiplane}, to ensure that the gradient-damage crack will indeed propagate to another point $\vec{P}^*$ under $\vec{U}$, the value of $\overline{G}$ should be larger than the effective material toughness $G_0>(\gc)_\mathrm{eff}$. To represent different types of mixed-mode loading, the ratio $K_2/K_1$ will be varied and its influence on the kinking behavior will be analyzed.
 
-Typical simulation results are illustrated by the damage field calculated with alternate minimization.
+In this section the first-order quasi-static gradient damage model (\cref{def:firstorderqs}) is used. The quasi-static condition constitutes a natural setting to prescribe a given deformation state near the crack tip. According to the convergence study in \cref{sec:antiplane}, the quasi-static gradient damage model can indeed be considered as a limit model of the dynamic one in absence of fast or unstable crack propagation. However according to the analysis of \cite{ChambolleFrancfortMarigo:2009}, the temporal crack propagation is necessarily \emph{unstable} in presence of a kink. Future work will be devoted to a full dynamic investigation of this problem.
+
+A non-structured triangular mesh is used to discretize the domain $\Omega$. The material, loading and numerical parameters used in this problem are summarized in \cref{tab:kinking}. The damage constitutive law \eqref{eq:at1} is used.
+\begin{table}[htbp]
+\centering
+\caption{Material, loading and numerical parameters for the plane crack kinking experiment.} \label{tab:kinking}
+\begin{tabular}{cccccc} \toprule
+$E$ & $\nu$ & $\gc$ & $\ell$ & $\overline{G}$ & $h$ \\ \midrule
+1 & 0.2 & 1 & 5\% or 1\% & 1.1 or 1.5 & $\ell/5$ \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Simulation results and discussion} Several simulations corresponding to different $K_2/K_1$ ratio are performed. Typical numerical results are illustrated by the damage field after kinking in \cref{fig:kinking_k2k1}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.9\textwidth]{kinking_G1x5.pdf}
-\caption{Damage field obtained with $\ell=1\%$ and $\overline{G}=1.5$ for three $K_2/K_1$ ratios} \label{fig:kinking_k2k1}
+\caption{Damage field obtained with $\ell=1\%$ and $\overline{G}=1.5$ for three $K_2/K_1$ ratios: (a) $K_2/K_1=0.6$, (b) $K_2/K_1=0.8$ and (c) $K_2/K_1=1$} \label{fig:kinking_k2k1}
 \end{figure}
-
-Comparaison with different kinking criteria with our gradient damage model results.
+The apparent kinking angle predicted by the gradient damage model is compared in \cref{fig:kinking_comp} with some commonly used kinking criteria in fracture mechanics, see \cref{sec:theoexpcrit}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.5\textwidth]{kinking_comp.pdf}
+\caption{Apparent kinking angle predicted by the gradient damage model compared with some commonly used kinking criteria in fracture mechanics} \label{fig:kinking_comp}
 \end{figure}
-
-Some conclusions
+The influence of the mixed-mode ratio $K_2/K_1$, the internal length $\ell$ and the intensity of the prescribed displacement $\overline{G}$ is analyzed as follows. 
 \begin{itemize}
-\item Influence of the internal length?
-\item Numerical kinking angles are in the range of theoretic predictions, as long as the internal length is sufficiently small (same remark as for the propagation example)
-\item Neither of the kinking criterions seems to be favoured by the meta-stability condition, however bear in mind that structural effect and angle measuring from the damage field may contribute to the discrepancies.
+\item Numerically obtained kinking angles are conforming to the theoretic predictions of several kinking criteria in fracture mechanics. In the isotropic case, the PLS, the $\sigma_{\theta\theta}$-max and the $G$-max criteria give similar kinking angles, see for instance \cite{ChambolleFrancfortMarigo:2009}. Anisotropy may be needed to distinguish between them, cf. \cite{HakimKarma:2005}.
+
+\item The internal length $\ell$, or equivalently the maximal stress \eqref{eq:sigc0}, again plays a subtile role here similarly to the antiplane problem in \cref{sec:antiplane}. From \cref{fig:kinking_comp}, the kinking angle show little dependence with respect to the internal length used. This confirms that as long as the internal length is sufficiently small compared to that of the body, the gradient-damage crack behaves just like a real sharp-interface crack.
+
+\item The intensity $\overline{G}$ determines how brutal the kinking process is, which can be measured by the post-kink add-crack length $\delta l$. According to the simulation results, a smaller $\overline{G}$ produces also a smaller $\delta l$. However the kink angle seems independent of $\overline{G}$ from \cref{fig:kinking_comp}.
+
+\item By comparing the three figures in \eqref{fig:kinking_comp}, it can be observed that the mixed-mode ratio $K_2/K_1$ also determines how unstable the crack propagation is during the kink. In particular, a larger $K_2/K_1$ leads to a larger $\delta l$. This point needs further investigation in the future.
 \end{itemize}
 
 \section{Dynamic Crack Branching} \label{sec:branching}
-We will first study the dynamic crack branching problem for a 2-d plane stress plate under constant pressure applied on its upper and lower boundaries. This particular problem has already been investigated within the phase-field community \cite{BordenVerhooselScottHughesLandis:2012,SchlueterWillenbuecherKuhnMueller:2014} where the numerical convergence aspect as well as the physical insight into the branching mechanism are analyzed. Here we will mainly focus on the computational efficiency as well as the possible use of several damage constitutive laws to approximate fracture.
+In this section we will study the dynamic crack branching problem for a 2-d plane stress plate under constant pressure applied on its upper and lower boundaries. This particular problem has already been investigated within the phase-field community \cite{BordenVerhooselScottHughesLandis:2012,SchlueterWillenbuecherKuhnMueller:2014} where the numerical convergence aspect as well as some physical insights into the branching mechanism are analyzed. Here in this work we will first focus on the computational efficiency of \cref{algo:explicit} implemented in the EPX software as well as the possible use of several damage constitutive laws to approximate fracture. This last strengthens the bridge between the phase-field and the gradient-damage communities. Finally we provide some fracture mechanics interpretations of the branching mechanism predicted in the gradient damage model. The thematic subjects covered here are thus summarized in \cref{tab:summbranching}.
+\begin{table}[htbp]
+\centering
+\caption{Thematic subjects covered in this section} \label{tab:summbranching}
+\begin{tabular}{ccccc} \toprule
+& Going dynamical & $\alpha\leftrightarrow\phi$ & $\nabla\alpha\to\Gamma$ & Experimental validation \\ \midrule
+Theoretics & & & & \\
+Numerics & & \rightthumbsup & \rightthumbsup & \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Problem setting} The geometry as well as the loading conditions are depicted in \cref{fig:branching}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.55\linewidth]{plateres.pdf}
 \caption{Geometry and loading conditions for the dynamic crack branching problem. Damage field $\alpha_t$ at $t=\SI{8e-5}{s}$ ranging from 0 (gray) to 1 (white).} \label{fig:branching}
 \end{figure}
+Due to symmetry only the upper half part is modeled. The initial crack $\Gamma_0$ is introduced via an initial damage field $\alpha^{-1}$. Material parameters are borrowed from \cite{BordenVerhooselScottHughesLandis:2012} where the internal length $\ell$ is set to $\SI{0.25}{mm}$. We use a structured quadrilateral elements of equal discretization spacing $h\approx\SI{0.045}{mm}$ in both directions achieving approximately 1 million elements. The current time increment is calculated based on the CFL condition with a security factor of 0.8. An unstructured mesh should be in general preferred. However the original analysis on mesh-induced anisotropy is conducted on structured triangular elements \cite{Negri:1999}. Furthermore the numerical study of \cite{LorentzGodard:2011} shows that the crack direction is insensitive to the orientation of a structured quadrilateral grids. We firstly use the damage constitutive law \eqref{eq:at1}. The symmetric tension-compression formulation is also adopted. This choice is justified by an \emph{a posteriori} verification of non-interpenetration of matter. The simulation result is illustrated in \cref{fig:branching} by the damage field $\alpha_t$ at $t=\SI{8e-5}{s}$ ranging from 0 (gray) to 1 (white). Similar contours have been obtained in \cite{BordenVerhooselScottHughesLandis:2012,SchlueterWillenbuecherKuhnMueller:2014}.
 
-The geometry as well as the loading conditions are depicted in Fig. \ref{fig:branching}. Due to symmetry only the upper half part is modeled. The initial crack $\Gamma_0$ is introduced via an initial damage field $\alpha^{-1}$. Material parameters are borrowed from \cite{BordenVerhooselScottHughesLandis:2012} where the internal length $\ell$ is set to $\SI{0.25}{mm}$. We use a structured quadrilateral elements of equal discretization spacing $h\approx\SI{0.045}{mm}$ in both directions achieving approximately 1 million elements. The current time increment is calculated based on the CFL condition with a security factor of 0.8. An unstructured mesh should be in general preferred. However the original analysis on mesh-induced anisotropy is conducted on structured triangular elements \cite{Negri:1999}. Furthermore the numerical study of \cite{LorentzGodard:2011} shows that the crack direction is insensitive to the orientation of a structured quadrilateral grids. We firstly use the damage constitutive law \eqref{eq:at1}. The symmetric tension-compression formulation is also adopted. This choice is justified by an \emph{a posteriori} verification of non-interpenetration of matter. The simulation result is illustrated in Fig. \ref{fig:branching} by the damage field $\alpha_t$ at $t=\SI{8e-5}{s}$ ranging from 0 (gray) to 1 (white). Similar contours have been obtained in \cite{BordenVerhooselScottHughesLandis:2012,SchlueterWillenbuecherKuhnMueller:2014}.
-
-A strong scaling analysis is conducted for several processor cores $\mathrm{NP}$ in the cluster Aster5 \cite{DelmasLefebvre:2014} provided by the Electricité de France. We have verified that all simulations give nearly the same results in terms of global energy evolution and field contours. The difference of the elastic energy at $t=\SI{8e-5}{s}$ is within 0.2\% between the sequential and the parallel $\mathrm{NP}=16$ cases, which may be due to floating point arithmetic and different setting of preconditioners. The scaling results are given in Fig. \ref{fig:scaling}. The calculation time is partitioned into 4 items: the ``elastodynamics'' part related to the solving of \eqref{eq:waveeqsdis}, the ``damage assembly'' part where the global Hessian matrix $\vec{H}$ and the second member $\vec{b}$ is constructed, the ``damage solving'' part where \eqref{eq:crackstdis} is solved and the ``communication'' part corresponding to the data exchange among processors. The maximum value among all processors are used. Quasi-ideal scaling is observed for the total computational time. The proportion of the ``elastodynamics'' and the ``damage assembly'' parts are decreasing, due to the increase of the ``communication'' overhead reaching 15\% with 16 cores and becoming comparable to that of the ``damage solving''.
+\subsection{Computational efficiency in a parallel computing context}
+A strong scaling analysis is conducted for several processor cores $\mathrm{NP}$ in the cluster \texttt{ASTER5} provided by the Electricité de France. We have verified that all simulations give nearly the same results in terms of global energy evolution and field contours. The difference of the elastic energy at $t=\SI{8e-5}{s}$ is within 0.2\% between the sequential and the parallel $\mathrm{NP}=16$ cases, which may be due to floating point arithmetic and different setting of preconditioners. The scaling results are given in \cref{fig:scaling}. The calculation time is partitioned into 4 items:
+\begin{enumerate}
+\item The ``elastodynamics'' part related to the solving of \eqref{eq:waveeqsdis},
+\item The ``damage assembly'' part where the global Hessian matrix $\vec{H}$ and the second member $\vec{b}$ is constructed,
+\item The ``damage solving'' part where \eqref{eq:crackstdis} is solved,
+\item The ``communication'' part corresponding to the data exchange among processors.
+\end{enumerate}
+The maximum value among all processors are used. Quasi-ideal scaling is observed for the total computational time. The proportion of the ``elastodynamics'' and the ``damage assembly'' parts are decreasing, due to the increase of the ``communication'' overhead reaching 15\% with 16 cores and becoming comparable to that of the ``damage solving''.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.5\linewidth]{plate_scaling.pdf}
 \caption{Strong scaling results for the dynamic crack branching problem with 1 million elements.} \label{fig:scaling}
 \end{figure}
 
-We remark that the quadratic bound-constrained minimization problem \eqref{eq:crackstdis} solved by the GPCG scheme implemented in PETSc is not very costly and represents in sequential and parallel calculations only 13\% of the total computational time. In the phase-field literature the damage problem is often solved by an unconstrained minimization of \eqref{eq:crackstdis} corresponding to a linear system
-\begin{equation} \label{eq:linearsystem}
-\vec{H}\dvec=\vec{b}.
-\end{equation}
-To reinforce irreversibility, either the damage driving term is replaced by a history field \cite{HofackerMiehe:2012,BordenVerhooselScottHughesLandis:2012}, or \eqref{eq:linearsystem} is followed by an \emph{a posteriori} projection in the admissible space, see \cite{LancioniRoyer-Carfagni:2009}. However, it should be kept in mind that the above computationally-appealing strategy only applies to the damage constitutive law \eqref{eq:at2}, where the solution of \eqref{eq:linearsystem} lies necessarily between 0 and 1 and the objective functional $q$ is indeed quadratic with respect to $\dvec$. Otherwise a specific numerical scheme for bound-constrained problems is needed. Nevertheless we would like to point out that the GPCG solver is extremely efficient even compared to the above strategy consisting of only one linear equation. The same crack branching analysis is conducted using the damage constitutive model \eqref{eq:at2} and a same internal length $\ell=\SI{0.25}{mm}$ and the results obtained with the GPCG solver and the above \emph{a posteriori} projection method are compared. In the latter case the same PCG method is employed to solve \eqref{eq:linearsystem}. The results are slightly different as expected, since the projection method does not solve exactly the full minimization problem \eqref{eq:crackstdis}. To compare their relative computational costs, the time consumed in damage solving is separately normalized by that corresponding to the elastodynamic problem in Tab. \ref{tab:gpcg_vs_cg_proj}.
+We remark that the quadratic bound-constrained minimization problem \eqref{eq:crackstdis} solved by the GPCG scheme implemented in PETSc is not very costly and represents in sequential and parallel calculations only 13\% of the total computational time. In the phase-field literature the damage problem is often solved by an unconstrained minimization of \eqref{eq:crackstdis} corresponding to a linear system \cref{eq:linearsystem}. The irreversibility condition is then approximated by several physical or numerical methods, see \cref{sec:phasefields}. However, it should be kept in mind that the above computationally-appealing strategy only applies to the damage constitutive law \eqref{eq:at2}, where the solution of \eqref{eq:linearsystem} lies necessarily between 0 and 1 and the objective functional \eqref{eq:qdiscrete} is indeed quadratic with respect to $\dvec$. Otherwise a specific numerical scheme for bound-constrained problems is needed. Nevertheless we would like to point out that the GPCG solver is extremely efficient even compared to the above strategy consisting of only one linear equation. The same crack branching analysis is conducted using the damage constitutive model \eqref{eq:at2} and a same internal length $\ell=\SI{0.25}{mm}$ and the results obtained with the GPCG solver and the \emph{a posteriori} projection method described in \cref{sec:phasefields} are compared. In the latter case the same preconditioned conjugate gradient method is employed to solve \eqref{eq:linearsystem}. The results are slightly different as expected, since the projection method does not solve exactly the full minimization problem \eqref{eq:crackstdis}. To compare their relative computational costs, the time consumed in damage solving is separately normalized by that corresponding to the elastodynamic problem in \cref{tab:gpcg_vs_cg_proj}.
 \begin{table}[htbp]
-
 \centering
 \caption{Relative damage-solving cost normalized by the time devoted to the elastodynamic part during a parallel calculation $\mathrm{NP}=16$. The damage constitutive law \eqref{eq:at2} is used. Comparison between the GPCG solver and the \emph{a posteriori} projection method.} \label{tab:gpcg_vs_cg_proj}
 \begin{tabular}{lll} \toprule
@@ -374,23 +443,17 @@ To reinforce irreversibility, either the damage driving term is replaced by a hi
 Damage-solving cost & 50\% & 77\% \\ \bottomrule
 \end{tabular}
 \end{table}
-Opposed to what is suggested by \cite{AmorMarigoMaurini:2009}, the use of a bound-constrained minimization solver implies a relative computational cost only 27\% higher than a traditional linear solver. This can be seen in the normalized histogram of CG iterations per time step illustrated in Fig. \ref{fig:histcg}. We recall that each CG iteration implies a matrix-vector multiplication, the most costly part of the algorithm. When only one linear system is to be solved in the \emph{a posteriori} projection method, approximately 20 CG iterations are needed in 35\% of all time steps. When the GPCG solver is used, we observe that the histogram is more spread out and more than 50 CG iterations may be needed for some time steps. Nevertheless the distribution is more concentrated around 10 to 30 iterations.
+
+Opposed to what is suggested by \cite{AmorMarigoMaurini:2009}, the use of a bound-constrained minimization solver implies a relative computational cost only 27\% higher than a traditional linear solver. This can be seen in the normalized histogram of CG iterations per time step illustrated in \cref{fig:histcg}. We recall that each CG iteration implies a matrix-vector multiplication, the most costly part of the algorithm. When only one linear system is to be solved in the \emph{a posteriori} projection method, approximately 20 CG iterations are needed in 35\% of all time steps. When the GPCG solver is used, we observe that the histogram is more spread out and more than 50 CG iterations may be needed for some time steps. Nevertheless the distribution is more concentrated around 10 to 30 iterations.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.5\linewidth]{hist_cg_tao_vs_cg_proj.pdf}
 \caption{Normalized histogram of CG iterations per time step. The damage constitutive law \eqref{eq:at2} is used. Comparison between the GPCG solver and the \emph{a posteriori} projection method.} \label{fig:histcg}
 \end{figure}
 
-We then turn to the choice of different damage constitutive laws from a computational and physical point of view. We take the simulation results using \eqref{eq:at1} as a reference and compare it with the widely used damage constitutive law \eqref{eq:at2} in the phase-field modeling of fracture. The quantitative effects of the internal length actually depend on the damage constitutive model used. Here we propose two natural choices of $\ell$ in the \eqref{eq:at2} case: one corresponding to the same value $\ell=\SI{0.25}{mm}$ as used in the \eqref{eq:at1} case, the other corresponding to a same maximal tensile stress as used in the \eqref{eq:at1} case, which gives $\ell\approx\SI{0.07}{mm}$. We recall from \cite{PhamAmorMarigoMaurini:2011} that the maximal stress than can be supported by a gradient damage material is given by
-\begin{equation} \label{eq:sigm}
-\sigma_\mathrm{m}=\begin{cases}
-\sqrt{\frac{3\gc E}{8\ell}} & \text{\eqref{eq:at1} case}, \\
-\frac{3\sqrt{3}}{16}\sqrt{\frac{\gc E}{\ell}} & \text{\eqref{eq:at2} case},
-\end{cases}
-\end{equation}
-which determines the internal length as long as the material toughness and the Young's modulus are fixed. The same GPCG solver is used and the relative damage-solving costs separately normalized by the time devoted to the elastodynamic part are reported in Tab. \ref{tab:at1_vs_at2}. We remark that the use of the constitutive law \eqref{eq:at1} or a smaller internal length $\ell$ reduces significantly the relative damage-solving cost. A viable explanation is given as follows. The theoretical 1-d damage profile of \eqref{eq:at2} corresponds to an exponential function without a finite support \cite{BourdinFrancfortMarigo:2008,MieheHofackerWelschinger:2010}. The damage band $2D$, \emph{i.e.} in which $\alpha_t>0$, is much wider than the \eqref{eq:at1} case where $D=2\ell$. Consequently, less \emph{active} nodes are present and the GPCG solver identifies much more \emph{free} nodes for the \eqref{eq:at2} case, which induces a bigger linear system to be solved. Similarly, a reduction of the material internal length may imply finer mesh along the crack path, however the damage is more concentrated and the relative solving cost is decreased.
+\subsection{Comparison between two damage constitutive laws}
+We then turn to the choice of different damage constitutive laws from a computational and physical point of view. We take the simulation results using \eqref{eq:at1} as a reference and compare it with the widely used damage constitutive law \eqref{eq:at2} in the phase-field modeling of fracture. The quantitative effects of the internal length actually depend on the damage constitutive model used. Here we propose two natural choices of $\ell$ in the \eqref{eq:at2} case: one corresponding to the same value $\ell=\SI{0.25}{mm}$ as used in the \eqref{eq:at1} case, the other corresponding to a same maximal tensile stress as used in the \eqref{eq:at1} case, which gives $\ell\approx\SI{0.07}{mm}$ according to \eqref{eq:sigc0}. The same GPCG solver is used and the relative damage-solving costs separately normalized by the time devoted to the elastodynamic part are reported in \cref{tab:at1_vs_at2}.
 \begin{table}[htbp]
-
 \centering
 \caption{Relative damage-solving cost normalized by the time devoted to the elastodynamic part during a parallel calculation $\mathrm{NP}=16$. The GPCG solver is used. Comparison between different constitutive laws.} \label{tab:at1_vs_at2}
 \begin{tabular}{ll} \toprule
@@ -401,23 +464,27 @@ which determines the internal length as long as the material toughness and the Y
 \end{tabular}
 \end{table}
 
-The damage field $\alpha_t$ at $t=\SI{8e-5}{s}$ obtained with the constitutive law \eqref{eq:at2} is illustrated in Fig. \ref{fig:at2_ell_sigm}. Recall that the same mesh with $h=\SI{0.05}{mm}$ is used and should be sufficient for both calculations. Compared to Fig. \ref{fig:branching} obtained with \eqref{eq:at1}, the \emph{transition area} where $0<\alpha_t<1$ is more pronounced especially in Fig. \ref{fig:at2_ell_sigm} with $\ell=\SI{0.25}{mm}$, conforming to the above discussions on the damage band. Another reason behind a relatively large zone with intermediate damage values is due to the different stress-strain behavior of these two constitutive laws during a homogeneous traction experiment \cite{PhamAmorMarigoMaurini:2011}. In the \eqref{eq:at1} case the material possesses a purely elastic domain and damage doesn't evolve as long as the maximal stress in \eqref{eq:sigm} is not reached. Then the material follows a classical softening behavior as damage grows from 0 to 1. However for the constitutive law \eqref{eq:at2} widely used in phase-field modeling, damage evolves the instant when the material is subjected to external loadings. An elastic domain is absent and stress-hardening is observed within the damage interval $[0,\frac{1}{4}]$, as is already been reported by \cite{BordenVerhooselScottHughesLandis:2012,SchlueterWillenbuecherKuhnMueller:2014}. In this case the phase-field $\alpha_t$ loses its physical interpretation as \emph{damage}, and hence correctly handling and interpreting crack healing is not trivial \cite{SchlueterWillenbuecherKuhnMueller:2014}.
+We remark that the use of the constitutive law \eqref{eq:at1} or a smaller internal length $\ell$ reduces significantly the \emph{relative} damage-solving cost. A viable explanation is given as follows. The theoretical 1-d damage profile of \eqref{eq:at2} corresponds to an exponential function without a finite support \cite{BourdinFrancfortMarigo:2008,MieheHofackerWelschinger:2010}. The  numerically obtained damage band $2D$, \emph{i.e.} in which $\alpha_t>0$, is much wider than the \eqref{eq:at1} case where $D=2\ell$. Consequently, less \emph{active} nodes are present and the GPCG solver identifies much more \emph{free} nodes for the \eqref{eq:at2} case, which induces a bigger linear system to be solved. Similarly, a reduction of the material internal length may imply finer mesh along the crack path (hence more computational cost in absolute values), however the damage is more concentrated and the relative solving cost of \eqref{eq:crackstdis} is decreased.
+
+The damage field $\alpha_t$ at $t=\SI{8e-5}{s}$ obtained with the constitutive law \eqref{eq:at2} is illustrated in \cref{fig:at2_ell_sigm}. Recall that the same mesh with $h=\SI{0.05}{mm}$ is used and should be sufficient for both calculations. Compared to Fig. \ref{fig:branching} obtained with \eqref{eq:at1}, the \emph{transition area} where $0<\alpha_t<1$ is more pronounced especially in Fig. \ref{fig:at2_ell_sigm} with $\ell=\SI{0.25}{mm}$, conforming to the above discussions on the damage band. Another reason behind a relatively large zone with intermediate damage values is due to the different stress-strain behavior of these two constitutive laws during a homogeneous traction experiment discussed in \cref{sec:ingredients}. In the \eqref{eq:at1} case the material possesses a purely elastic domain and damage doesn't evolve as long as the maximal stress is not reached. Then the material follows a classical softening behavior as damage grows from 0 to 1. However for the constitutive law \eqref{eq:at2} widely used in phase-field modeling, damage evolves the instant when the material is subjected to external loadings. An elastic domain is absent and stress-hardening is observed within the interval $[0,\frac{1}{4}]$. In this case the phase-field $\alpha_t$ loses its physical interpretation as \emph{damage}, and hence correctly handling and interpreting crack healing is not trivial, see \cref{sec:phasefields}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[height=3cm]{AT2_ell_sigm.pdf}
 \caption{Damage field $\alpha_t$ at $t=\SI{8e-5}{s}$ ranging from 0 (blue) to 1 (red) for the dynamic branching problem. Comparison between (a) $\ell=\SI{0.25}{mm}$ and (b) $\ell\approx\SI{0.07}{mm}$ with the same constitutive model \eqref{eq:at2}.} \label{fig:at2_ell_sigm}
 \end{figure}
 
-Furthermore, this peculiar behavior of the constitutive law \eqref{eq:at2} also contributes to an overestimation of the dissipated energy, as is noted in \cite{BordenVerhooselScottHughesLandis:2012,VignolletMayBorstVerhoosel:2014}. The energy evolution in this dynamic crack branching problem is given in Fig. \ref{fig:energy_at1_at2}. It is observed that the \eqref{eq:at2} law produces a dissipated energy much bigger than the \eqref{eq:at1} case, although according to Fig. \ref{fig:at2_ell_sigm} the damage fields are similar.
+Furthermore, this peculiar behavior of the constitutive law \eqref{eq:at2} also contributes to an overestimation of the dissipated energy, as is noted in \cite{BordenVerhooselScottHughesLandis:2012,VignolletMayBorstVerhoosel:2014}. The energy evolution in this dynamic crack branching problem is given in \cref{fig:energy_at1_at2}. It is observed that the \eqref{eq:at2} law produces a dissipated energy much bigger than the \eqref{eq:at1} case, although according to \cref{fig:at2_ell_sigm} the damage fields are similar.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.5\linewidth]{damage_constitutive_laws.pdf}
 \caption{Energy evolution for the dynamic crack branching problem obtained with several constitutive laws.} \label{fig:energy_at1_at2}
 \end{figure}
 
-As can be seen from Fig. \ref{fig:at2_ell_sigm} and \ref{fig:energy_at1_at2}, apparently the results obtained with the same internal length $\ell$ resembles better the \eqref{eq:at1} calculation in Fig. \ref{fig:branching}, even though it corresponds to a smaller maximal stress than the latter case. It should be reminded that $\ell$ does not play merely the role of determination of the maximal stress as in \eqref{eq:sigm}. From \cite{SicsicMarigo:2013}, this parameter also contributes qualitatively to the separation of the outer linear elastic fracture mechanics problem and the inner crack tip problem in an asymptotic context. A smaller internal length implies a wider region outside the crack where the fracture mechanics theory may apply. Meanwhile, a size effect is also introduced via this internal length as it influences the stability of a structure \cite{PhamMarigo:2013-1}. We admit that the choice of this parameter is not a simple one and may constitute one of the difficulties in phase-field modeling of fracture problems.
+As can be seen from \cref{fig:at2_ell_sigm,fig:energy_at1_at2}, apparently the results obtained with the same internal length $\ell$ resembles better the \eqref{eq:at1} calculation in \cref{fig:branching}, even though it corresponds to a smaller maximal stress than the latter case. It should be reminded that $\ell$ does not play merely the role of determination of the maximal stress as in \eqref{eq:sigm}. From \cref{sec:linkDF,sec:antiplane,sec:kinking}, this parameter also contributes qualitatively to the separation of the outer linear elastic fracture mechanics problem and the inner crack tip problem in an asymptotic context. A smaller internal length implies a wider region outside the crack where the fracture mechanics theory may apply. We admit that the choice of this parameter is not a simple one and may constitute one of the difficulties in phase-field modeling of fracture problems.
 
-\section{Edge-cracked plate under shearing impact} \label{sec:kalthoff}
+\subsection{Physical insights into the branching mechanism}
+
+\section{Edge-Cracked Plate Under Shearing Impact} \label{sec:kalthoff}
 We then consider a pre-notched two-dimensional plane strain plate impacted by a projectile. In the dynamic fracture community this is often referred as the Kalthoff-Winkler experiment reported by \emph{e.g.} \cite{Kalthoff:2000} where a failure mode transition from brittle to ductile fracture is observed for a high strength maraging steel when the impact velocity is increased. Due to symmetry, only the upper half part of the plate will be considered. The geometry and the boundary conditions for the reduced problem are described in Fig. \ref{fig:kalthoff}.
 \begin{figure}[htbp]
 \centering
@@ -477,7 +544,18 @@ The tension-compression split based on the trace of the total strain \cite{AmorM
 \end{figure}
 
 \section{Crack Arrest Due to the Presence of a Hole} \label{sec:gregoire}
-The problem considered is the ``one crack two holes'' test studied in \cite{HaboussaGregoireElguedjMaigreCombescure:2011}, where it is found that in dynamics cracks may be pushed away from the holes present in the domain due to wave reflections. The geometry and the boundary conditions are recalled in Fig. \ref{fig:gregoire}.
+This section is devoted to a two-dimensional experimental validation of the dynamic gradient damage model for brittle materials. The thematic subjects covered here are thus summarized in \cref{tab:summhole}.
+\begin{table}[htbp]
+\centering
+\caption{Thematic subjects covered in this section} \label{tab:summhole}
+\begin{tabular}{ccccc} \toprule
+& Going dynamical & $\alpha\leftrightarrow\phi$ & $\nabla\alpha\to\Gamma$ & Experimental validation \\ \midrule
+Theoretics & & & & \\
+Numerics & & & & \rightthumbsup \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Problem setting} The problem considered is the ``one crack two holes'' test studied in \cite{HaboussaGregoireElguedjMaigreCombescure:2011}, where it is found that in dynamics cracks may be pushed away from the holes present in the domain due to wave reflections. The geometry and the boundary conditions are recalled in Fig. \ref{fig:gregoire}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.7\linewidth]{gregoire.pdf}
@@ -487,21 +565,22 @@ Plane stress condition is assumed. Initial crack is introduced via a real notch 
 \begin{equation} \label{eq:pmmagc}
 \gc=\frac{K_\mathrm{IA}^2}{E}\approx\SI{0.2667}{N/mm}
 \end{equation}
-thanks to the Irwin's formula under plane stress condition. The material internal length, or equivalently the maximal tensile stress of PMMA used in the experiment through \eqref{eq:sigm}, is unknown. Two reasonable values are tested corresponding respectively to a critical stress $\SI{70}{MPa}$ or $\SI{80}{MPa}$, which gives along with \eqref{eq:pmmagc} either $\ell\approx\SI{0.05}{mm}$ or $\ell\approx\SI{0.0375}{mm}$. An unconstrained mixed triangular-quadrilateral mesh refined with $h\approx\SI{2e-2}{mm}$ near the initial crack and all possible nucleation sites is used, arriving at approximately \num{400000} elements. The current time increment is updated based on the CFL condition with a security factor of 0.8.
+thanks to the Irwin's formula under plane stress condition. The material internal length, or equivalently the maximal tensile stress of PMMA through \eqref{eq:sigc0}, is unknown. Two reasonable values are tested corresponding respectively to a critical stress $\SI{70}{MPa}$ or $\SI{80}{MPa}$, which gives along with \eqref{eq:pmmagc} either $\ell\approx\SI{0.05}{mm}$ or $\ell\approx\SI{0.0375}{mm}$. An unconstrained mixed triangular-quadrilateral mesh refined with $h\approx\SI{2e-2}{mm}$ near the initial crack and all possible nucleation sites is used, arriving at approximately \num{400000} elements. The current time increment is updated based on the CFL condition with a security factor of 0.8.
+
+\paragraph{Simulation results and discussion} The simulations results are illustrated in \cref{fig:siggregoire}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[height=3.7cm]{gregoire_7080.pdf}
 \caption{Hydrostatic stress $p_t=\frac{1}{2}\tr\sig_t$ ranging from less than \SI{-30}{MPa} (blue) to more than \SI{30}{MPa} (red) for (a) $\sigma_\mathrm{m}=\SI{70}{MPa}$ at $t\approx\SI{1.6e-4}{s}$, and (b) $\sigma_\mathrm{m}=\SI{80}{MPa}$ at $t\approx\SI{1.8e-4}{s}$, in the crack arrest problem.} \label{fig:siggregoire}
 \end{figure}
-
-The simulations results are illustrated in Fig. \ref{fig:siggregoire}. In both cases crack arrest is reproduced due to the high compression area under the right circular hole. In the case when the maximal tensile stress is set to $\sigma_\mathrm{m}=\SI{70}{MPa}$, secondary crack nucleation is observed at the right circular hole boundary under high tension. This phenomena is not observed in experiments and hence the critical stress value of $\sigma_\mathrm{m}=\SI{70}{MPa}$ is thus underestimated. In the $\sigma_\mathrm{m}=\SI{80}{MPa}$ case, no secondary crack nucleation is found. This result again highlights the role played by the internal length $\ell$ as a material parameter.
+In both cases crack arrest is reproduced due to the high compression area under the right circular hole. In the case when the maximal tensile stress is set to $\sigma_\mathrm{m}=\SI{70}{MPa}$, secondary crack nucleation is observed at the right circular hole boundary under high tension. This phenomena is not observed in experiments and hence the critical stress value of $\sigma_\mathrm{m}=\SI{70}{MPa}$ is thus underestimated. In the $\sigma_\mathrm{m}=\SI{80}{MPa}$ case, no secondary crack nucleation is found. This result again highlights the role played by the internal length $\ell$ as a material parameter.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.5\linewidth]{gregoire_cracktip.pdf}
 \caption{Crack tip abscissa evolution in the crack arrest problem. Comparison between the $\sigma_\mathrm{m}=\SI{80}{MPa}$ case and the experimental results.} \label{fig:cracktip}
 \end{figure}
 
-As the crack front is not explicitly tracked in phase-field modeling of fracture, here the current crack tip is located on the contour $\alpha=0.9$ at the farthest point in the $x$-direction. We then compare the numerical crack tip abscissa evolution with the experimental one \cite{HaboussaGregoireElguedjMaigreCombescure:2011}, in Fig. \ref{fig:cracktip}. Very good agreement can be found in the crack initiation and propagation phase. The crack arrest predicted is slightly conservative compared to the experimental one. This could be due to the small deviation of the initial crack from the symmetry axis in the experiment \cite{HaboussaGregoireElguedjMaigreCombescure:2011}. Meanwhile the maximal tensile stress $\sigma_\mathrm{m}\geq\SI{80}{MPa}$ could be considered as an adjusting parameter of the model. More simulations could be performed to determine its best value, at a price of using a more refined mesh since $\ell\propto1/\sigma_\mathrm{m}^2$ according to \eqref{eq:sigm}.
+As the crack front is not explicitly tracked in phase-field modeling of fracture, here the current crack tip is located on the contour $\alpha=0.9$ at the farthest point in the $x$-direction. We then compare the numerical crack tip abscissa evolution with the experimental one \cite{HaboussaGregoireElguedjMaigreCombescure:2011}, in \cref{fig:cracktip}. Very good agreement can be found in the crack initiation and propagation phase. The crack arrest predicted is slightly conservative compared to the experimental one. This could be due to the small deviation of the initial crack from the symmetry axis in the experiment \cite{HaboussaGregoireElguedjMaigreCombescure:2011}. Meanwhile the maximal tensile stress $\sigma_\mathrm{m}\geq\SI{80}{MPa}$ could be considered as an adjusting parameter of the model. More simulations could be performed to determine its best value, at a price of using a more refined mesh since $\ell\propto1/\sigma_\mathrm{m}^2$ according to \eqref{eq:sigc0}.
 
 \section{Brazilian Test} \label{sec:brazilian}
 
@@ -515,23 +594,23 @@ This dynamic tensile test on a L-shaped concrete specimen is proposed in \cite{O
 
 The load is applied through unilateral contact (EPX keyword \texttt{IMPACT}) with a hard device with imposed velocity $\vec{V}(t)=\overline{V}f(t)\vec{e}_2$. The intensity is scaled via the factor $\overline{V}$. The function $f(t)$ defined below ensures that at crack initiation the loading velocity is approximately $V$. Three loading speeds are tested: $\SI{0.74}{m/s}$, $\SI{1}{m/s}$ and $\SI{1.5}{m/s}$. From Figs. \ref{fig:L-specimen} and \ref{fig:alpha_L}, we observe that the initial propagation angle slightly increases with the prescribed velocity (see also Tab. \ref{tab:initial_angle}) and crack branching may produce, as it is also reported in experiments.
 \begin{mdframed}[hidealllines=true,backgroundcolor=gray!20]
-\begin{minted}[breaklines]{text}
+\begin{verbatim}
 FONC 1 TABL 5 0D0 0D0 1.5D-4 1D0 2D-4 1D0 4D-4 2D0 1D0 2D0
-\end{minted}
+\end{verbatim}
 \end{mdframed}
 
 \begin{figure}[htbp]
 \centering
-\begin{subfigure}[b]{0.48\textwidth}
-\centering
-\includegraphics[height=5cm]{v1000.jpg}
-\caption{$v=\SI{1}{m/s}$}
-\end{subfigure}
-\begin{subfigure}[b]{0.48\textwidth}
-\centering
-\includegraphics[height=5cm]{v1500.jpg}
-\caption{$v=\SI{1.5}{m/s}$} \label{fig:v15ell1}
-\end{subfigure}
+%\begin{subfigure}[b]{0.48\textwidth}
+%\centering
+%\includegraphics[height=5cm]{v1000.jpg}
+%\caption{$v=\SI{1}{m/s}$}
+%\end{subfigure}
+%\begin{subfigure}[b]{0.48\textwidth}
+%\centering
+%\includegraphics[height=5cm]{v1500.jpg}
+%\caption{$v=\SI{1.5}{m/s}$} \label{fig:v15ell1}
+%\end{subfigure}
 \caption{Damage field $\alpha_t$ ranging from 0 (blue) to 1 (red) for different loading speeds.} \label{fig:alpha_L}
 \end{figure}
 
@@ -547,32 +626,32 @@ Initial propagation direction & $\SI{64}{\degree}$ & $\SI{71}{\degree}$ & $\SI{7
 We then turn to the global dynamic structural response obtained with different loading rates. As it is expected, the peak load increases with the prescribed velocity, cf. Fig. \ref{fig:F-t-L-sim}. A good agreement with the experimental measurement is also found at $v=\SI{1.5}{m/s}$ as illustrated in Fig. \ref{fig:F-t-L}. Knowing that no strain rates effects is taken into account during material constitutive modeling, this increase of peak load for higher loading rates can be attributed to inertial itself. According to \cite{OzboltBedeSharmaMayer:2015}, this progressive increase of resistance is a pure consequence of inertial effects and not from velocity-dependent material strength or fracture energy.
 \begin{figure}[htbp]
 \centering
-\begin{subfigure}[b]{0.48\textwidth}
-\centering
-\includegraphics[height=5cm]{F_v.pdf}
-\caption{Simulation results.} \label{fig:F-t-L-sim}
-\end{subfigure}
-\begin{subfigure}[b]{0.48\textwidth}
-\centering
-\includegraphics[height=5cm]{F_v1500.pdf}
-\caption{Comparison with experimental measurement at $v=\SI{1.5}{m/s}$.} \label{fig:F-t-L}
-\end{subfigure}
+%\begin{subfigure}[b]{0.48\textwidth}
+%\centering
+%\includegraphics[height=5cm]{F_v.pdf}
+%\caption{Simulation results.} \label{fig:F-t-L-sim}
+%\end{subfigure}
+%\begin{subfigure}[b]{0.48\textwidth}
+%\centering
+%\includegraphics[height=5cm]{F_v1500.pdf}
+%\caption{Comparison with experimental measurement at $v=\SI{1.5}{m/s}$.} \label{fig:F-t-L}
+%\end{subfigure}
 \caption{Load-time histories for different loading speeds.}
 \end{figure}
 
 It should be noted that these calculations have been performed with a relatively small internal length $\ell=\SI{1}{mm}$, which amounts to overestimate the tensile strength $\sigma_\mathrm{max}\approx \SI{27}{MPa}$ of the concrete. If we use instead the correct value of $\sigma_\mathrm{max}=\SI{3.12}{MPa}$ as indicated in \cite{OzboltBedeSharmaMayer:2015}, the internal length becomes \SI{73}{mm}, a size comparable to that of the specimen and which may undermine the approximation of brittle fracture via damage. Hopefully as the crack initiates at the center corner in presence of a stress singularity, the internal length should not influence much crack initiation, contrary to what is claimed in \cite{MesgarnejadBourdinKhonsari:2014}. The peak load as well as the global structural response is not sensible to the internal length, as can be seen from Fig. \ref{fig:alphav1500ell2x0F}. However with $\ell=\SI{2}{mm}$ the damage field obtained is slightly different from the case $\ell=\SI{1}{mm}$ in Fig. \ref{fig:v15ell1}, and crack nucleation from the foundation is also observed due to a smaller maximal tensile stress $\sigma_\mathrm{max}\approx \SI{19}{MPa}$ (yet still larger than the real value). Since in experiments no secondary crack initiation is present, we must ask the question how the critical stress $\sigma_\mathrm{max}=\SI{3.12}{MPa}$ is obtained in \cite{OzboltBedeSharmaMayer:2015}.
 \begin{figure}[htbp]
 \centering
-\begin{subfigure}[b]{0.48\textwidth}
-\centering
-\includegraphics[height=5cm]{v1500-ell2x0.png}
-\caption{Damage field with $\ell=\SI{2}{mm}$.} \label{fig:alphav1500ell2x0}
-\end{subfigure}
-\begin{subfigure}[b]{0.48\textwidth}
-\centering
-\includegraphics[height=5cm]{F_v1500_ell.pdf}
-\caption{Load-time histories.} \label{fig:alphav1500ell2x0F}
-\end{subfigure}
+%\begin{subfigure}[b]{0.48\textwidth}
+%\centering
+%\includegraphics[height=5cm]{v1500-ell2x0.png}
+%\caption{Damage field with $\ell=\SI{2}{mm}$.} \label{fig:alphav1500ell2x0}
+%\end{subfigure}
+%\begin{subfigure}[b]{0.48\textwidth}
+%\centering
+%\includegraphics[height=5cm]{F_v1500_ell.pdf}
+%\caption{Load-time histories.} \label{fig:alphav1500ell2x0F}
+%\end{subfigure}
 \caption{Influence of the internal length $\ell$ on damage field and global structural response at $v=\SI{1.5}{m/s}$.}
 \end{figure}
 

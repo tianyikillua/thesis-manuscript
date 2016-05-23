@@ -1,10 +1,10 @@
 %!TEX root=../main.tex
-\chapter{Numerical implementation}
+\chapter{Numerical Implementation} \label{chap:numerics}
 \minitoc
 
 This chapter is devoted to the numerical implementation of the dynamic gradient damage model outlined in \cref{def:dynagraddama}. Semi-spatial discretization is performed in \cref{sec:spatial} based on the classical $C^0$ finite element method. The coupled two-field evolution problem is then discretized in the time domain based on the general $\beta$-Newmark scheme, see \cref{sec:timedis}. Some implementation issues are indicated in \cref{sec:implementation}.
 
-In this contribution the spatial and temporal discretization is as usual decoupled and will be discussed below separately. Space-time finite element methods (\cite{HughesHulbert:1988}) exploits fully the variational nature of the formulation \eqref{eq:vi} and can be considered as a possible improvement in the future. The elastic energy density split \eqref{eq:elasticTC} is adopted to take into account tension-compression asymmetry. The two damage constitutive laws \eqref{eq:at2} and \eqref{eq:at1} will be used.  In this work the irreversiblity condition and the variational inequality \eqref{eq:vi} will be effectively implemented, which amounts to solve numerically the weak wave equation \eqref{eq:weakform} and the minimality principle for damage \eqref{eq:crackmin} at every time step.
+In this contribution the spatial and temporal discretization is as usual decoupled and will be discussed below separately. Space-time finite element methods (\cite{HughesHulbert:1988}) exploits fully the variational nature of the formulation \eqref{eq:vi} and can be considered as a possible improvement in the future. The elastic energy density split \eqref{eq:elasticTC} is adopted to take into account tension-compression asymmetry. The two damage constitutive laws \eqref{eq:at2} and \eqref{eq:at1} will be used. In this work the irreversibility condition and the variational inequality \eqref{eq:vi} will be effectively implemented, which amounts to solve numerically the weak wave equation \eqref{eq:weakform} and the minimality principle for damage \eqref{eq:crackmin} at every time step.
 
 \section{Spatial Discretization} \label{sec:spatial}
 The spatial discretization described here constitutes a dynamic extension of the work of \cite{BourdinFrancfortMarigo:2008,PhamAmorMarigoMaurini:2011} for the regularized fracture model \eqref{eq:Pualpha} and the quasi-static gradient damage model outlined in \cref{def:qsgraddama}. A discussion on the large-displacement situations is indicated at the end. The thematic subjects covered here are thus summarized in \cref{tab:summsd}.
@@ -251,15 +251,15 @@ Numerics & \rightthumbsup & & & \\ \bottomrule
 \end{table}
 
 \subsection{Numerical solving of the damage problem}
-In this work, the damage energy minimization problem \eqref{eq:cracknummin} will be directly solved at structural scale. It could be converted into an equivalent local problem defined for each element. This possibility requires introduction of Lagrange multipliers at every Gauss points and an identification between the nodal damage field and the damage defined at Gauss points, see \cite[p.~49]{Beaurain:2011}. The principal motivation of this kind of Lagriangian modeling is the ability in the software Code-Aster to impose more naturally the irreversibility condition, however the computational cost is higher due to additional unknown variables.
+In this work, the damage energy minimization problem \eqref{eq:cracknummin} will be directly solved at the structural scale. It could be converted into an equivalent local problem defined for each element. This possibility requires introduction of Lagrange multipliers at every Gauss points and an identification between the nodal damage field and the damage defined at Gauss points, see \cite[p.~49]{Beaurain:2011}. The principal motivation of this kind of Lagriangian modeling is the ability in the software Code-Aster to impose more naturally the irreversibility condition, however the computational cost is higher due to additional unknown variables.
 
 Consequently, \eqref{eq:cracknummin} can be regarded as a large scale bound-constrained minimization problem defined at the structural level. Due to the damage constitutive requirement, the problem is convex and gradient-based numerical algorithms can be applied. These methods calls for the evaluation of the objective functional \eqref{eq:Hb} as well as its first and second derivatives (Hessian matrix $\vec{H}$). An efficient storage and manipulation of these objects is essential especially in an explicit dynamics context.
 
 Here the library PETSc is adopted due to its optimized efficiency, see \cite{PETSc:2015}. As a high-level C++/Fortran numerical linear algebra backend, PETSc provides in particular the \texttt{Vec} and the \texttt{Mat} classes for defining vectors and matrices. The actual storage format is not fixed in advance and it suffices to call the function \texttt{Vec/MatSetType} to affect a particular format. The computational arrays (the CSR format for example) can be extracted for output but in general all operations of these objects \texttt{Vec}/\texttt{Mat} are independent of the storage format used and thus transparent to the user. As an example, a unique interface is available to conduct a matrix-vector product
 \begin{mdframed}[hidealllines=true,backgroundcolor=gray!20]
-\begin{minted}[breaklines,breakanywhere]{fortran}
+\begin{verbatim}
 CALL MATMULT(H,X,GRAD,PETSCERR)
-\end{minted}
+\end{verbatim}
 \end{mdframed}
 where the vector \texttt{GRAD} stocks the result of $\vec{H}\dvec$. PETSc is built on MPI and only one generic version exists which can be run either in sequential or parallel. The calling functions are almost the same in both cases, thus the code could be parallelized with minor interface changes.
 
@@ -267,10 +267,9 @@ Specifically the algorithm Gradient Projection Conjugate Gradient (GPCG) propose
 
 Using the PETSc library, both the implicit and explicit time-stepping \cref{algo:implicit,algo:explicit} are implemented as a Python package named ``FEniCS Dynamic Gradient Damage'', see \cite{LiMaurini:2015}. It is based on the FEniCS Project \cite{LoggMardalWells:2012} for automated solution of partial differential equations. A specific C++ interface \texttt{PETScTAOSolver} is developed which brings various mathematical optimization algorithms defined in PETSc/TAO into FEniCS. In this implementation the tension-compression asymmetry is not taken into account. A linearized strain theory is also assumed.
 
-The explicit time-stepping procedure for the dynamic gradient damage model summarized in \cref{algo:explicit} is also implemented in EUROPLEXUS, an explicit dynamics program dedicated to transient phenomena involving fluid-structure interaction \cite{EPX:2015}. Here all the tension-compression asymmetry models discussed in \cref{sec:TC} are implemented. The large-displacement extension, see \cref{sec:extensions}, is also by default activated in the software.
+The explicit time-stepping procedure for the dynamic gradient damage model summarized in \cref{algo:explicit} is also implemented in EPX, an explicit dynamics program dedicated to transient phenomena involving fluid-structure interaction \cite{EPX:2015}. Here all the tension-compression asymmetry models discussed in \cref{sec:TC} are implemented. The large-displacement extension, see \cref{sec:extensions}, is also by default activated in the software.
 
-\subsection{Details of implementation in EUROPLEXUS}
-
+\subsection{Details of implementation in EPX}
 \paragraph{Initialization}
 The initialization \texttt{INIT\_ENDOGRAD} of the gradient damage model is performed at the end of the routine \texttt{initia.ff}. It has several objectives
 \begin{itemize}
@@ -285,7 +284,7 @@ During a MPI parallel computation, a permutation of nodes is needed according to
 
 \paragraph{Time-stepping} The change to the EPX time iteration routines \texttt{calcul.ff} and \texttt{d\_calcul.ff} is minimal. We simply add the following pseudo code concerning the assembly and the solving of the damage problem before the elastodynamics part.
 \begin{mdframed}[hidealllines=true,backgroundcolor=gray!20]
-\begin{minted}[breaklines]{fortran}
+\begin{verbatim}
 ...
 IF (L_ENDOGRAD) THEN
   CALL SEQ/MPI_ASSEM_ALPHA(...)
@@ -294,7 +293,7 @@ END IF
 ...
 CALL CELEM(...)
 ...
-\end{minted}
+\end{verbatim}
 \end{mdframed}
 
 We note that the routine \texttt{SEQ/MPI\_ASSEM\_ALPHA} constructs the Hessian matrix $\vec{H}$ and the second member $\vec{b}$ associated to the quadratic damage minimization problem by performing a first loop on all the elements. The copy and the correspondence between the global damage vector and the local damage vector specific to each element are conducted without modifying the arguments of all existing routines: \texttt{celem.ff}, \texttt{loopelm.ff}, \texttt{wpgen.ff} and all element routines \texttt{triang.ff} for example. The elementary variables associated with the current element $\alpha^\mathrm{e}$, $\vec{H}^\mathrm{e}$ and $\vec{b}^\mathrm{e}$ are all stored globally inside the module \texttt{m\_endograd\_data.ff}. They are preallocated during the initialization phase depending on the maximum local nodes. This current implementation is not thread-safe, thus OpenMP parallelization is not available.
@@ -338,3 +337,8 @@ The analytical solution \eqref{eq:eigenvalueana} is compared with the numerical 
 \item New method: 15 significant figures for eigenvalues and 10 for eigenvectors, within \SI{23.5}{s} for \num{1e8} calculations.
 \end{itemize}
 As can be seen, a factor of 2.7 in time is gained.
+
+\section*{Summary of this Chapter}
+In this chapter we describe a direct numerical implementation of the dynamic gradient damage model. It applies to both 1-d, 2-d and 3-d physical problems. Its efficiency will be demonstrated via simulation results in \cref{chap:simulation}. The spatial discretization is based on classical $C^0$ finite element method and is presented in \cref{sec:spatial}. It is decoupled from the time-stepping scheme described in \cref{sec:timedis} for the $\vec{u}$-problem governed by the discrete elastic-damage dynamic wave equation \eqref{eq:waveeqsdistdis}. The explicit Newmark method will be used whenever inertial effects are dominant. Implicit methods parametrized by the $\beta$-parameter are applied for intermediate cases between explicit dynamic and quasi-static situations. Due to the same mathematical structure for the damage problem (bound-constrained convex optimization problem), \eqref{eq:cracknummin} is solved at the structural scale similarly to the quasi-static settings. The discrete numerical model is summarized in \cref{algo:implicit,algo:explicit}.
+
+The computational architecture is summarized in \cref{sec:implementation}. The numerical solving of the damage problem is based on the numerical linear algebra library PETSc. It is introduced to the explicit dynamics software EPX for storage and manipulation of sparse matrices and vectors. The Gradient Projection Conjugate Gradient method is used to numerically solve \eqref{eq:cracknummin}.
