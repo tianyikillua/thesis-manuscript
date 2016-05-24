@@ -166,7 +166,7 @@ from \eqref{eq:un1} we obtain the equation for $\uvec^{n+1}$
 \vec{M}\frac{\uvec^{n+1}-\tilde{\uvec}^{n+1}}{\Delta t^2}=\beta\bigl(\vec{F}_\mathrm{ext}^{n+1}-\vec{F}_\mathrm{int}(\uvec^{n+1},\dvec^n)\bigr).
 \end{equation}
 In general due to the use of tension-compression asymmetry models \eqref{eq:elasticTC}, it is a nonlinear equation which requires several Newton iterations and the evaluation of the current tangent stiffness. The time-stepping procedure for the dynamic gradient damage model based on the implicit Newmark-$\beta$ method in a prediction-correction form is summarized in \cref{algo:implicit}.
-\begin{algorithm*}[htbp]
+\begin{algorithm}[htbp]
 \caption{Staggered time-stepping procedure for the dynamic gradient damage model based on the implicit Newmark-$\beta$ method.} \label{algo:implicit}
 \begin{algorithmic}[1]\linespread{1.2}\selectfont\normalsize
 \For{every successive time step $n\geq 0$}
@@ -178,7 +178,7 @@ In general due to the use of tension-compression asymmetry models \eqref{eq:elas
   \State Solve $\dvec^{n+1}$ via \eqref{eq:cracknummin}.
 \EndFor
 \end{algorithmic}
-\end{algorithm*}
+\end{algorithm}
 
 In the explicit case when $\beta=0$, it turns out that the time evolution system in $(\uvec,\dvec)$ is automatically decoupled and the two subproblems separately in $\uvec^{n+1}$ and in $\dvec^{n+1}$ can be solved in a sequence at every time step, see \cref{fig:updatestate}.
 \begin{figure}[htbp]
@@ -203,7 +203,7 @@ the Newmark time-stepping \eqref{eq:un2} and \eqref{eq:un1} reads
 \dot{\uvec}^{n+1/2} &= \dot{\uvec}^{n-1/2}+\Delta t\ddot{\uvec}^{n}.
 \end{align*}
 The explicit time-stepping procedure for the discretized dynamic gradient damage model is then summarized in \cref{algo:explicit}.
-\begin{algorithm*}[htbp]
+\begin{algorithm}[htbp]
 \caption{Explicit time-stepping procedure for the dynamic gradient damage model.} \label{algo:explicit}
 \begin{algorithmic}[1]\linespread{1.2}\selectfont\normalsize
 \For{every successive time step $n\geq 0$}
@@ -214,17 +214,17 @@ The explicit time-stepping procedure for the discretized dynamic gradient damage
   \State Update $\dot{\uvec}^{n+1}=\dot{\uvec}^{n+1/2}+\frac{\Delta t}{2}\ddot{\uvec}^{n+1}$.
 \EndFor
 \end{algorithmic}
-\end{algorithm*}
+\end{algorithm}
 
 The initialization phase for the above implicit and explicit time-stepping procedure is described in \cref{algo:init}. We observe that the initial damage is recomputed $\dvec^{-1}\mapsto\dvec^0$ in the step 2. The role of $\dvec^{-1}$ is to bring some \emph{a priori} knowledge of the damage field resulting from a previous calculation or more frequently to represent an initial crack $\dvec^{-1}=1$ on $\Gamma_0$. This step thus renders it compatible with the initial displacement condition and the energy minimization structure. Remark that in phase field approaches for example in \cite{BordenVerhooselScottHughesLandis:2012}, the initial crack is introduced via an initial history field $\mathcal{H}_0$ which is localized along the desired initial defect. It is due to the fact that the irreversible constraint is dropped during energy minimization \eqref{eq:crackmin} in their models.
-\begin{algorithm*}[htbp]
+\begin{algorithm}[htbp]
 \caption{Initialization for the implicit and explicit time-stepping procedure described in \cref{algo:implicit,algo:explicit}.} \label{algo:init}
 \begin{algorithmic}[1]\linespread{1.2}\selectfont\normalsize
 \State Given initial conditions $\uvec^0$, $\dot{\uvec}^0$ and $\dvec^{-1}$.
 \State Reinitialize the damage $\dvec^0=\operatorname{arg min}q_{\,\uvec^0}(\cdot)$ subjected to constraints $0\leq\dvec^{-1}\leq\dvec^0\leq 1$.
 \State Initialize the acceleration $\vec{M}\ddot{\uvec}^0=\vec{F}_\mathrm{ext}^0-\vec{F}_\mathrm{int}(\uvec^0,\dvec^0)$.
 \end{algorithmic}
-\end{algorithm*}
+\end{algorithm}
 
 \begin{remark}[Temporal convergence]
 Remark that only the irreversiblity condition $\dot{\alpha}_t\geq 0$ and the variational inequality \eqref{eq:vi} is effectively implemented. The former condition is reinforced during energy minimization \eqref{eq:cracknummin}. It is shown in \cite{LarsenOrtnerSuli:2010} that the time-discrete numerical model summarized by \cref{algo:implicit,algo:explicit} will also balance energy as required in \eqref{eq:dyngdeb}, when the time increment becomes small. Their constructive proof makes use of the implicit Euler scheme used in \cite{Bourdin:2011}, however our experience suggests the same for the implicit and explicit Newmark schemes.
