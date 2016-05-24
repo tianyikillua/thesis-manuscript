@@ -20,7 +20,7 @@ Numerics & \cref{sec:branching,sec:kalthoff} & \cref{sec:1d,sec:antiplane,sec:ki
 \end{table}
 
 \section{Crack Nucleation in a Bar under Impact} \label{sec:1d}
-This section is devoted to a numerical analysis of a one-dimensional bar under impact loading conditions. The focus is on crack nucleation in dynamics using the gradient damage model. In absence of an initial crack in the problem setting, the classical Griffith's theory of fracture is incapable of predicting material and structural failure. Hence here the simulation results will be compared to local strain-softening models (conventional damage models for instance). The objective is to illustrate the crack nucleation criterion in gradient damage models and the role played by the internal length $\eta$ in such process. The thematic subjects covered here are thus summarized in \cref{tab:summbar}.
+This section is devoted to a numerical analysis of a one-dimensional bar under impact loading conditions. The focus is on crack nucleation in dynamics using the gradient damage model. In absence of an initial crack in the problem setting, the classical Griffith's theory of fracture is incapable of predicting material and structural failure. Hence here the simulation results will be compared to local strain-softening models (conventional damage models for instance). The objective is to illustrate the crack nucleation criterion in gradient damage models and the role played by the internal length in such process. The thematic subjects covered here are thus summarized in \cref{tab:summbar}.
 \begin{table}[htbp]
 \centering
 \caption{Thematic subjects covered in this section} \label{tab:summbar}
@@ -32,7 +32,7 @@ Numerics & & & \rightthumbsup & \\ \bottomrule
 \end{table}
 
 \subsection{Analytical solutions for local strain-softening materials}
-This problem is initially considered by \cite{Bazant:1985aa} for an elastic strain-softening material. The one-dimensional initially stationary bar occupying the interval $[-L,L]$ is subject at both ends a tensile shock $\vec{U}=\pm vt\,\vec{e}_1$ where $v$ measures the intensity. Due to the jump condition the strain field propagates with an initial value of $\varepsilon=v/c$ at the wave speed $c=\sqrt{E/\rho}$. At $t=\frac{L}{c}$ when the two waves meet at the center, the strain at $x=0$ is doubled $\varepsilon=2v/c$ and continues to propagate to the rest part of the bar. We will only focus on the dynamic evolution in the time interval $[0,\frac{2L}{c}]$ before the waves travel the whole length. In \cite{Bazant:1985aa}, the material strain-softening condition is satisfied at a given critical strain level $\varepsilon_\mc$. If this criterion is never met, the analytical solution corresponds to a purely elastodynamic problem, which is given by
+This problem is initially considered by \cite{Bazant:1985aa} for an elastic strain-softening material. The one-dimensional initially stationary bar occupying the interval $[-L,L]$ is subject at both ends a tensile shock $\vec{U}_t=\pm vt\,\vec{e}_1$ where $v$ measures the intensity, see \cref{fig:elassoftening}. Due to the jump condition the strain field propagates with an initial value of $\varepsilon=v/c$ at the wave speed $c=\sqrt{E/\rho}$. At $t=\frac{L}{c}$ when the two waves meet at the center, the strain at $x=0$ is doubled $\varepsilon=2v/c$ and continues to propagate to the rest part of the bar. We will only focus on the dynamic evolution in the time interval $[0,\frac{2L}{c}]$ before the waves travel the whole length. In \cite{Bazant:1985aa}, the material strain-softening condition is satisfied at a given critical strain level $\varepsilon_\mc$. If this criterion is never met, the analytical solution corresponds to a purely elastodynamic problem, which is given by
 \begin{align*}
 u &= -v\inp{t-\frac{x+L}{c}}+v\inp{t+\frac{x-L}{c}}\,, \\
 \varepsilon &= \frac{v}{c}\mH\left(t-\frac{x+L}{c}\right)+\frac{v}{c}\mH\left(t+\frac{x-L}{c}\right)\,,
@@ -64,111 +64,166 @@ Several remarks can be given concerning the physical deficiencies of local strai
 \item Fracture takes place instantaneously with a vanishing energy dissipation, consequently spurious mesh dependency is observed for finite element solutions, see our discussions on this point in \cref{sec:twointerpretations}. It can be observed that \eqref{eq:elaslocal} corresponds to the elastodynamic solution of the bar initially broken at $x=0$, which implies total mechanical energy conservation and no additional energy dissipation when fracture happens at $t=\frac{L}{c}$.
 \end{itemize}
 
-As we shall see in the sequel, the gradient-damage approach of fracture permits a better modeling of crack nucleation.
+As we shall see in the sequel, the gradient-damage approach of fracture permits a better modeling of crack nucleation, via the introduction of a length scale.
 
 \subsection{Gradient-damage modeling}
-The dynamic gradient damage model outlined in \cref{def:dynagraddama} is applied for this particular one-dimensional problem. Symmetry is taken into account and only the interval $[0,L]$ is modeled. The displacement at $x=0$ is blocked due to symmetry and at $x=L$ it is subject to the above impact condition. The explicit time-stepping described by \cref{algo:explicit} is used in the FEniCS implementation, see \cite{LiMaurini:2015}.
+The dynamic gradient damage model outlined in \cref{def:dynagraddama} is applied for this particular one-dimensional problem. Symmetry is taken into account and only the interval $\Omega=[0,L]$ is modeled. The displacement at $x=0$ is blocked due to symmetry. The explicit time-stepping described by \cref{algo:explicit} is used in the FEniCS implementation, see \cite{LiMaurini:2015}.
 
-The Lagrangian density involved in the generalized space-time action integral \eqref{eq:actionG} reads
+The Lagrangian involved in the generalized space-time action integral \eqref{eq:actionG} reads
 \[
-\mathcal{L}(u,\dot{u},\alpha)=\int_0^L\left(\frac{1}{2}\mathsf{a}(\alpha)Eu'^2+w(\alpha)+w_1\eta^2\alpha'^2-\frac{1}{2}\rho\dot{u}^2\right)\D{x}.
+\mathcal{L}(u_t,\dot{u}_t,\alpha_t)=\int_\Omega\left(\frac{1}{2}\mathsf{a}(\alpha_t)Eu_t'^2+w(\alpha_t)+w_1\eta^2\alpha_t'^2-\frac{1}{2}\rho\dot{u}_t^2\right)\D{x}.
 \]
 A rescaling of the displacement by $u_\mc$ and a normalization of the space/time scales is performed to obtain a non-dimensional problem. Specifically, displacement is scaled by a factor of $u_\mc=\sigma_\mc L/E$ where $\sigma_\mc$ corresponds to the critical stress of the gradient damage material, see \eqref{eq:sigc0}, and $u_\mc$ is thus the critical displacement at the end $x=L$ of a bar fixed at $x=0$ in the quasi-static condition. The half-bar length $L$ and the corresponding time $L/c$ for the elastic wave to travel such distance is used to normalize the spatial and temporal scales. We have thus
 \begin{align}
-u(x,t) &= u_\mc\,\uhat\left(\frac{x}{L},\frac{ct}{L}\right)=\uhat(\xhat,\that)\,, \label{eq:u} \\
-\alpha(x) &= \ahat\left(\frac{x}{L}\right)=\ahat(\xhat).
+u(x,t) &= u_\mc\,\uhat\left(\frac{x}{L},\frac{ct}{L}\right)=u_\mc\,\uhat(y,\tau)\,, \label{eq:uhat} \\
+\alpha(x) &= \ahat\left(\frac{x}{L}\right)=\ahat(y)\,, \notag
 \end{align}
+where $y$ and $\tau$ designate respectively the normalized space and time coordinate.
 
-In this work the damage constitutive law \eqref{eq:at1} is used. According to \cref{sec:ingredients}, the critical stress is then given by $\sigma_\mc=\sqrt{w_1E}$, which leads to the following non-dimensional Lagrangian density
+In this work the damage constitutive law \eqref{eq:at1} is used. According to \cref{sec:ingredients}, the critical stress is then given by $\sigma_\mc=\sqrt{w_1E}$, which leads to the following non-dimensional Lagrangian
 \begin{equation} \label{eq:nondimensionalL}
-\widehat{\mathcal{L}}(\uhat,\dot{\uhat},\ahat)=w_1L\int_0^1\left(\frac{1}{2}(1-\ahat)^2\uhat'^2+\ahat+\widehat{\eta}^2\ahat'^2-\frac{1}{2}\dot{\uhat}^2\right)\D{x}.
+\mathcal{L}(u_t,\dot{u}_t,\alpha_t)=\widehat{\mathcal{L}}(\uhat_\tau,\dot{\uhat}_\tau,\ahat_\tau)=w_1L\int_0^1\left(\frac{1}{2}(1-\ahat_\tau)^2\uhat_\tau'^2+\ahat_\tau+\widehat{\eta}^2\ahat_\tau'^2-\frac{1}{2}\dot{\uhat}_\tau^2\right)\D{y}.
 \end{equation}
-For a given finite $\eta$, the length scale $\widehat{\eta}=\eta/L$ is the only non-dimensional parameter influencing the qualitative behaviors of the problem. Numerically, this amounts to solve the evolution problem in the normalized interval $[0,1]$ with the parameters indicated in \cref{tab:para1d}.
+For a given finite $\eta$, the length scale $\widehat{\eta}=\eta/L$ is the only non-dimensional parameter influencing the qualitative behaviors of the problem. Numerically, this amounts to solve the evolution problem in the normalized interval $[0,1]$ with the parameters indicated in \cref{tab:para1d}. The relationship \eqref{eq:gcingd} between $w_1$ and $\gc$ is also used.
 \begin{table}[htbp]
 \centering
-\caption{Material parameters for the crack nucleation problem} \label{tab:para1d}
-\begin{tabular}{llll} \toprule
-$\rho$ & $E$ & $\gc$ & $\sigma_\mc$ \\ \midrule
-1 & 1 & $\frac{8}{3}\eta$ & 1 \\ \bottomrule
+\caption{Geometric and material parameters for the crack nucleation problem} \label{tab:para1d}
+\begin{tabular}{lllll} \toprule
+$L$ & $\rho$ & $E$ & $\gc$ & $\sigma_\mc$ \\ \midrule
+1 & 1 & 1 & $\frac{8}{3}\eta$ & 1 \\ \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Numerical convergence properties}
-We first analyze the numerical convergence properties of dynamic gradient damage models given a fixed length ratio $\eta/L$. With a uniform linear finite element interpolation with typical mesh size $h$ and the explicit Newmark scheme (along with mass lumping) with the time increment corresponding to the CFL time step $\Delta t=\Delta t_\mathrm{CFL}=\frac{h}{c}$, it is known that the displacement for an elastodynamic problem (without damage or strain-softening) converges in $\mathcal{O}(h^2)$ in the $L^2$ norm defined by
-\begin{equation} \label{eq:error}
-e_u=\frac{\norm{u-u_\mathrm{ref}}_{L_2}}{\norm{u_\mathrm{ref}}_{L_2}}=\frac{\sqrt{\int_\Omega(u-u_\mathrm{ref})^2\dx}}{\sqrt{\int_\Omega u_\mathrm{ref}^2\dx}}.
+Using the normalized space and time scales, we assume that at $y=1$ the bar is subject to the impact condition $\widehat{\vec{U}}_\tau=\widehat{v}\tau\,\vec{e}_1$. The time interval of interest is $\tau\in[0,2]$. After normalization, the damage criterion \eqref{eq:localdamagefirstorder} for an initially sound body (with $\widehat{\alpha}_\tau=0$ almost everywhere) reads hence
+\begin{equation} \label{eq:nuclecrit}
+\uhat_\tau'^2\leq 1.
 \end{equation}
-Furthermore, superconvergence can be observed for this particular one-dimensional problem with the above numerical parameters, see \cite{Hughes:2010}. In this case the obtained results are exact (with respect to the original time-space continuous problem) at discretization nodes independently of how few elements are used. The convergence rate as well as this property can be illustrated numerically by considering an elastic bar subject to $u_t(1)=\frac{1}{2}(1-\cos(\pi t))$ at $x=1$. In \eqref{eq:error}, $u_\mathrm{ref}$ is taken to be a reference solution obtained with $h=\num{1e-3}$. From \cref{fig:elasconv}, the quadratic convergence as well as the superconvergence property is verified. If a velocity shock is applied here $u_t(1)=kt$, since the analytical solution is piecewise linear, the numerical one coincides exactly with the theoretic one.
+This implies along with the consistency condition \eqref{eq:damageconsis} that damage could first takes place wherever \eqref{eq:nuclecrit} is satisfied with an equality. Tension-compression asymmetry \eqref{eq:elasticTC} is not considered here. Using the jump condition, we have thus
+\begin{itemize}
+\item If $\widehat{v}>1$, then the damage criterion is instantaneously met at $y=1$ and subsequent crack nucleation could take place soon.
+\item If $0.5<\widehat{v}<1$, then the damage criterion is satisfied at $\tau=1$ when the two waves arrive at the center. A typical strain and damage evolution obtained with the dynamic gradient damage model is indicated in \cref{fig:grad3d}. Strain localization takes place and damage evolves at the center, which resembles the result obtained with the local strain-softening model in \cref{fig:elassoftening}.
+\end{itemize}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{grad3d.pdf}
+\caption{Strain (a) and damage (b) before and after the wave crossing at $t=\frac{L}{c}$ in the dynamic gradient damage model with $\widehat{\eta}=0.01$} \label{fig:grad3d}
+\end{figure}
+
+\subsection{Numerical convergence properties}
+We first analyze the numerical convergence properties of dynamic gradient damage models given a fixed length ratio $\eta/L$. With a uniform linear finite element interpolation with typical mesh size $h$ and the explicit Newmark scheme (along with mass lumping) with a time increment corresponding to the CFL time step $\Delta \tau=\Delta \tau_\mathrm{CFL}=h$ (since the wave speed is normalized to 1), it is known that the displacement $u_h$ at time $\tau\in[0,2]$ for an elastodynamic problem (without damage or strain-softening) converges with order $\mathcal{O}(h^2)$ in the $L^2$ norm for the error defined by
+\begin{equation} \label{eq:error}
+e_h=\frac{\norm{u_h-u_\mathrm{ref}}_{L_2}}{\norm{u_\mathrm{ref}}_{L_2}}=\frac{\sqrt{\int_\Omega(u_h-u_\mathrm{ref})^2\D{x}}}{\sqrt{\int_\Omega u_\mathrm{ref}^2\D{x}}}.
+\end{equation}
+Furthermore, superconvergence can be observed for this particular one-dimensional problem with the above numerical parameters, see \cite{Hughes:2010}. In this case the obtained results are exact (with respect to the original time-space continuous problem) at discretization nodes independently of how few elements are used. The convergence rate as well as this property can be illustrated numerically by considering an elastic bar subject to $\widehat{\vec{U}}_\tau=\frac{1}{2}(1-\cos(\pi \tau))\,\vec{e}_1$ at $y=1$. A snapshot of the dynamic system state at $\tau=1$ is taken. In \eqref{eq:error}, $u_\mathrm{ref}$ is taken to be a reference solution obtained with $h=\num{1e-3}$. From \cref{fig:elasconv}, the quadratic convergence as well as the superconvergence property is verified. If a velocity shock is applied here, since the analytical solution is piecewise linear, the finite element solution would coincide exactly with the theoretic one.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{elas_h.pdf}
 \caption{Numerical convergence for the elastodynamic problem} \label{fig:elasconv}
 \end{figure}
 
-
-
-
-
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.95\textwidth]{grad3d.pdf}
-\caption{Gradient damage strain-softening problem}
-\end{figure}
-
-At $t=1$, with $v=0.6$ and $\widehat{\ell}=0.1$, we get
-
-
-The reference solution is obtained with $h=\widehat{\ell}/100$. The numerical convergence of $(u,\alpha)$ and hence of $\mathcal{S}$ demonstrates the well-posedness of the physical problem thanks to the introduction of a length scale. The superconvergence property is lost, since it can be observed that solutions with different discretization sizes no longer agree with the exact one at nodes. However the quadratic convergence rate remains. It can be observed that $h=\widehat{\ell}/10$ gives sufficiently accurate results and hence will be used in all subsequent calculations.
-\begin{figure}[htbp]
-\includegraphics[width=0.95\textwidth]{grad_h_ell0x2.pdf}
-\caption{Numerical convergence study for $\ell=0.2$: (a) displacement at $t=1$ and (b) convergence rates}
-\end{figure}
+In the dynamic gradient damage model, numerical convergence is studied for the displacement and the damage at $\tau=2$, with an impact speed $\widehat{v}=0.6$ and two length scales $\widehat{\eta}=0.1$ or $0.2$. The results are indicated in \cref{fig:gradhell0x1,fig:gradhell0x2}. The reference solution is obtained with $h=\widehat{\eta}/100$.
 \begin{figure}[htbp]
 \includegraphics[width=0.95\textwidth]{grad_h_ell0x1.pdf}
-\caption{Numerical convergence study for $\ell=0.1$: (a) displacement at $t=1$ and (b) convergence rates}
+\caption{Numerical convergence study for $\widehat{\eta}=0.1$: (a) displacement at $\tau=2$ and (b) convergence rates} \label{fig:gradhell0x1}
 \end{figure}
-
-For the shock velocity $v\in(0.5, 1)$, the bar will solely break at the center where the two tensile waves transmitted from both ends encounter.
 \begin{figure}[htbp]
+\includegraphics[width=0.95\textwidth]{grad_h_ell0x2.pdf}
+\caption{Numerical convergence study for $\widehat{\eta}=0.2$: (a) displacement at $\tau=2$ and (b) convergence rates} \label{fig:gradhell0x2}
+\end{figure}
+Several remarks are given as follows.
+\begin{itemize}
+\item The superconvergence property is lost, since it can be observed that solutions with different discretization sizes no longer agree with each other exactly at the nodes.
+\item The quadratic convergence rate for the displacement and the damage may degenerate according to the value of the length scale $\widehat{\eta}$. As $\widehat{\eta}\to 0$ (see \cref{fig:gradhell0x1}), strain is more localized near $y=0$, which may lead to a lower convergence rate. In any case, convergence is ensured. We assume that $h=\widehat{\eta}/10$ gives sufficiently accurate results and hence will be used in all subsequent calculations.
+\end{itemize}
+
+\subsection{Energy dissipation at fracture}
+Consider the case when the damage criterion \eqref{eq:nuclecrit} will be first satisfied at $\tau=1$ when the two tensile waves encounter at the center. Fracture in gradient damage models is defined as the event when/where $\widehat{\alpha}_t(y)\approx 1$ somewhere in the bar. Numerically the value of 0.99 is used as the threshold. For the shock velocity $\widehat{v}=0.6$ and the length scale $\widehat{\eta}=0.1$, the final damage field at fracture is illustrated in \cref{fig:alphatf}.
+\begin{figure}[htbp]
+\centering
 \includegraphics[width=0.5\linewidth]{alpha.pdf}
-\caption{The final (when $\sup_\Omega\alpha>0.99$) damage field for $v=0.6$ and $\widehat{\ell}=0.1$.}
+\caption{Damage field at fracture with $\widehat{v}=0.6$ and $\widehat{\eta}=0.1$.} \label{fig:alphatf}
 \end{figure}
+where the analytical quasi-static optimal damage field is also indicated, see \cite{PhamAmorMarigoMaurini:2011}. Recall that the optimal damage field corresponds to the equivalent fracture toughness \eqref{eq:gcingd}. Since here the damage band obtained is wider than the optimal one, more energy is dissipated than the $\gc$ defined via \eqref{eq:gcingd}.
 
-Compared to the quasi-static situation, here more energy is dissipated when the bar breaks since the damage is more spread out than the analytical one. This overdissipation of approximately 30\% seems to be independent of the length ratio $\ell/L$ and the shock velocity. In this non-local gradient damage model, the energy dissipation at fracture is always finite at finite material internal length $\ell$ (which garantees that fracture will produce), contrary to the local strain softening model where no energy is dissipated at all \cite{Bazant:1985aa}.
+This overdissipation is analyzed for different length scales and shock velocities, see \cref{fig:Gc-ell}. The energy dissipated at fracture is normalized by the quasi-static optimal fracture toughness defined via \eqref{eq:gcingd}. We observe that the overdissipation of approximately 30\% seems to be independent of the length ratio $\eta/L$ and shows little dependence on the shock velocity. In any case, with a gradient damage modeling of fracture, fracture takes place always with a non-vanishing energy dissipation. Future work will be devoted to a better understanding of this over-dissipation.
 \begin{figure}[htbp]
+\centering
 \includegraphics[width=0.5\linewidth]{Gc-ell.pdf}
-\caption{Dissipated energy when the bar breaks.} \label{fig:Gc-ell}
+\caption{Dissipated energy when the bar breaks} \label{fig:Gc-ell}
 \end{figure}
 
-The instant of fracture varies depending on the length ration $\ell/L$, which illustrates a size effect non-existent in local strain-softening models. At fixed $\ell$ (a material property), the fracture threshold $t_\mathrm{f}$ can be delayed for shorter bars (\emph{smaller is stronger}). On the other hand, the behavior of longer bars is similar to that of a local model as the bar breaks as soon as the two tensile waves encounter. Comparison between these two models can be analyzed in the limit $\ell/L\to 0$.
+\subsection{Size effect}
+Recall that in local strain-softening models the instant of fracture coincides with the instant when the strain-softening mechanism is satisfied. This implies that the structural failure is size-independent. Consider first the case when fracture takes place at $\tau=1$ in local models, \emph{i.e.} for $\widehat{v}\in(0.5,1)$. The instant of fracture $\tau_\mathrm{f}$ for different length scales $\eta/L$ is illustrated in \cref{fig:tfell}, where the result $\tau_\mathrm{f}=1$ for local models is also indicated.
 \begin{figure}[htbp]
+\centering
 \includegraphics[width=0.5\linewidth]{tf-ell.pdf}
-\caption{Size effect.}
+\caption{Size effect illustrated by the instant of fracture for different length scales for $\widehat{v}\in(0.5,1)$} \label{fig:tfell}
 \end{figure}
+Several remarks are given as follows.
+\begin{itemize}
+\item With dynamic gradient damage models, the instant of fracture normalized by the factor $\frac{L}{c}$ depends on the length scale $\eta/L$, which illustrates a size effect. In local strain-softening models fracture takes place always at $t=\frac{L}{c}$, or $\tau=1$.
 
-For very high loading speeds $v>1$ and relatively small size ratio $\ell/L$, another size effect regime can be observed. The time of fracture scales linearly with the length ratio $\ell/L$, and inversely proportional to the loading speed $v$ with an exposant $-1.68$. We have
+\item At fixed internal length $\eta$ (material property), shorter bars delay ultimate fracture (\emph{smaller is stronger}), while for longer bars the fracture behavior is similar to that predicted by the local model. Comparison between these two models can be analyzed in the limit $\eta/L\to 0$. It will be performed in the next section.
+
+\item Contrary to quasi-static situations, this size effect depends also on the shock velocity. For higher velocities $\widehat{v}\approx 1^-$, the fracture instant approaches the local strain-softening model. The reverse is observed for lower shock speeds for $\widehat{v}\approx 0.5^+$.
+\end{itemize}
+
+For higher shock speeds $\widehat{v}>1$, fracture will take place immediately at $\tau=0$ for local models independently of the size of the bar. For gradient damage models, another size effect diagram is observed, see \cref{fig:sizeeffectv1}(a). In can be seen that longer bars behave exactly like the local strain-softening models, \emph{i.e.} $\tau_\mathrm{f}\to 0$. Again, fracture can be delayed for shorter bars. For small length ratios $\eta/L$, the instant of fracture $\tau_\mathrm{f}$ scales linearly with $\eta/L$. With $\eta/L=0.01$, the dependence of the instant of fracture on the shock velocity is analyzed in \cref{fig:sizeeffectv1}(b). According to these two diagrams in \cref{fig:sizeeffectv1}, we have the following estimation for small length scales $\eta/L\ll 1$ and large shock velocities $\widehat{v}\gg 1$
 \[
-\widehat{t}_\mathrm{f}\propto\frac{\ell}{L\cdot v^{1.68}}
+\tau_\mathrm{f}\propto\widehat{\eta}\cdot\widehat{v}^{\,-1.75}.
 \]
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.95\linewidth]{tf-ell2v.pdf}
-\caption{Size effect and Velocity effect for $v>1$}
+\includegraphics[width=\linewidth]{tf-ell2v.pdf}
+\caption{(a) Size effect illustrated by the instant of fracture for different length scales $\widehat{v}>1$. (b) Dependence of the instant of fracture on the shock velocity with $\eta/L=0.01$} \label{fig:sizeeffectv1}
 \end{figure}
 
-At $t=0.6$, we vary the length scale $\ell/L$ and compare results obtained with the local model and the gradient damage model.
+Using the definition of the rescaled time $\tau$, the linear scaling of the rescaled instant of fracture with respect to the length scale $\tau_\mathrm{f}\propto\widehat{\eta}$ leads to
+\begin{equation} \label{eq:tfc}
+t_\mathrm{f}\propto\frac{\eta}{c}.
+\end{equation}
+It can be seen that here the value of the internal length determines the actual structural failure instant and should be considered as a material parameter. Future work will be devoted to a theoretic understanding of \eqref{eq:tfc}.
+
+\subsection{Link with local strain-softening models}
+As indicated by \cref{fig:tfell,fig:sizeeffectv1}, the fracture behaviors of longer bars are similar to that predicted by the local strain-softening model. At $\tau=0.6$, the asymptotic behavior of the rescaled displacement when $\eta/L\to 0$ is indicated in \cref{fig:comp1d} for two shock velocities. The solution due to the local strain-softening model is also indicated.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{comp_1d.pdf}
-\caption{Asymptotic behavior when $\ell/L\to 0$.}
+\caption{Asymptotic behavior of the rescaled displacement when $\eta/L\to 0$ compared with the local strain-softening model: (a) $\widehat{v}=0.6$ and (b) $\widehat{v}=0.9$} \label{fig:comp1d}
 \end{figure}
 
-A slow convergence can be observed in the $L^2$-norm of the normalized displacement. In the limit $\ell/L\to 0$, the normalized displacement $\widehat{u}$ thus converges to that predictied by the local strain-softening model. The real displacement develops a discontinuity at $x=\frac{1}{2}$ with a jump of magnitude $4vu_0\inp{t-\frac{L}{2c}}$.
+A slow convergence can be observed in the $L^2$-norm of the normalized displacement, see \cref{fig:conv_ell}. The convergence rate shows dependence on the shock velocity. In the limit $\ell/L\to 0$, the normalized displacement $\widehat{u}$ thus converges to that predicted by the local strain-softening model.
 \begin{figure}[htbp]
+\centering
 \includegraphics[width=0.5\linewidth]{conv_ell.pdf}
-\caption{Convergence rate in $\ell/L$.}
+\caption{Convergence rate for the rescaled displacement when $\eta/L\to 0$} \label{fig:conv_ell}
 \end{figure}
+
+However note that this convergence toward the local strain-softening model can never be attained and should only be considered as a limiting behavior of dynamic gradient damage models, see also the discussion between the variational approach to fracture and gradient damage approaches in \cref{sec:twointerpretations}. Several remarks are given as follows.
+\begin{itemize}
+\item The above convergence is established for the normalized displacement. Using the definition \eqref{eq:uhat}, for $\widehat{v}\in(0.5,1)$ the real displacement tends to develop a sharp discontinuity at $x=0$ with a jump of magnitude
+\[
+\llbracket u_t(0)\rrbracket=4vu_\mc\inp{t-\frac{L}{c}}=4v\sqrt{\frac{3\gc}{8E\eta}}L\inp{t-\frac{L}{c}}.
+\]
+
+\item For very long bars $L\to\infty$, the two tensile waves can never arrive at the center and for $\widehat{v}\in(0.5,1)$ fracture will never take place, since $\llbracket u_t(0)\rrbracket\to 0$ when $L\to 0$.
+
+\item Very small internal lengths $\ell\to 0$ implies an infinite critical stress $\sigma_\mc\to\infty$ through \eqref{eq:sigc0}, hence again fracture can never take place. Instead $\ell$ should be considered as a material parameter, see \cref{sec:twointerpretations}.
+\end{itemize}
+
+\subsection*{Conclusion}
+As is demonstrated by numerical simulations, a gradient-damage approach of dynamic fracture leads a better modeling of crack nucleation in the following aspects:
+\begin{itemize}
+\item In the Griffith's theory crack nucleation is not possible for an initially sound body. In the gradient damage model (with a fixed internal length $\ell$), crack can nucleation and the damage initiation criterion is given by \eqref{eq:nuclecrit}.
+
+\item The internal length $\ell$ influences numerical convergence properties and needs further investigation concerning in particular the convergence rates.
+
+\item In gradient damage models, fracture takes place with a finite non-vanishing energy dissipation while in local strain-softening models it is not the case. In dynamics a systematic over-dissipation is observed for all internal lengths and needs further investigation.
+
+\item In local strain-softening models the fracture mechanism is size-independent. In gradient damage models the length ratio $\ell/L$ achieves a size effect in terms of the fracture instant. The general belief \emph{smaller is stronger} is verified.
+
+\item A certain link between gradient damage models and local strain-softening models is found by investigating the limit $\ell/L\to 0$. In such process, the fracture behavior of gradient damage models is qualitatively similar to that of local models, if the normalized displacement \eqref{eq:uhat} is considered.
+\end{itemize}
 
 \section{Antiplane Tearing} \label{sec:antiplane}
 This section discusses a particular numerical experiment tailored to highlight the properties of the dynamic gradient damage model while focusing on the \emph{initiation} and \emph{propagation} phases of defect evolution. Specifically, we will investigate the fracture mechanics criterion for an existing phase-field crack to \emph{initiate}, and then to \emph{propagate} along a certain path. This experiment constitutes a numerical verification of the generalized Griffith criterion given in \cref{prop:Ggriffithlaw} and its asymptotic interpretation outlined in \cref{prop:whenellpetit}. Recall that these properties can also be considered as a dynamic extension of the theoretic results established in \cite{SicsicMarigo:2013} for quasi-static gradient damage models. Another objective is to investigate the quasi-static limit of the dynamic model summarized in \cref{def:dynagraddama}. The thematic subjects covered here are thus summarized in \cref{tab:summanti}.
@@ -533,7 +588,7 @@ We remark that the use of the constitutive law \eqref{eq:at1} or a smaller inter
 The damage field $\alpha_t$ at $t=\SI{8e-5}{s}$ obtained with the constitutive law \eqref{eq:at2} is illustrated in \cref{fig:at2_ell_sigm}. Recall that the same mesh with $h=\SI{0.05}{mm}$ is used and should be sufficient for both calculations. Compared to Fig. \ref{fig:branching} obtained with \eqref{eq:at1}, the \emph{transition area} where $0<\alpha_t<1$ is more pronounced especially in Fig. \ref{fig:at2_ell_sigm} with $\eta=\SI{0.25}{mm}$, conforming to the above discussions on the damage band. Another reason behind a relatively large zone with intermediate damage values is due to the different stress-strain behavior of these two constitutive laws during a homogeneous traction experiment discussed in \cref{sec:ingredients}. In the \eqref{eq:at1} case the material possesses a purely elastic domain and damage doesn't evolve as long as the maximal stress is not reached. Then the material follows a classical softening behavior as damage grows from 0 to 1. However for the constitutive law \eqref{eq:at2} widely used in phase-field modeling, damage evolves the instant when the material is subjected to external loadings. An elastic domain is absent and stress-hardening is observed within the interval $[0,\frac{1}{4}]$. In this case the phase-field $\alpha_t$ loses its physical interpretation as \emph{damage}, and hence correctly handling and interpreting crack healing is not trivial, see \cref{sec:phasefields}.
 \begin{figure}[htbp]
 \centering
-\includegraphics[height=3cm]{AT2_ell_sigm.pdf}
+\includegraphics[width=0.9\textwidth]{AT2_ell_sigm.pdf}
 \caption{Damage field $\alpha_t$ at $t=\SI{8e-5}{s}$ ranging from 0 (blue) to 1 (red) for the dynamic branching problem. Comparison between (a) $\eta=\SI{0.25}{mm}$ and (b) $\eta\approx\SI{0.07}{mm}$ with the same constitutive model \eqref{eq:at2}} \label{fig:at2_ell_sigm}
 \end{figure}
 
@@ -591,7 +646,7 @@ Similar to \cref{sec:branching}, small differences can be observed between these
 If the initial crack $\Gamma_0$ is modeled via an initial damage field $\alpha^{-1}$, as for the previous dynamic crack branching example, no crack propagation is observed and the structures behaves as if the crack does not exist, \emph{i.e.} the crack closure phenomenon. The horizontal displacement $u_x$ obtained in both cases at $t\approx\SI{2.4e-5}{s}$ when the real notch case starts to propagate is presented in \cref{fig:alpha0}.
 \begin{figure}[htbp]
 \centering
-\includegraphics[height=5.5cm]{alpha0.pdf}
+\includegraphics[width=0.9\textwidth]{alpha0.pdf}
 \caption{Displacement $u_x$ ranging from \SI{0}{mm} (blue) to \SI{0.4}{mm} (red) for (a) the real notch induced initial crack and (b) the damage induced initial crack, at $t\approx\SI{2.4e-5}{s}$ when the crack starts to propagate in the real notch case (a)} \label{fig:alpha0}
 \end{figure}
 In the real notch induced initial crack case, \emph{contact condition is not prescribed} on the initial crack lips distanced by a finite height $\approx h$ in the geometry. As can be checked from Fig. \ref{fig:alpha0}, no material interpenetration happens in the real notch case and waves propagate in the plate through the lower impacted edge. However in the damage induced initial crack case, possible normal compressive stresses can indeed be transferred to the upper part of the plate, via the tension-compression asymmetry model \cite{FreddiRoyer-Carfagni:2010} which simulates a crack closure. Nevertheless, our simulation illustrates that this model also prohibits tangential relative movement along the crack lips, and a \emph{perfect adhesion} (no-slip condition) is observed, \emph{i.e.} exactly the opposite situation compared to the real notch case. This result is expected from our discussions on future improvement of these tension-compression formulations in \cref{sec:howtochoose}. The failure of these elastic energy decompositions to account for the actual damage value or its gradient approximating the crack normal has been reported by \cite{MayVignolletBorst:2015}. In the subsequent discussions we will only consider the case where the initial crack is introduced via a real notch in the geometry.
@@ -615,14 +670,14 @@ As can be seen from \cref{fig:crack_length_speed}, the crack speed is well bound
 When the prescribed impact velocity is increased from $v=\SI{16.5}{m/s}$ to $v=\SI{100}{m/s}$, successive crack branching and nucleation of cracks at the lower-right corner due to high tensile stresses are observed as can be seen from \cref{fig:v1d5}. The hydrostatic stress $p_t=\frac{1}{2}\tr\sig_t$ is presented in the deformed configuration and we verify that no damage is produced in the compression zones. To visualize the crack, elements with $\alpha_t>0.9$ are hidden in the graphical output. Similar phenomena have been reported in \cite{HofackerMiehe:2012} with $v=\SI{50}{m/s}$. Recall that in the Kalthoff-Winkler experiment a failure-mode transition from mode-\RN{1} to mode-\RN{2} is observed when the impact velocity increases. The discrepancy between our simulation and the experiment is due to the material constitutive behavior. As a material parameter, the tension-compression formulation of \cite{FreddiRoyer-Carfagni:2010} coupled with a purely elastic model favors propagation of mode-\RN{1} cracks in the direction perpendicular to the maximal principle stress. On the contrary, the high strength steel used in the experiment develops a considerable plastic zone along the mode-\RN{2} crack and an elastic-plastic-damage model should be more suitable, see for example the work of \cite{MieheHofackerSchaenzelAldakheel:2015}. Nevertheless, experimentally more bifurcations are indeed observed for brittle materials such as glass when the impact velocity is increased, which is known as a \emph{velocity effect} in \cite{Schardin:2012}.
 \begin{figure}[htbp]
 \centering
-\includegraphics[height=5.5cm]{kalthoff_TC6.pdf}
+\includegraphics[width=0.9\textwidth]{kalthoff_TC6.pdf}
 \caption{Simulation results at $t=\SI{4e-5}{s}$ with an impact speed $v=\SI{100}{m/s}$: (a) the damage field $\alpha_t$ ranging from 0 (blue) to 1 (red), and (b) the hydrostatic stress $\frac{1}{2}\tr\sig_t$ ranging from less than \SI{-1e4}{MPa} (blue) to more than \SI{1.5e3}{MPa} (red). The tension-compression asymmetry model \cite{FreddiRoyer-Carfagni:2010} is used} \label{fig:v1d5}
 \end{figure}
 
 On the other hand, the widely used elastic energy density split proposed in \cite{MieheHofackerWelschinger:2010} produces diffusive damage in compression zones. From \cref{fig:v1d5_miehe}, we observe appearance of damage at the lower-left corner and at the lower surface of the initial crack edge, even though they are both under compression. This phenomena is conforming to our previous theoretical analysis of this model on a homogeneous uniaxial compression experiment in \cref{sec:uniaxial}, where it is found that damage grows even though the compressive stress is still increasing in its absolute value.
 \begin{figure}[htbp]
 \centering
-\includegraphics[height=5.5cm]{kalthoff_TC5.pdf}
+\includegraphics[width=0.9\textwidth]{kalthoff_TC5.pdf}
 \caption{Simulation results at $t=\SI{4e-5}{s}$ with an impact speed $v=\SI{100}{m/s}$: (a) the damage field $\alpha_t$ ranging from 0 (blue) to 1 (red), and (b) the hydrostatic stress $\frac{1}{2}\tr\sig_t$ ranging from less than \SI{-1e4}{MPa} (blue) to more than \SI{1.5e3}{MPa} (red). The tension-compression asymmetry model \cite{MieheHofackerWelschinger:2010} is used} \label{fig:v1d5_miehe}
 \end{figure}
 
@@ -663,7 +718,7 @@ thanks to the Irwin's formula under plane stress condition. The material interna
 \paragraph{Simulation results and discussion} The simulations results are illustrated in \cref{fig:siggregoire}.
 \begin{figure}[htbp]
 \centering
-\includegraphics[height=3.7cm]{gregoire_7080.pdf}
+\includegraphics[width=\textwidth]{gregoire_7080.pdf}
 \caption{Hydrostatic stress $p_t=\frac{1}{2}\tr\sig_t$ ranging from less than \SI{-30}{MPa} (blue) to more than \SI{30}{MPa} (red) for (a) $\sigma_\mathrm{m}=\SI{70}{MPa}$ at $t\approx\SI{1.6e-4}{s}$, and (b) $\sigma_\mathrm{m}=\SI{80}{MPa}$ at $t\approx\SI{1.8e-4}{s}$, in the crack arrest problem} \label{fig:siggregoire}
 \end{figure}
 In both cases crack arrest is reproduced due to the high compression area under the right circular hole. In the case when the maximal tensile stress is set to $\sigma_\mathrm{m}=\SI{70}{MPa}$, secondary crack nucleation is observed at the right circular hole boundary under high tension. This phenomena is not observed in experiments and hence the critical stress value of $\sigma_\mathrm{m}=\SI{70}{MPa}$ is thus underestimated. In the $\sigma_\mathrm{m}=\SI{80}{MPa}$ case, no secondary crack nucleation is found. This result again highlights the role played by the internal length $\ell$ as a material parameter.
