@@ -58,9 +58,9 @@ For simplex finite elements (triangular and tetrahedral elements) the Jacobian o
 \vec{F}_\mathrm{int}^\me=\abs{\Omega_\me}\vec{B}^\mT\sig_\mathrm{eff}=\abs{\Omega_\me}\vec{B}^\mT(\mathsf{a}_\mathrm{eff}\sig_0^++\sig_0^-)\,,
 \end{equation}
 where $\abs{\Omega_\me}$ denotes the measure (area of volume) of $\Omega_\me$ and $\mathsf{a}_\mathrm{eff}$ stands for the effective stiffness degradation
-\[
+\begin{equation} \label{eq:aeff}
 \mathsf{a}_\mathrm{eff}=\frac{1}{\abs{\Omega_\me}}\int_{\Omega_\me}\mathsf{a}(\vec{N}_\alpha\dvec)\dx.
-\]
+\end{equation}
 Explicit expression of $\mathsf{a}_\mathrm{eff}$ can be readily computed and are given as follows.
 \begin{itemize}
 \item Triangular elements
@@ -269,7 +269,7 @@ Using the PETSc library, both the implicit and explicit time-stepping \cref{algo
 
 The explicit time-stepping procedure for the dynamic gradient damage model summarized in \cref{algo:explicit} is also implemented in EPX, an explicit dynamics program dedicated to transient phenomena involving fluid-structure interaction \cite{EPX:2015}. Here all the tension-compression asymmetry models discussed in \cref{sec:TC} are implemented. The large-displacement extension, see \cref{sec:extensions}, is also by default activated in the software.
 
-\subsection{Details of implementation in EPX}
+\subsection{Details of implementation in EPX} \label{sec:epx}
 \paragraph{Initialization}
 The initialization \texttt{INIT\_ENDOGRAD} of the gradient damage model is performed at the end of the routine \texttt{initia.ff}. It has several objectives
 \begin{itemize}

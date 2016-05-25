@@ -4,7 +4,13 @@
 
 In this chapter the numerical discrete dynamic gradient damage model summarized in \cref{algo:implicit,algo:explicit} is applied to investigate numerous academic or real-world fracture problems. Since this part constitutes an essential part of the present work, the organization of these simulation results is described as follows:
 \begin{itemize}
-\item \textbf{Ordering}: the fracture problems considered are ordered in terms of \emph{computational complexity}. In other words, lower dimensional problems (1-d and 2-d) are presented before higher dimensional problems (3-d). The FEniCS implementation is used first to analyze some academic problems under the small displacement hypothesis: the crack nucleation problem in a one-dimensional bar (\cref{sec:1d}), the 2-d scalar antiplane tearing problem (\cref{sec:antiplane}) and the 2-d plane crack kinking problem (\cref{sec:kinking}). Afterwards, real-world dynamic fracture problems are considered in the EPX software environment, which includes the 2-d plane crack branching problem (\cref{sec:branching}), the Kalthoff experiment (\cref{sec:kalthoff}), the crack arrest problem (\cref{sec:gregoire}), the 3-d Brazilian test on a cylinder (\cref{sec:brazilian}), the 3-d dynamic fracture problem of a L-shaped concrete specimen (\cref{sec:L-specimen} and the CEA impact test on beams (\cref{sec:beam}).
+\item \textbf{Ordering}: the fracture problems considered are ordered in terms of \emph{computational complexity}. In other words, lower dimensional problems (1-d and 2-d) are presented before higher dimensional problems (3-d). The FEniCS implementation is used first to analyze some academic problems under the small displacement hypothesis: the crack nucleation problem in a one-dimensional bar (\cref{sec:1d}), the 2-d scalar antiplane tearing problem (\cref{sec:antiplane}) and the 2-d plane crack kinking problem (\cref{sec:kinking}). Afterwards, real-world dynamic fracture problems are considered in the EPX software environment, which includes the 2-d plane crack branching problem (\cref{sec:branching}), the Kalthoff experiment (\cref{sec:kalthoff}), the crack arrest problem (\cref{sec:gregoire}). Application to concrete structures are considered at the end: the dynamic fracture problem of a L-shaped concrete specimen (\cref{sec:L-specimen}), the 3-d Brazilian test on a cylinder (\cref{sec:brazilian}) and the CEA impact test on beams (\cref{sec:beam}). If one focuses on different phases of crack evolution, the following diagram can be obtained, while \cref{sec:L-specimen,sec:brazilian,sec:beam} constitute an application of the dynamic gradient damage model to real concrete structures.
+\begin{center}
+\begin{tabular}{ccccccc}
+Nucleation &$\to$& Propagation &$\to$& Kinking \& Branching &$\to$& Arrest \\
+\cref{sec:1d} && \cref{sec:antiplane} && \cref{sec:kinking,sec:branching,sec:kalthoff} && \cref{sec:gregoire}
+\end{tabular}
+\end{center}
 
 \item \textbf{Objectives}: using the classification given in \cref{sec:scope}, the scope of these simulations is to carry out an investigation of several damage constitutive laws and tension-compression asymmetry formulations (link with phase-field approaches represented by $\alpha\leftrightarrow\phi$), to provide a better understanding of gradient-damage modeling of fracture $\nabla\alpha\to\Gamma$) and to compare the simulation results with the experimental data (simulation validation). The precise objectives and the thematic subjects covered will be as usual recalled at the beginning of each section.
 \end{itemize}
@@ -15,7 +21,7 @@ According to the definition of the thematic subjects given in \cref{sec:scope}, 
 \caption{Thematic subjects covered in the numerical simulations of this chapter} \label{tab:summsim}
 \begin{tabular}{cccc} \toprule
 & $\alpha\leftrightarrow\phi$ & $\nabla\alpha\to\Gamma$ & Experimental validation \\ \midrule
-Numerics & \cref{sec:branching,sec:kalthoff} & \cref{sec:1d,sec:antiplane,sec:kinking,sec:branching,sec:kalthoff,sec:brazilian} & \cref{sec:gregoire,sec:L-specimen,sec:beam} \\ \bottomrule
+Numerics & \cref{sec:branching,sec:kalthoff,sec:brazilian} & \cref{sec:1d,sec:antiplane,sec:kinking,sec:branching,sec:kalthoff,sec:brazilian} & \cref{sec:gregoire,sec:L-specimen,sec:beam} \\ \bottomrule
 \end{tabular}
 \end{table}
 
@@ -214,7 +220,7 @@ However note that this convergence toward the local strain-softening model can n
 \subsection*{Conclusion}
 As is demonstrated by numerical simulations, a gradient-damage approach of dynamic fracture leads a better modeling of crack nucleation in the following aspects:
 \begin{itemize}
-\item In the Griffith's theory crack nucleation is not possible for an initially sound body. In the gradient damage model (with a fixed internal length $\ell$), crack can nucleation and the damage initiation criterion is given by \eqref{eq:nuclecrit}.
+\item In the Griffith's theory crack nucleation is not possible for an initially sound body. In the gradient damage model (with a fixed internal length $\ell$), crack can nucleate and the damage initiation criterion is given by \eqref{eq:nuclecrit}.
 
 \item The internal length $\ell$ influences numerical convergence properties and needs further investigation concerning in particular the convergence rates.
 
@@ -226,7 +232,7 @@ As is demonstrated by numerical simulations, a gradient-damage approach of dynam
 \end{itemize}
 
 \section{Antiplane Tearing} \label{sec:antiplane}
-This section discusses a particular numerical experiment tailored to highlight the properties of the dynamic gradient damage model while focusing on the \emph{initiation} and \emph{propagation} phases of defect evolution. Specifically, we will investigate the fracture mechanics criterion for an existing phase-field crack to \emph{initiate}, and then to \emph{propagate} along a certain path. This experiment constitutes a numerical verification of the generalized Griffith criterion given in \cref{prop:Ggriffithlaw} and its asymptotic interpretation outlined in \cref{prop:whenellpetit}. Recall that these properties can also be considered as a dynamic extension of the theoretic results established in \cite{SicsicMarigo:2013} for quasi-static gradient damage models. Another objective is to investigate the quasi-static limit of the dynamic model summarized in \cref{def:dynagraddama}. The thematic subjects covered here are thus summarized in \cref{tab:summanti}.
+In \cref{sec:1d} the crack \emph{nucleation} is considered and a stress-based criterion \eqref{eq:nuclecrit} governs the damage initiation. This section discusses a particular numerical experiment tailored to highlight the properties of the dynamic gradient damage model while focusing on the \emph{initiation} and \emph{propagation} phases of defect evolution. Specifically, we will investigate the fracture mechanics criterion for an existing phase-field crack to \emph{initiate}, and then to \emph{propagate} along a certain path. This experiment constitutes a numerical verification of the generalized Griffith criterion given in \cref{prop:Ggriffithlaw} and its asymptotic interpretation outlined in \cref{prop:whenellpetit}. Recall that these properties can also be considered as a dynamic extension of the theoretic results established in \cite{SicsicMarigo:2013} for quasi-static gradient damage models. Another objective is to investigate the quasi-static limit of the dynamic model summarized in \cref{def:dynagraddama}. The thematic subjects covered here are thus summarized in \cref{tab:summanti}.
 \begin{table}[htbp]
 \centering
 \caption{Thematic subjects covered in this section} \label{tab:summanti}
@@ -480,7 +486,7 @@ Thanks to Griffith's law (\cref{prop:Ggriffithlaw,prop:whenellpetit}) in the gra
 A non-structured triangular mesh is used to discretize the domain $\Omega$. The damage constitutive law \eqref{eq:at1} is used. We use the explicit time stepping procedure outlined in \cref{algo:explicit} for the solving of the dynamic $(\vec{u},\alpha)$ problem. The material, loading and numerical parameters used in this problem are summarized in \cref{tab:kinking}. 
 \begin{table}[htbp]
 \centering
-\caption{Material, loading and numerical parameters for the plane crack kinking experiment.} \label{tab:kinking}
+\caption{Material, loading and numerical parameters for the plane crack kinking experiment} \label{tab:kinking}
 \begin{tabular}{lllllll} \toprule
 $\rho$ & $E$ & $\nu$ & $\gc$ & $\eta$ & $\overline{G}$ & $h$ \\ \midrule
 1 & 1 & 0.2 & 1 & 5\% or 1\% & 1.1 or 1.5 & $\eta/5$ \\ \bottomrule
@@ -534,7 +540,7 @@ Numerics & & \rightthumbsup & \rightthumbsup & \rightthumbsup \\ \bottomrule
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.55\linewidth]{plateres.pdf}
-\caption{Geometry and loading conditions for the dynamic crack branching problem. Damage field $\alpha_t$ at $t=\SI{8e-5}{s}$ ranging from 0 (gray) to 1 (white).} \label{fig:branching}
+\caption{Geometry and loading conditions for the dynamic crack branching problem. Damage field $\alpha_t$ at $t=\SI{8e-5}{s}$ ranging from 0 (gray) to 1 (white)} \label{fig:branching}
 \end{figure}
 Due to symmetry only the upper half part is modeled. The initial crack $\Gamma_0$ is introduced via an initial damage field $\alpha^{-1}$. Material parameters are borrowed from \cite{BordenVerhooselScottHughesLandis:2012} where the internal length $\eta$ is set to $\SI{0.25}{mm}$. We use a structured quadrilateral elements of equal discretization spacing $h\approx\SI{0.045}{mm}$ in both directions achieving approximately 1 million elements. The current time increment is calculated based on the CFL condition with a security factor of 0.8. An unstructured mesh should be in general preferred. However the original analysis on mesh-induced anisotropy is conducted on structured triangular elements \cite{Negri:1999}. Furthermore the numerical study of \cite{LorentzGodard:2011} shows that the crack direction is insensitive to the orientation of a structured quadrilateral grids. We firstly use the damage constitutive law \eqref{eq:at1}. The symmetric tension-compression formulation is also adopted. This choice is justified by an \emph{a posteriori} verification of non-interpenetration of matter. The simulation result is illustrated in \cref{fig:branching} by the damage field $\alpha_t$ at $t=\SI{8e-5}{s}$ ranging from 0 (gray) to 1 (white). Similar contours have been obtained in \cite{BordenVerhooselScottHughesLandis:2012,SchlueterWillenbuecherKuhnMueller:2014}.
 
@@ -689,7 +695,7 @@ The tension-compression split based on the trace of the total strain \cite{AmorM
 \end{figure}
 
 \subsection*{Conclusion}
-Different tension-compression asymmetry formulations in Sect. \ref{sec:TC} are analyzed numerically here. Some physical properties derived through a uniaxial traction experiment are verified in actual dynamic fracture problems. The elastic energy split proposed by \cite{FreddiRoyer-Carfagni:2010} is recommended for brittle materials because homogeneous (diffusive) damage does not occur under compression. However these models should be modified to correctly account for the unilateral contact condition. A better strategy may be to use a transition algorithm between the phase-field and the sharp-interface description of cracks.
+Different tension-compression asymmetry formulations in Sect. \ref{sec:TC} are analyzed numerically here. Some physical properties derived through a uniaxial traction experiment are verified in actual dynamic fracture problems. The elastic energy split proposed by \cite{FreddiRoyer-Carfagni:2010} is recommended for brittle materials because homogeneous (diffusive) damage does not occur under compression. However these models should be modified to correctly account for the unilateral contact condition. A better strategy may be to use a transition algorithm between the smeared and the sharp-interface description of cracks.
 
 \section{Crack Arrest Due to the Presence of a Hole} \label{sec:gregoire}
 This section is devoted to a two-dimensional experimental validation of the dynamic gradient damage model for brittle materials. The thematic subjects covered here are thus summarized in \cref{tab:summhole}.
@@ -730,9 +736,7 @@ In both cases crack arrest is reproduced due to the high compression area under 
 
 As the crack front is not explicitly tracked in phase-field modeling of fracture, here the current crack tip is located on the contour $\alpha=0.9$ at the farthest point in the $x$-direction. We then compare the numerical crack tip abscissa evolution with the experimental one \cite{HaboussaGregoireElguedjMaigreCombescure:2011}, in \cref{fig:cracktip}. Very good agreement can be found in the crack initiation and propagation phase. The crack arrest predicted is slightly conservative compared to the experimental one. This could be due to the small deviation of the initial crack from the symmetry axis in the experiment \cite{HaboussaGregoireElguedjMaigreCombescure:2011}. Meanwhile the maximal tensile stress $\sigma_\mathrm{m}\geq\SI{80}{MPa}$ could be considered as an adjusting parameter of the model. More simulations could be performed to determine its best value, at a price of using a more refined mesh since $\ell\propto1/\sigma_\mathrm{m}^2$ according to \eqref{eq:sigc0}.
 
-\paragraph{Conclusion} The dynamic gradient damage model outlined in \cref{def:dynagraddama} along with the \eqref{eq:at1} damage constitutive law and the tension-compression model of \cite{FreddiRoyer-Carfagni:2010} is experimentally validated for PMMA specimen. Further studies will focus on applications to concrete structures.
-
-\section{Brazilian Test} \label{sec:brazilian}
+\paragraph{Conclusion} The dynamic gradient damage model outlined in \cref{def:dynagraddama} along with the \eqref{eq:at1} damage constitutive law and the tension-compression model of \cite{FreddiRoyer-Carfagni:2010} is experimentally validated for PMMA specimens. Further studies will focus on applications to concrete structures.
 
 \section{Dynamic Fracture of L-Shaped Concrete Specimen} \label{sec:L-specimen}
 This dynamic tensile test on a L-shaped concrete specimen is proposed in \cite{OzboltBedeSharmaMayer:2015}. Its geometry and loading conditions are summarized in Fig. \ref{fig:L-specimen}. A hard device (displacement control) is applied on the lower left arm \SI{30}{mm} from the edge through a disc of $D=\SI{45}{mm}$ to suppress if possible local damages due to concentration. A quadrilateral mesh refined near \emph{a priori} known crack propagation region is used, arriving at approximately quadrilateral \num{200000} elements. The concrete material properties (density, elastic moduli and fracture toughness) are taken from \cite{OzboltBedeSharmaMayer:2015}.
@@ -804,5 +808,86 @@ It should be noted that these calculations have been performed with a relatively
 %\end{subfigure}
 \caption{Influence of the internal length $\ell$ on damage field and global structural response at $v=\SI{1.5}{m/s}$.}
 \end{figure}
+
+\section{Three-Dimensional Brazilian Splitting Test} \label{sec:brazilian}
+This section is devoted to three-dimensional numerical simulations of the Brazilian tests on concrete cylinders. Due to an increasing compressive load applied along the diameter direction, eventually fracture takes place along the loading direction and the cylinder splits vertically into two parts. One objective here is to verify the EPX implementation of the explicit time-stepping procedure summarized in \cref{algo:explicit} during a three-dimensional calculation. Furthermore, different tension-compression asymmetry formulations analyzed in \cref{sec:TC} are compared with respect to their aptitude to reproduce such fracture pattern. The size effect reported by various authors such as \cite{RoccoGuineaPlanasElices:1999,RuizOrtizPandolfi:2000} is also investigated using the dynamic gradient damage model. The thematic subjects covered here are thus summarized in \cref{tab:summbrazilian}.
+\begin{table}[htbp]
+\centering
+\caption{Thematic subjects covered in this section} \label{tab:summbrazilian}
+\begin{tabular}{ccccc} \toprule
+& Going dynamical & $\alpha\leftrightarrow\phi$ & $\nabla\alpha\to\Gamma$ & Experimental validation \\ \midrule
+Theoretics & & & & \\
+Numerics & & \rightthumbsup & \rightthumbsup & \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Problem setting} The geometry and loading conditions are summarized in \cref{fig:brazilian}. Two diameters will be considered here to investigate possible size effects: $D=\SI{500}{mm}$ and $D=\SI{200}{mm}$. The bearing strips are introduced to prevent ill-posed concentration. In this work they are assumed to be a part of the cylinder for the sake of simplicity, however more realistic modeling involving unilateral contact conditions is possible. The compressive loads are prescribed by a given velocity evolution $\vec{V}_t$ on the outer surface of the strips. In this work the dynamic effect is not the main objective and hence a relatively low loading velocity is used $\norm{\vec{V}_t}=\SI{\pm 0.1}{m/s}$. An initial rise time of \SI{1e-6}{s} is introduced to avoid velocity shocks.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.4\textwidth]{brazilian.pdf}
+\caption{Three-dimensional Brazilian test on a concrete cylinder characterized by its diameter $D$ and its thickness $W$. The compressive loads modeled as prescribed velocities are transmitted to the cylinder along the vertical diameter direction via two bearings strips of width $D/16$.} \label{fig:brazilian}
+\end{figure}
+The material parameters for a typical concrete are borrowed from \cite{RuizOrtizPandolfi:2000}. Numerically an unstructured tetrahedral mesh is used to discretize the cylinder volume. A uniform mesh size of $h\approx\SI{10}{mm}$ leads to approximately \num{1e5} finite elements for $D=\SI{500}{mm}$ and \num{25000} elements for the small cylinder with $D=\SI{200}{mm}$. The material and numerical parameters are summarized in \cref{tab:brazilian}. The damage constitutive law \eqref{eq:at1} is used. Using the identification of the equivalent fracture toughness \eqref{eq:gcingd}, the internal length $\eta$ can be derived from $\gc$ and $\sigma_\mc$, which gives $\eta\approx \SI{46}{mm}$.
+\begin{table}[htbp]
+\centering
+\caption{Material and numerical parameters for the Brazilian test} \label{tab:brazilian}
+\begin{tabular}{llllll} \toprule
+$\rho$ & $E$ & $\nu$ & $\gc$ & $\sigma_\mc$ & $h$ \\ \midrule
+\SI{2450}{kg/m^3} & \SI{37.9}{GPa} & 0.15 & \SI{66.2}{N/m} & \SI{4.53}{MPa} & \SI{10}{mm} \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Fracture pattern predicted by different tension-compression models}
+Pursuing the work in \cref{sec:kalthoff}, the use of different tension-compression asymmetry formulations as discussed in \cref{sec:TC} are investigated here with respect to their aptitude to reproduce the desired vertical splitting fracture pattern of the cylinder. As a genuine material parameter, the choice of these formulations in a numerical simulation should be justified by experimental facts. In this work two particular models are compared: the approach proposed by \cite{AmorMarigoMaurini:2009} by separating the deviatoric and spheric part of the sound elastic energy and the model proposed by \cite{FreddiRoyer-Carfagni:2010} which is recommended following our analyses in \cref{sec:kalthoff}. The big cylinder with $D=\SI{500}{mm}$ is first used. The final fracture pattern obtained by these two formulations is indicated in \cref{fig:brazilian_tc}.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{brazilian_TC.pdf}
+\caption{Fracture pattern represented by the damage field ranging from 0 (blue) to 1 (red) for the Brazilian splitting test obtained by two tension-compression asymmetry models: (a) the model of \cite{AmorMarigoMaurini:2009} and (b) the model of \cite{FreddiRoyer-Carfagni:2010}} \label{fig:brazilian_tc}
+\end{figure}
+Several remarks are given as follows.
+\begin{itemize}
+\item With the model proposed by \cite{AmorMarigoMaurini:2009}, damage is concentrated where the loads are applied. This experiment illustrates its deficiency to describe the microscopic/macroscopic fracture mechanism of concrete.
+
+\item Vertical splitting is reproduced by the formulation of \cite{FreddiRoyer-Carfagni:2010}. It illustrates that the damage mechanism in concrete is indeed induced by local tensile stresses. It can be seen that fracture is homogeneous in the thickness direction. A two-dimensional modeling could suffice. In this work the obtained three-dimensional simulation results verify the generality of the variational formulation outlined in \cref{def:dynagraddama} and the robustness of the EPX implementation in \cref{sec:epx}.
+\end{itemize}
+
+\subsection{Dynamic evolution of global quantities and fields}
+The evolution of global quantities and fields is now investigated. A useful reference time scale $t_\mathrm{ref}=D/c$, which corresponds to the time for the elastic wave to travel across the cylinder diameter, is used to normalize the time variable. First, we are interested in the temporal evolution of the applied vertical load $F_t$ transmitted through the bearing strip. From basic static elastic analyses, the load $F_t$ induces a maximum splitting tensile stress $\sigma$ at the center of the diameter which is given by
+\begin{equation} \label{eq:sigmaFWD}
+\sigma=\frac{2F}{\pi WD}
+\end{equation}
+According to the damage criterion \eqref{eq:localdamagefirstorder} for an initially sound body (as analyzed in \cref{sec:1d}), damage or fracture is expected to take place at the center where the criterion is firstly satisfied. A critical load $F_\mathrm{ref}$ which corresponds to the critical stress $\sigma_\mc$ in \eqref{eq:sigmaFWD} can thus be defined. It is used for normalization. The evolution for $t\mapsto F_t$ is illustrated in \cref{fig:brazilian_ft}. Some snapshots of the damage field at some particular instants are taken to complement the curve.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.5\textwidth]{brazilian-ft.pdf}
+\caption{Temporal evolution of the applied load transmitted through the bearing strip with or without activation of the erosion mechanism available in the EPX software, illustrated by snapshots of the damage field ranging from 0 (blue) to 1 (red)} \label{fig:brazilian_ft}
+\end{figure}
+
+The curve labeled ``Without erosion'' is first analyzed. It can be verified that damage begins to evolve at the center when the splitting stress induced by the transmitted load $F_t$ attains the material critical stress. As $F_t$ increases, damage develops and propagates into a crack band along the vertical diameter direction until a complete split of the cylinder. However the temporal evolution of $F_t$ requires further investigation:
+\begin{itemize}
+\item The applied load attains a peak of approximately $1.2F_\mathrm{ref}$, which may due to structural hardening effects between the damage initiation when $F_t\approx F_\mathrm{ref}$ and the onset of fracture.
+
+\item After the peak, unexpectedly the load is not instantaneously decreasing to zero. However, its temporal evolution indicates that there exists still some residual stiffness along the vertical crack. Remark that the loading condition is very similar to the edge-cracked plate experiment studied in \cref{sec:kalthoff}, \emph{i.e.} sliding loads parallel to an existing or established gradient-damage crack. Continuing our analyses there, it is suspected that this peculiar temporal evolution is again due to the deficiency of the existing tension-compression models to represent a genuine unilateral condition, see \cref{sec:howtochoose}. In particular, the crack normal direction is not considered in these models, hence some residual stresses may be present parallel to the crack. The definition of such normal vectors, nevertheless, is not trivial due to the smeared description. We reiterate the conclusion of \cref{sec:kalthoff} that a better strategy may be to use a transition algorithm between the smeared and the sharp-interface description of cracks.
+
+\item A possible remedy within the EPX environment may be to activate the ``erosion'' mechanism. When a crack is detected (for example when the effective degradation \eqref{eq:aeff} approaches zero within a tolerance) for a certain finite element, its contribution to the internal force vector \eqref{eq:Fint} will be ignored. By doing so, an approximative stress-free condition is thus by default prescribed along the crack lip. With the activation of the erosion mechanism, the fracture pattern is not altered however as can be seen from \cref{fig:brazilian_ft}, the transmitted load quickly decreases to zero after the peak value, which corresponds to ultimate structural failure. Future work will be devoted to a thorough investigation of the erosion mechanism to take into account for instance unilateral effects.
+\end{itemize}
+
+Temporal evolution of global energetic quantities is illustrated in \cref{fig:brazilian_e}. It can be seen that initially inertia is not important which in turn ensures the validity of \eqref{eq:sigmaFWD}. During crack nucleation and propagation along the diameter, the kinetic energy suddenly develops and becomes comparable to the elastic energy, which illustrates the unstable or brutal nature of the crack propagation phase. A full dynamic analysis is indeed more appropriate for this Brazilian test.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.5\textwidth]{brazilian-energy.pdf}
+\caption{Temporal evolution of global energetic quantities with the erosion mechanism} \label{fig:brazilian_e}
+\end{figure}
+
+\subsection{Size effect}
+A size effect is present for the present Brazilian test following the analyses in \cite{RoccoGuineaPlanasElices:1999,RuizOrtizPandolfi:2000}. In particular, smaller cylinders should produce higher peak loads (normalized by $F_\mathrm{ref}$ determined by the material critical stress and the diameter) at the onset of fracture, confirming the commonly acknowledged idea \emph{smaller is stronger}. On the other hand, bigger cylinders should break as soon as the critical material stress is reached. The temporal evolution of the applied load $F_t$ for two concrete cylinders with different diameters are indicated in \cref{fig:brazilian_size}. It can be seen that the fracture pattern remains similar. The above size effect is numerically verified and reproduced by the dynamic gradient damage model. The existence of such size effects is due to the introduction of the material internal length $\ell$, see also the work on crack nucleation of a bar in \cref{sec:1d}.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.5\textwidth]{brazilian-size.pdf}
+\caption{Temporal evolution of the applied load transmitted through the bearing strip for two concrete cylinders with different diameters} \label{fig:brazilian_size}
+\end{figure}
+
+\subsection*{Conclusion}
+In terms of fracture pattern prediction for concrete structures, the tension-compression model proposed by \cite{FreddiRoyer-Carfagni:2010} seems to be a good candidate compared to other choices. However the crack normal vector is not taken into account and residual stiffness may be present along and parallel to the crack lip. The ``erosion'' mechanism available in the EPX software could produce a real crack however its use need further investigation. Size effect for Brazilian tests on concrete cylinders is reproduced by the gradient damage model. The existence of such experimentally validated size effects is due to the introduction of the material internal length $\ell$.
 
 \section{CEA Impact Test on Beams} \label{sec:beam}
