@@ -4,7 +4,7 @@
 
 In this chapter the numerical discrete dynamic gradient damage model summarized in \cref{algo:implicit,algo:explicit} is applied to investigate numerous academic or real-world fracture problems. Since this part constitutes an essential part of the present work, the organization of these simulation results is described as follows:
 \begin{itemize}
-\item \textbf{Ordering}: the fracture problems considered are ordered in terms of \emph{computational complexity}. In other words, lower dimensional problems (1-d and 2-d) are presented before higher dimensional problems (3-d). The FEniCS implementation is used first to analyze some academic problems under the small displacement hypothesis: the crack nucleation problem in a one-dimensional bar (\cref{sec:1d}), the 2-d scalar antiplane tearing problem (\cref{sec:antiplane}) and the 2-d plane crack kinking problem (\cref{sec:kinking}). Afterwards, real-world dynamic fracture problems are considered in the EPX software environment, which includes the 2-d plane crack branching problem (\cref{sec:branching}), the Kalthoff experiment (\cref{sec:kalthoff}), the crack arrest problem (\cref{sec:gregoire}). Application to concrete structures are considered at the end: the dynamic fracture problem of a L-shaped concrete specimen (\cref{sec:L-specimen}), the 3-d Brazilian test on a cylinder (\cref{sec:brazilian}) and the CEA impact test on beams (\cref{sec:beam}). If one focuses on different phases of crack evolution, the following diagram can be obtained, while \cref{sec:L-specimen,sec:brazilian,sec:beam} constitute an application of the dynamic gradient damage model to real concrete structures.
+\item \textbf{Ordering}: the fracture problems considered in this chapter are ordered in terms of \emph{computational complexity}. The FEniCS implementation is used first to analyze some academic problems under the small displacement hypothesis: the crack nucleation problem in a one-dimensional bar (\cref{sec:1d}), the 2-d scalar antiplane tearing problem (\cref{sec:antiplane}) and the 2-d plane crack kinking problem (\cref{sec:kinking}). Afterwards, real-world dynamic fracture problems are considered in the EPX software environment: the 2-d plane crack branching problem (\cref{sec:branching}), the Kalthoff experiment (\cref{sec:kalthoff}) and the crack arrest problem (\cref{sec:gregoire}). Application to concrete structures are considered at the end: the Brazilian test on concrete cylinders (\cref{sec:brazilian}), the dynamic fracture problem of a L-shaped concrete specimen (\cref{sec:L-specimen}) and the CEA impact test on beams (\cref{sec:beam}). If one focuses on different phases of crack evolution, the following diagram can be obtained. \cref{sec:brazilian,sec:L-specimen,sec:beam} constitute an application of the dynamic gradient damage model to real concrete structures and are not listed in the diagram.
 \begin{center}
 \begin{tabular}{ccccccc}
 Nucleation &$\to$& Propagation &$\to$& Kinking \& Branching &$\to$& Arrest \\
@@ -21,7 +21,7 @@ According to the definition of the thematic subjects given in \cref{sec:scope}, 
 \caption{Thematic subjects covered in the numerical simulations of this chapter} \label{tab:summsim}
 \begin{tabular}{cccc} \toprule
 & $\alpha\leftrightarrow\phi$ & $\nabla\alpha\to\Gamma$ & Experimental validation \\ \midrule
-Numerics & \cref{sec:branching,sec:kalthoff,sec:brazilian} & \cref{sec:1d,sec:antiplane,sec:kinking,sec:branching,sec:kalthoff,sec:brazilian} & \cref{sec:gregoire,sec:L-specimen,sec:beam} \\ \bottomrule
+Numerics & \cref{sec:branching,sec:kalthoff,sec:brazilian} & \cref{sec:1d,sec:antiplane,sec:kinking,sec:branching,sec:kalthoff,sec:brazilian} & \cref{sec:branching,sec:kalthoff,sec:gregoire,sec:brazilian,sec:L-specimen,sec:beam} \\ \bottomrule
 \end{tabular}
 \end{table}
 
@@ -608,6 +608,28 @@ Furthermore, this peculiar behavior of the constitutive law \eqref{eq:at2} also 
 As can be seen from \cref{fig:at2_ell_sigm,fig:energy_at1_at2}, apparently the results obtained with the same internal length $\ell$ resembles better the \eqref{eq:at1} calculation in \cref{fig:branching}, even though it corresponds to a smaller maximal stress than the latter case. It should be reminded that $\ell$ does not play merely the role of determination of the maximal stress as in \eqref{eq:sigm}. From \cref{sec:linkDF,sec:antiplane,sec:kinking}, this parameter also contributes qualitatively to the separation of the outer linear elastic fracture mechanics problem and the inner crack tip problem in an asymptotic context. A smaller internal length implies a wider region outside the crack where the fracture mechanics theory may apply. We admit that the choice of this parameter is not a simple one and may constitute one of the difficulties in phase-field modeling of fracture problems.
 
 \subsection{Physical insights into the branching mechanism} \label{sec:microbrachingstu}
+Here a physical understanding of crack branching predicted by the dynamic gradient damage model is proposed. According to a brief discussion in \cref{sec:kinematics}, two different branching mechanisms can be distinguished.
+\begin{enumerate}
+\item The first one concerns micro-branching, where micro-cracks nucleate and propagate along the main crack.
+\item The second refers to macro-branching, where the main crack splits into two or more branches.
+\end{enumerate}
+However it is observed experimentally that macro-branching is always preceded by the micro-branching phenomenon. Using the terminology used in \cite{SharonFineberg:1996}, micro-branches corresponds to ``frustrated'' branching events while macro-branches are ``successful'' ones. It is experimental evidence that the microstructure of the crack surface, or equivalently the fracture process zone where nonlinearities dominate, plays an essential role during such branching events, see the pioneer work of \cite{Ravi-ChandarKnauss:1984,Ravi-ChandarKnauss:1984a} and a review of these aspects in \cite{FinebergMarder:1999}. In presence of such events, from a macroscopic modeling viewpoint the main crack propagates with an ensemble of many interacting microcracks. More energy is thus dissipated due to the evolution of these micro-branches, see \cite{SharonGrossFineberg:1996}.
+
+In gradient damage models, the cross-section of a crack is modeled by a damage profile of a finite band proportional to the internal length, see \cref{sec:ingredients}. The fracture toughness $\gc$ can be identified by the energy consumed during the creation of an optimal damage profile $\alpha_*$ in a quasi-static setting. In dynamics, our numerical simulations indicate that in some circumstances the damage $\alpha$ would develop a wider band across the gradient-damage crack, which results in an over-dissipation of energy. We suspect that this phenomenon could be considered as a macroscopic representation of micro-branching with the gradient-damage approach. In \cref{fig:micro-macro}, the final damage field obtained with the \eqref{eq:at1} model is indicated. Before a critical time $t_\mc$, the initial crack $\vec{P}_0$ propagates with an optimal damage profile $\alpha_*$. This kind of \emph{simple} propagation is theoretically and numerically investigated in \cref{sec:linkDF,sec:antiplane}. From a critical time $t_\mc$, we observe that the damage band across the crack is wider than the previous case. The continuous widening (micro-branching) eventually leads to the macro-branching of the main gradient-damage crack. 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\linewidth]{plate-micro-macro.pdf}
+\caption{Distinction between micro and macro branching in gradient damage models} \label{fig:micro-macro}
+\end{figure}
+
+The damage profile at the initial crack tip $\vec{P}_0$ and at a crack tip after this critical time $t_\mc$ is compared with the optimal damage profile in \cref{fig:micro-macro}. In absence of micro-branching, the damage develops an optimal damage profile across the crack if the spatial discretization error (where $\alpha=1$ in an interval of width $2h$) is ignored, see \cref{sec:ellipticregul}. However during micro-branching, the damage band is even more widened. This implies further damage dissipation and may be considered to represent macroscopically the interaction of micro-branches. 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.5\linewidth]{plate_alpha.pdf}
+\caption{Damage profile in absence (for instance at the initial crack tip $\vec{P}_0$) and in presence (for instance at a crack tip just after the critical time $t_\mc$) of micro-branching, compared with the optimal damage profile} \label{fig:micro-macro}
+\end{figure}
+
+Newt we propose to perform a zoom in time and in space at $t_\mc$ to better understand the physics behind the micro-branching event.
 
 \subsection*{Conclusion}
 The dynamic gradient damage model could be computationally more demanding compared to traditional approaches based on a sharp description of cracks. Griffith's law combined with specialized numerical methods could perform reasonably well with much less computational cost for fracture problems in absence of crack nucleation and complex topology changes. The major advantage of phase-field modeling reside in its generality in treating 2d and 3d crack evolution problems by providing a unified framework from onset to structural failure. Thanks to an efficient parallelization of the solving algorithm (\cref{algo:explicit}), the computing time can also be significantly reduced as demonstrated in \cref{fig:scaling}.
@@ -738,78 +760,7 @@ As the crack front is not explicitly tracked in phase-field modeling of fracture
 
 \paragraph{Conclusion} The dynamic gradient damage model outlined in \cref{def:dynagraddama} along with the \eqref{eq:at1} damage constitutive law and the tension-compression model of \cite{FreddiRoyer-Carfagni:2010} is experimentally validated for PMMA specimens. Further studies will focus on applications to concrete structures.
 
-\section{Dynamic Fracture of L-Shaped Concrete Specimen} \label{sec:L-specimen}
-This dynamic tensile test on a L-shaped concrete specimen is proposed in \cite{OzboltBedeSharmaMayer:2015}. Its geometry and loading conditions are summarized in Fig. \ref{fig:L-specimen}. A hard device (displacement control) is applied on the lower left arm \SI{30}{mm} from the edge through a disc of $D=\SI{45}{mm}$ to suppress if possible local damages due to concentration. A quadrilateral mesh refined near \emph{a priori} known crack propagation region is used, arriving at approximately quadrilateral \num{200000} elements. The concrete material properties (density, elastic moduli and fracture toughness) are taken from \cite{OzboltBedeSharmaMayer:2015}.
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.45\linewidth]{L-specimen.pdf}
-\caption{Geometry and loading conditions for the L-specimen problem. Damage field $\alpha_t$ at $t=\SI{6e-4}{s}$ ranging from 0 (gray) to 1 (white), for $v=\SI{0.74}{m/s}$.} \label{fig:L-specimen}
-\end{figure}
-
-The load is applied through unilateral contact (EPX keyword \texttt{IMPACT}) with a hard device with imposed velocity $\vec{V}(t)=\overline{V}f(t)\vec{e}_2$. The intensity is scaled via the factor $\overline{V}$. The function $f(t)$ defined below ensures that at crack initiation the loading velocity is approximately $V$. Three loading speeds are tested: $\SI{0.74}{m/s}$, $\SI{1}{m/s}$ and $\SI{1.5}{m/s}$. From Figs. \ref{fig:L-specimen} and \ref{fig:alpha_L}, we observe that the initial propagation angle slightly increases with the prescribed velocity (see also Tab. \ref{tab:initial_angle}) and crack branching may produce, as it is also reported in experiments.
-\begin{mdframed}[hidealllines=true,backgroundcolor=gray!20]
-\begin{verbatim}
-FONC 1 TABL 5 0D0 0D0 1.5D-4 1D0 2D-4 1D0 4D-4 2D0 1D0 2D0
-\end{verbatim}
-\end{mdframed}
-
-\begin{figure}[htbp]
-\centering
-%\begin{subfigure}[b]{0.48\textwidth}
-%\centering
-%\includegraphics[height=5cm]{v1000.jpg}
-%\caption{$v=\SI{1}{m/s}$}
-%\end{subfigure}
-%\begin{subfigure}[b]{0.48\textwidth}
-%\centering
-%\includegraphics[height=5cm]{v1500.jpg}
-%\caption{$v=\SI{1.5}{m/s}$} \label{fig:v15ell1}
-%\end{subfigure}
-\caption{Damage field $\alpha_t$ ranging from 0 (blue) to 1 (red) for different loading speeds.} \label{fig:alpha_L}
-\end{figure}
-
-\begin{table}[htbp]
-\centering
-\caption{Initial crack propagation direction with different loading speeds for the L-specimen problem.} \label{tab:initial_angle}
-\begin{tabular}{llll} \toprule
-& $\SI{0.74}{m/s}$ & $\SI{1}{m/s}$ & $\SI{1.5}{m/s}$ \\ \midrule
-Initial propagation direction & $\SI{64}{\degree}$ & $\SI{71}{\degree}$ & $\SI{77}{\degree}$ \\ \bottomrule
-\end{tabular}
-\end{table}
-
-We then turn to the global dynamic structural response obtained with different loading rates. As it is expected, the peak load increases with the prescribed velocity, cf. Fig. \ref{fig:F-t-L-sim}. A good agreement with the experimental measurement is also found at $v=\SI{1.5}{m/s}$ as illustrated in Fig. \ref{fig:F-t-L}. Knowing that no strain rates effects is taken into account during material constitutive modeling, this increase of peak load for higher loading rates can be attributed to inertial itself. According to \cite{OzboltBedeSharmaMayer:2015}, this progressive increase of resistance is a pure consequence of inertial effects and not from velocity-dependent material strength or fracture energy.
-\begin{figure}[htbp]
-\centering
-%\begin{subfigure}[b]{0.48\textwidth}
-%\centering
-%\includegraphics[height=5cm]{F_v.pdf}
-%\caption{Simulation results.} \label{fig:F-t-L-sim}
-%\end{subfigure}
-%\begin{subfigure}[b]{0.48\textwidth}
-%\centering
-%\includegraphics[height=5cm]{F_v1500.pdf}
-%\caption{Comparison with experimental measurement at $v=\SI{1.5}{m/s}$.} \label{fig:F-t-L}
-%\end{subfigure}
-\caption{Load-time histories for different loading speeds.}
-\end{figure}
-
-It should be noted that these calculations have been performed with a relatively small internal length $\eta=\SI{1}{mm}$, which amounts to overestimate the tensile strength $\sigma_\mathrm{max}\approx \SI{27}{MPa}$ of the concrete. If we use instead the correct value of $\sigma_\mathrm{max}=\SI{3.12}{MPa}$ as indicated in \cite{OzboltBedeSharmaMayer:2015}, the internal length becomes \SI{73}{mm}, a size comparable to that of the specimen and which may undermine the approximation of brittle fracture via damage. Hopefully as the crack initiates at the center corner in presence of a stress singularity, the internal length should not influence much crack initiation, contrary to what is claimed in \cite{MesgarnejadBourdinKhonsari:2014}. The peak load as well as the global structural response is not sensible to the internal length, as can be seen from Fig. \ref{fig:alphav1500ell2x0F}. However with $\eta=\SI{2}{mm}$ the damage field obtained is slightly different from the case $\eta=\SI{1}{mm}$ in Fig. \ref{fig:v15ell1}, and crack nucleation from the foundation is also observed due to a smaller maximal tensile stress $\sigma_\mathrm{max}\approx \SI{19}{MPa}$ (yet still larger than the real value). Since in experiments no secondary crack initiation is present, we must ask the question how the critical stress $\sigma_\mathrm{max}=\SI{3.12}{MPa}$ is obtained in \cite{OzboltBedeSharmaMayer:2015}.
-\begin{figure}[htbp]
-\centering
-%\begin{subfigure}[b]{0.48\textwidth}
-%\centering
-%\includegraphics[height=5cm]{v1500-ell2x0.png}
-%\caption{Damage field with $\eta=\SI{2}{mm}$.} \label{fig:alphav1500ell2x0}
-%\end{subfigure}
-%\begin{subfigure}[b]{0.48\textwidth}
-%\centering
-%\includegraphics[height=5cm]{F_v1500_ell.pdf}
-%\caption{Load-time histories.} \label{fig:alphav1500ell2x0F}
-%\end{subfigure}
-\caption{Influence of the internal length $\ell$ on damage field and global structural response at $v=\SI{1.5}{m/s}$.}
-\end{figure}
-
-\section{Three-Dimensional Brazilian Splitting Test} \label{sec:brazilian}
+\section{Brazilian Splitting Test on Concrete Cylinders} \label{sec:brazilian}
 This section is devoted to three-dimensional numerical simulations of the Brazilian tests on concrete cylinders. Due to an increasing compressive load applied along the diameter direction, eventually fracture takes place along the loading direction and the cylinder splits vertically into two parts. One objective here is to verify the EPX implementation of the explicit time-stepping procedure summarized in \cref{algo:explicit} during a three-dimensional calculation. Furthermore, different tension-compression asymmetry formulations analyzed in \cref{sec:TC} are compared with respect to their aptitude to reproduce such fracture pattern. The size effect reported by various authors such as \cite{RoccoGuineaPlanasElices:1999,RuizOrtizPandolfi:2000} is also investigated using the dynamic gradient damage model. The thematic subjects covered here are thus summarized in \cref{tab:summbrazilian}.
 \begin{table}[htbp]
 \centering
@@ -889,5 +840,105 @@ A size effect is present for the present Brazilian test following the analyses i
 
 \subsection*{Conclusion}
 In terms of fracture pattern prediction for concrete structures, the tension-compression model proposed by \cite{FreddiRoyer-Carfagni:2010} seems to be a good candidate compared to other choices. However the crack normal vector is not taken into account and residual stiffness may be present along and parallel to the crack lip. The ``erosion'' mechanism available in the EPX software could produce a real crack however its use need further investigation. Size effect for Brazilian tests on concrete cylinders is reproduced by the gradient damage model. The existence of such experimentally validated size effects is due to the introduction of the material internal length $\ell$.
+
+\section{Dynamic Fracture of L-Shaped Concrete Specimen} \label{sec:L-specimen}
+This section is devoted to a gradient-damage modeling of the dynamic tensile test on a two-dimensional L-shaped concrete specimen. Compared to \cref{sec:brazilian}, the objective here is to investigate dynamic or velocity effects in dynamic fracture problems on concrete structures, \emph{i.e.} their influence on the temporal evolution of global quantities and spatial crack path. An experimental validation of the model is also considered against the results obtained in \cite{OzboltBedeSharmaMayer:2015}. The thematic subjects covered here are thus summarized in \cref{tab:summL}.
+\begin{table}[htbp]
+\centering
+\caption{Thematic subjects covered in this section} \label{tab:summL}
+\begin{tabular}{ccccc} \toprule
+& Going dynamical & $\alpha\leftrightarrow\phi$ & $\nabla\alpha\to\Gamma$ & Experimental validation \\ \midrule
+Theoretics & & & & \\
+Numerics & & \rightthumbsup & \rightthumbsup & \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Problem setting}
+The geometry and loading conditions are adapted from \cite{OzboltBedeSharmaMayer:2015} and are summarized in \cref{fig:L-specimen}.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.45\linewidth]{L-specimen.pdf}
+\caption{Geometry and loading conditions for the L-specimen problem. Damage field $\alpha_t$ at $t=\SI{6e-4}{s}$ ranging from 0 (gray) to 1 (white) obtained by $\ell=\SI{1}{mm}$, for $v=\SI{0.74}{m/s}$} \label{fig:L-specimen}
+\end{figure}
+A hard device (displacement control) is applied on the lower left arm \SI{30}{mm} from the edge through a disc of $D=\SI{45}{mm}$ to avoid local concentration. The load is applied through unilateral contact (EPX keyword \texttt{IMPACT}) with an imposed velocity $\vec{V}(t)=\overline{V}f(t)\vec{e}_2$. The intensity is scaled via the factor $\overline{V}$. The function $f(t)$ defined below ensures that at crack initiation the loading velocity is approximately $V$:
+\begin{mdframed}[hidealllines=true,backgroundcolor=gray!20]
+\begin{verbatim}
+FONC 1 TABL 5 0D0 0D0 1.5D-4 1D0 2D-4 1D0 4D-4 2D0 1D0 2D0.
+\end{verbatim}
+\end{mdframed}
+The concrete material properties are borrowed from \cite{OzboltBedeSharmaMayer:2015} and are summarized in \cref{tab:L}. The damage constitutive law \eqref{eq:at1} is used. Using \eqref{eq:gcingd}, the internal length $\eta$ can be derived from $\gc$ and $\sigma_\mc$, which gives $\eta\approx \SI{72}{mm}$. The analysis is performed in the temporal interval $[0,\SI{6e-4}{s}]$ and the explicit time-stepping method (\cref{algo:explicit}) is used. According to the comparative analyses in \cref{sec:kalthoff,sec:brazilian}, the tension-compression model proposed by \cite{FreddiRoyer-Carfagni:2010} should be preferred for brittle materials. The domain is discretized by a non-structured quadrilateral mesh with a typical size $h\approx\SI{10}{mm}$, arriving at approximately \num{2000} elements. 
+\begin{table}[htbp]
+\centering
+\caption{Material and numerical parameters for the L-specimen test} \label{tab:L}
+\begin{tabular}{llllll} \toprule
+$\rho$ & $E$ & $\nu$ & $\gc$ & $\sigma_\mc$ & $h$ \\ \midrule
+\SI{2210}{kg/m^3} & \SI{32.2}{GPa} & 0.18 & \SI{58.56}{N/m} & \SI{3.12}{MPa} & \SI{10}{mm} \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Path prediction with a relatively large internal length}
+The internal length here $\eta\approx \SI{72}{mm}$ is not small by comparison with the dimension of the body (with a side length $\SI{250}{mm}$). We had the same situation for the Brazilian test in \cref{sec:brazilian} with $D=\SI{200}{mm}$. However due to symmetry crack nucleates and propagates along the central diameter direction away from the boundary. Furthermore dynamic effects are not important and diffuse damage is not observed. In this problem however, crack path prediction is one of the objectives of the simulation and a large internal length, which implies a large damage band and a more smeared description of cracks, may complicate the identification of the crack path. In \cref{fig:v7401500sigm} the final damage field obtained with $\ell\approx\SI{72}{mm}$ for two different loading speeds is indicated.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{v740-1200-sigm.pdf}
+\caption{Damage field $\alpha_t$ ranging from 0 (blue) to 1 (red) for two different loading speeds obtained with $\ell\approx\SI{72}{mm}$: (a) $v=\SI{0.74}{m/s}$ and (b) $v=\SI{1.2}{m/s}$} \label{fig:v7401200sigm}
+\end{figure}
+
+The simulation results (\cref{fig:v7401200sigm}) are to be compared with the experimental fracture patterns indicated in \cref{fig:v7401200exp}. For a lower loading speed $v=\SI{0.74}{m/s}$, the initial nucleation angle is close to the experimental one. However the damage field simulated seems to indicate a crack branching event which is not observed in the experiment. For a higher loading speed $v=\SI{1.2}{m/s}$, a relatively large diffusive damage zone is produced near the nucleation corner. The crack branching is reproduced, however the branching location and subsequent crack propagation path do not agree with the experimental results.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{v740-1200-exp.pdf}
+\caption{Fracture patterns observed in experiments conducted by \cite{OzboltBedeSharmaMayer:2015}} \label{fig:v7401200exp}
+\end{figure}
+
+The failure to reproduce the experimentally observed fracture pattern in this example can be partially attributed to the followings difficulties:
+\begin{itemize}
+\item With a relatively large internal length, the elliptic damage problem interferes with the border $\partial\Omega$ through the boundary condition prescribed in the damage criterion \eqref{eq:localdamagefirstorder} and the consistency condition \eqref{eq:damageconsis}. The value of $\ell$ should be ``reduced'' for smaller structures, see \cite{LorentzGodard:2011}. Furthermore, the separation of scales between the outer fracture mechanics problem and the inner damage strain-softening problem considered in \cref{sec:linkDF,sec:antiplane,sec:kinking} is no longer possible with a large internal length. In that case the gradient damage model can not be considered as an approximation of the \emph{fracture} problem.
+
+\item With the damage constitutive law \eqref{eq:at1} (but also with \eqref{eq:at2}), since no additional parameters are introduced, the internal length is directly computed from \eqref{eq:gcingd} from the fracture toughness and the maximal material stress. For brittle materials such as PMMA considered in \cref{sec:gregoire}, it leads to an extremely small internal length ($\eta\approx\SI{0.0375}{mm}$ is used there) compared to industrial specimen or structures. It calls for a computationally costly numerical simulation with parallel computing techniques, however a confined damage process zone leads to a separation of scales described above and a link between damage and fracture can be achieved. For concrete on the other hand, one obtains with \eqref{eq:gcingd} an internal length of several centimeters. The modeling of fracture phenomena in small concrete specimens with these kind of constitutive laws is questionable.
+\end{itemize}
+
+%From Figs. \ref{fig:L-specimen} and \ref{fig:alpha_L}, we observe that the initial propagation angle slightly increases with the prescribed velocity (see also Tab. \ref{tab:initial_angle}) and crack branching may produce, as it is also reported in experiments.
+%\begin{table}[htbp]
+%\centering
+%\caption{Initial crack propagation direction with different loading speeds for the L-specimen problem.} \label{tab:initial_angle}
+%\begin{tabular}{llll} \toprule
+%& $\SI{0.74}{m/s}$ & $\SI{1}{m/s}$ & $\SI{1.5}{m/s}$ \\ \midrule
+%Initial propagation direction & $\SI{64}{\degree}$ & $\SI{71}{\degree}$ & $\SI{77}{\degree}$ \\ \bottomrule
+%\end{tabular}
+%\end{table}
+
+\subsection{Dynamical effects}
+%We then turn to the global dynamic structural response obtained with different loading rates. As it is expected, the peak load increases with the prescribed velocity, cf. Fig. \ref{fig:F-t-L-sim}. A good agreement with the experimental measurement is also found at $v=\SI{1.5}{m/s}$ as illustrated in Fig. \ref{fig:F-t-L}. Knowing that no strain rates effects is taken into account during material constitutive modeling, this increase of peak load for higher loading rates can be attributed to inertial itself. According to \cite{OzboltBedeSharmaMayer:2015}, this progressive increase of resistance is a pure consequence of inertial effects and not from velocity-dependent material strength or fracture energy.
+%\begin{figure}[htbp]
+%\centering
+%\begin{subfigure}[b]{0.48\textwidth}
+%\centering
+%\includegraphics[height=5cm]{F_v.pdf}
+%\caption{Simulation results.} \label{fig:F-t-L-sim}
+%\end{subfigure}
+%\begin{subfigure}[b]{0.48\textwidth}
+%\centering
+%\includegraphics[height=5cm]{F_v1500.pdf}
+%\caption{Comparison with experimental measurement at $v=\SI{1.5}{m/s}$.} \label{fig:F-t-L}
+%\end{subfigure}
+%\caption{Load-time histories for different loading speeds.}
+%\end{figure}
+%
+%It should be noted that these calculations have been performed with a relatively small internal length $\eta=\SI{1}{mm}$, which amounts to overestimate the tensile strength $\sigma_\mathrm{max}\approx \SI{27}{MPa}$ of the concrete. If we use instead the correct value of $\sigma_\mathrm{max}=\SI{3.12}{MPa}$ as indicated in \cite{OzboltBedeSharmaMayer:2015}, the internal length becomes \SI{73}{mm}, a size comparable to that of the specimen and which may undermine the approximation of brittle fracture via damage. Hopefully as the crack initiates at the center corner in presence of a stress singularity, the internal length should not influence much crack initiation, contrary to what is claimed in \cite{MesgarnejadBourdinKhonsari:2014}. The peak load as well as the global structural response is not sensible to the internal length, as can be seen from Fig. \ref{fig:alphav1500ell2x0F}. However with $\eta=\SI{2}{mm}$ the damage field obtained is slightly different from the case $\eta=\SI{1}{mm}$ in Fig. \ref{fig:v15ell1}, and crack nucleation from the foundation is also observed due to a smaller maximal tensile stress $\sigma_\mathrm{max}\approx \SI{19}{MPa}$ (yet still larger than the real value). Since in experiments no secondary crack initiation is present, we must ask the question how the critical stress $\sigma_\mathrm{max}=\SI{3.12}{MPa}$ is obtained in \cite{OzboltBedeSharmaMayer:2015}.
+%\begin{figure}[htbp]
+%\centering
+%\begin{subfigure}[b]{0.48\textwidth}
+%\centering
+%\includegraphics[height=5cm]{v1500-ell2x0.png}
+%\caption{Damage field with $\eta=\SI{2}{mm}$.} \label{fig:alphav1500ell2x0}
+%\end{subfigure}
+%\begin{subfigure}[b]{0.48\textwidth}
+%\centering
+%\includegraphics[height=5cm]{F_v1500_ell.pdf}
+%\caption{Load-time histories.} \label{fig:alphav1500ell2x0F}
+%\end{subfigure}
+%\caption{Influence of the internal length $\ell$ on damage field and global structural response at $v=\SI{1.5}{m/s}$.}
+%\end{figure}
 
 \section{CEA Impact Test on Beams} \label{sec:beam}
