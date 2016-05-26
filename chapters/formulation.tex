@@ -94,7 +94,24 @@ Their constitutive behaviors are illustrated in the \cref{fig:at1at2} during a h
 \caption{Constitutive behaviors for the \eqref{eq:at1} model (a) and the \eqref{eq:at2} model (b) during a homogeneous uniaxial traction experiment} \label{fig:at1at2}
 \end{figure}
 
-\paragraph{Links between damage and fracture} As outlined in \cref{sec:fm98,sec:graddamage}, the link between damage and fracture can be established in terms of the $\Gamma$-convergence theory. The damage dissipation energy \eqref{eq:surface}--\eqref{eq:surfaceGc} can be regarded as an equivalent Griffith crack surface functional in the gradient damage model. An effective fracture toughness $\gc$, \emph{i.e.} the energy required to create a unit Griffith-like crack surface, can be identified as the energy dissipated during the optimal damage band creation in a uniaxial traction experiment, see \cite{PhamAmorMarigoMaurini:2011}. For the damage dissipation energy written in the form of \eqref{eq:surface}, we have
+\paragraph{Links between damage and fracture} As outlined in \cref{sec:fm98,sec:graddamage}, the link between damage and fracture can be established in terms of the $\Gamma$-convergence theory. The damage dissipation energy \eqref{eq:surface} can be regarded as an equivalent Griffith crack surface functional in the gradient damage model. An effective fracture toughness $\gc$, \emph{i.e.} the energy required to create a unit Griffith-like crack surface, can be identified as the energy dissipated during the optimal damage profile creation in a uniaxial traction experiment, see \cite{PhamAmorMarigoMaurini:2011} for a detailed discussion on this point. The optimal damage profile $\alpha_*$ can be considered as the theoretic cross-section perpendicular to a gradient-damage crack. If $x$ refers to the transverse coordinate axis centered at the crack where $\alpha_*(x)=0$, the optimal damage profile for the \eqref{eq:at1} model is given by
+\begin{equation} \label{eq:at1alpha}
+\alpha_*(x)=\begin{cases}
+\left(1-\frac{\abs{x}}{2\eta}\right)^2 & \text{if $\abs{x}<2\eta$\,,} \\
+0 & else.
+\end{cases}
+\end{equation}
+While for the damage constitutive model \eqref{eq:at2}, one derives
+\begin{equation} \label{eq:at2alpha}
+\alpha_*(x)=\exp\left(\frac{\abs{x}}{\eta}\right).
+\end{equation}
+These two damage profiles are illustrated in \cref{fig:at12}. It can be observed that {eq:at2alpha} does not possess a finite support from a theoretic point of view.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.5\textwidth]{at12.pdf}
+\caption{Optimal damage profiles for the \eqref{eq:at1} and \eqref{eq:at2} damage constitutive models} \label{fig:at12}
+\end{figure}
+With such optimal damage profiles, the corresponding dissipated energy can be consequently computed by injecting $\alpha_*$ into \eqref{eq:surface} or \eqref{eq:surfaceGc}. For the damage dissipation energy written in the form of \eqref{eq:surface}, we have
 \begin{equation} \label{eq:gcingd}
 \gc=2\sqrt{2}\ell\int_0^1\sqrt{w_1w(\beta)}\D{\beta}.
 \end{equation}
