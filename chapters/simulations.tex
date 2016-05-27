@@ -442,10 +442,10 @@ In this paper further physical insights into the dynamic gradient damage model a
 These numerical experiments provide hence a justification of the dynamic gradient damage model along with its current implementation, when it is used as a genuine physical model for complex real-world dynamic fracture problems.
 
 \section{Plane Crack Kinking} \label{sec:kinking}
-The three physical principles of \cref{def:dynagraddama} determine \emph{when} and \emph{how} the crack propagates. In \cref{sec:antiplane} the initiation and propagation phases of defect evolution are considered. According to \cref{sec:dynafrac}, it focuses on \emph{when} cracks propagate. In this section, we will focus on the path along which the crack follows, \emph{i.e.} \emph{how} cracks evolve. Specifically, this section is devoted to a numerical analysis of plane crack kinking predicted by the gradient damage model. The thematic subjects covered here are thus summarized in \cref{tab:summanti}.
+The three physical principles of \cref{def:dynagraddama} determine \emph{when} and \emph{how} the crack propagates. In \cref{sec:antiplane} the initiation and propagation phases of defect evolution are considered. According to \cref{sec:dynafrac}, it focuses on \emph{when} cracks propagate. In this section, we will focus on the path along which the crack follows, \emph{i.e.} \emph{how} cracks evolve. Specifically, this section is devoted to a numerical analysis of plane crack kinking predicted by the gradient damage model. The thematic subjects covered here are thus summarized in \cref{tab:summkink}.
 \begin{table}[htbp]
 \centering
-\caption{Thematic subjects covered in this section} \label{tab:summanti}
+\caption{Thematic subjects covered in this section} \label{tab:summkink}
 \begin{tabular}{ccccc} \toprule
 & Going dynamical & $\alpha\leftrightarrow\phi$ & $\nabla\alpha\to\Gamma$ & Experimental validation \\ \midrule
 Theoretics & & & & \\
@@ -577,7 +577,7 @@ Opposed to what is suggested by \cite{AmorMarigoMaurini:2009}, the use of a boun
 \end{figure}
 
 \subsection{Comparison between two damage constitutive laws}
-We then turn to the choice of different damage constitutive laws from a computational and physical point of view. We take the simulation results using \eqref{eq:at1} as a reference and compare it with the widely used damage constitutive law \eqref{eq:at2} in the phase-field modeling of fracture. The quantitative effects of the internal length actually depend on the damage constitutive model used. Here we propose two natural choices of $\ell$ in the \eqref{eq:at2} case: one corresponding to the same value $\eta=\SI{0.25}{mm}$ as used in the \eqref{eq:at1} case, the other corresponding to a same maximal tensile stress as used in the \eqref{eq:at1} case, which gives $\eta\approx\SI{0.07}{mm}$ according to \eqref{eq:sigc0}. The same GPCG solver is used and the relative damage-solving costs separately normalized by the time devoted to the elastodynamic part are reported in \cref{tab:at1_vs_at2}.
+We then turn to the choice of different damage constitutive laws from a computational and physical point of view. We take the simulation results using \eqref{eq:at1} as a reference and compare it with the widely used damage constitutive law \eqref{eq:at2} in the phase-field modeling of fracture. The quantitative effects of the internal length actually depend on the damage constitutive model used. Here we propose two natural choices of $\ell$ in the \eqref{eq:at2} case: one corresponding to the same value $\eta=\SI{0.25}{mm}$ as used in the \eqref{eq:at1} case, the other corresponding to a same maximal tensile stress as used in the \eqref{eq:at1} case, which gives $\eta\approx\SI{0.07}{mm}$ according to \eqref{eq:sigc0} and \eqref{eq:gcingd}. The same GPCG solver is used and the relative damage-solving costs separately normalized by the time devoted to the elastodynamic part are reported in \cref{tab:at1_vs_at2}.
 \begin{table}[htbp]
 \centering
 \caption{Relative damage-solving cost normalized by the time devoted to the elastodynamic part during a parallel calculation $\mathrm{NP}=16$. The GPCG solver is used. Comparison between different constitutive laws} \label{tab:at1_vs_at2}
@@ -622,16 +622,39 @@ In gradient damage models, the cross-section of a crack is modeled by a damage p
 \caption{Distinction between micro and macro branching in gradient damage models} \label{fig:micro-macro}
 \end{figure}
 
-The damage profile at the initial crack tip $\vec{P}_0$ and at a crack tip after this critical time $t_\mc$ is compared with the optimal damage profile in \cref{fig:micro-macro}. In absence of micro-branching, the damage develops an optimal damage profile across the crack if the spatial discretization error (where $\alpha=1$ in an interval of width approximately $h$, see \eqref{eq:gceff}) is ignored, see \cref{sec:ellipticregul}. However during micro-branching, the damage band is even more widened. This implies an increased damage dissipation and may be considered to represent macroscopically the interaction of micro-branches. 
+The damage profile at the initial crack tip $\vec{P}_0$ and at a crack tip after this critical time $t_\mc$ is compared with the optimal damage profile in \cref{fig:plate_alpha}. In absence of micro-branching, the damage develops an optimal damage profile across the crack if the spatial discretization error (where $\alpha=1$ in an interval of width approximately $h$, see \eqref{eq:gceff}) is ignored, see \cref{sec:ellipticregul}. However during micro-branching, the damage band is even more widened. This implies an increased damage dissipation and may be considered to represent macroscopically the interaction of micro-branches. 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.5\linewidth]{plate_alpha.pdf}
-\caption{Damage profile in absence (for instance at the initial crack tip $\vec{P}_0$) and in presence (for instance at a crack tip just after the critical time $t_\mc$) of micro-branching, compared with the optimal damage profile} \label{fig:micro-macro}
+\caption{Damage profile in absence (for instance at the initial crack tip $\vec{P}_0$) and in presence (for instance at a crack tip just after the critical time $t_\mc$) of micro-branching, compared with the optimal damage profile} \label{fig:plate_alpha}
 \end{figure}
 
-Newt we propose to perform a zoom in time and in space at $t_\mc$ to better understand the physics behind the micro-branching event. Note that the classical $\Gamma$-convergence estimation \eqref{eq:gammaconvergence} is no longer valid, since the damage profile varies along the main crack and not necessarily corresponds to the optimal damage profile. The crack tip of the main crack is now tracked on the contour $\alpha_t=\overline{\alpha}$ where $\overline{\alpha}=0.9$ is used in this work. The current crack velocity is then deduced by applying a second-order difference scheme. The main objective is to investigate stress distribution before and at the onset of micro-branching. In particular, the hoop (circumferential) stress $\sigma_{\theta\theta}$ is analyzed near the current crack tip. Its evolution as a function of the distance to the crack $r$ and as a function of the angle $\theta$ with respect to the propagation direction ($x$-axis) is separated considered.
+Newt we propose to perform a zoom in time and in space at $t_\mc$ to better understand the physics behind the micro-branching event. Note that during microbranching the classical $\Gamma$-convergence estimation \eqref{eq:gammaconvergence} is no longer valid, since the damage profile varies along the main crack and not necessarily corresponds to the optimal damage profile. It may only be used to estimate the current energy dissipation rate normalized by the quasi-static fracture toughness
+\begin{equation} \label{eq:circl}
+\overset{\circ}{l}_t=\frac{\dot{\mathcal{S}}_t}{(\gc)_\mathrm{eff}}
+\end{equation}
+where spatial discretization effect is taken into account, see \eqref{eq:gceff}. The current location of the main crack given by its length $l_t$ is tracked on the contour $\alpha_t(l_t,0)=0.95$, where $y=0$ refers to the propagation path. The current crack velocity $\dot{l}_t$ is then deduced by applying a second-order difference scheme. The comparison between $\overset{\circ}{l}_t$ and $\dot{l}_t$ is illustrated in \cref{fig:plate-v}.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.5\linewidth]{plate_v.pdf}
+\caption{Crack velocity evolution derived from the dissipated energy $\mathcal{S}$ using \eqref{eq:circl} or from the contour where $\alpha_t(l_t,0)=0.95$. $A$ denotes an instant before micro-branching, $B$ denotes the onset of micro-branching and $C$ refers to the macro-branching event} \label{fig:plate-v}
+\end{figure}
+Several remarks are given below.
+\begin{itemize}
+\item Before micro-branching (for example at the point $A$), these two estimations give the same crack velocity. It implies that in absence of micro-branching a dynamic gradient-damage crack also dissipates the same amount of energy when propagating. This energy dissipation corresponds again to the creation of an optimal damage profile, see \eqref{eq:gcingd}.
 
-Before the micro-branching event (at an arbitrary instant $0<t<t_\mc$, where the current crack speed $\dot{l}_t=0.26c_\mathrm{R}$), the hoop stress distribution is indicated in \cref{fig:SigT200}. To normalize the spatial distance, the damage band $D=2\eta$ is used.
+\item From the point $B$ or for $t>t_\mathrm{c}$, these two estimations of the crack velocity diverge quickly. This point $B$ or the time $t_\mc$ marks the onset of micro-branching. From this point, the value of $\overset{\circ}{l}_t$ no longer measures the crack speed but only a normalized total energy dissipation due to crack propagation. According to \eqref{eq:circl}, much more energy is dissipated during the propagation of the main crack $l_t$, while its velocity $\dot{l}_t$ is well below a fraction (60\%) of the Rayleigh wave speed $c_\mathrm{R}$. In this work, we share the viewpoint announced in \cite{SharonFineberg:1996} that a lower limiting fracture velocity compared to the Griffith's theory (see \cref{sec:theoexpcrit}) can be attributed to an energy over-dissipation due to micro-branching. This leads to the definition of a velocity dependent apparent fracture toughness $\Gamma(\dot{l}_t)$ for the main crack, see \cite{SharonFineberg:1996,SharonFineberg:1999}. Note that $\Gamma(\dot{l}_t)$ is only apparent for a single macroscopic crack containing an ensemble of interacting micro-cracks. It measures the total surface creation due to not only the main crack but also micro-cracks nucleated along the previous one. However the real energy dissipated per unit crack surface creation is still constant and is given by the quasi-static $\gc$, see \cite{SharonFineberg:1996}.
+
+\item The critical velocity $v_\mc$ above which the main crack develops micro-branches is approximately $v_\mc=\SI{0.4}{c_\mathrm{R}}$. This value agrees with the experimental evidence reported for brittle materials such as PMMA in \cite{FinebergGrossMarderSwinney:1992a}. A comprehensive review on the microbranching mechanism can be found in \cite{FinebergMarder:1999}. The gradient damage model provides thus a better modeling of the critical velocity than several theoretical approaches based on a sharp-interface crack without microbranch interaction (approximately $0.6c_\mathrm{R}$ according to Yoffe, see \cref{fig:yoffe} and $0.46c_\mathrm{R}$ obtained in \cite{KatzavAdda-BediaArias:2007}). This confirms the viewpoint shared in \cite{Ravi-Chandar:1998} that the determination of the critical speed itself $v_\mc$ calls for a theory of process zone describing nonlinear material behaviors near the crack tip. The gradient damage approach seems to be a good candidate.
+\end{itemize}
+
+The next objective is to investigate stress distribution before and at the onset of micro-branching. In particular, the hoop (circumferential) stress $\sigma_{\theta\theta}$ is analyzed near the current crack tip. Its evolution as a function of the distance to the crack $r$ and as a function of the angle $\theta$ with respect to the propagation direction ($x$-axis) is separated considered. For the latter case, at several distances $r$ to the crack tip, the hoop stress is separately normalized by its value at $\theta=0$ which gives
+\[
+\Sigma_\mathrm{H}(r,\theta)=\frac{\sigma_{\theta\theta}(r,\theta)}{\sigma_{\theta\theta}(r,0)}.
+\]
+The angular variation of these normalized hoop stress $\Sigma_\mathrm{H}$ will be compared to the asymptotic expansion of the stress tensor in the Griffith's theory (LEFM) given in \eqref{eq:singularform}, where the current crack speed $\dot{l}_t$ derived from the gradient damage crack tip is used in the angular functions $\vec{\Theta}_i(\theta,\dot{l})$. A least-square analysis is performed to identify the possible $\widehat{K}_\RN{2}=K_\RN{2}/K_\RN{1}$ perturbation in the simulation. The hoop stress variation situated at $r=D$ is used for such analysis, since according to the analysis in \cref{sec:asymptotic} the stress outside the damage process zone contributes to the fracture behavior of the material.
+
+Before the micro-branching event we consider an arbitrary instant $A$ in \cref{fig:plate-v} where the current crack speed $\dot{l}_t=0.26c_\mathrm{R}$). The hoop stress distribution is indicated in \cref{fig:SigT200}. To normalize the spatial distance, the damage band $D=2\eta$ is used.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{SigT200.pdf}
@@ -639,20 +662,27 @@ Before the micro-branching event (at an arbitrary instant $0<t<t_\mc$, where the
 \end{figure}
 Several remarks are given below.
 \begin{itemize}
-\item 
+\item Contrary to the Griffith's theory, the stress tensor is no more singular at the ``crack tip'', see also \cref{fig:stress}. The hoop stress is maximized just outside the damage band at $r\approx D=2\eta$.
+
+\item Mode-II perturbation is not detected and the angular variation matches perfectly with the linear elastic Griffith's theory in particular for $r>D$, \emph{i.e.} outside the damage process zone. The gradient-damage crack just behaves like a Griffith crack similar to the antiplane experiment in \cref{sec:antiplane} and a separation between the outer linear elastic problem and the inner damage crack tip problem can be achieved. The curve at $r=0.5D$ is situated a little above the theoretic prediction, hence the $r$-dependence and the $\theta$-dependence of the stress tensor is no longer decoupled compared to the linear elastic prediction \eqref{eq:singularform}. It can be verified that the stress is indeed maximal in front of the crack tip at $\theta=0$.
 \end{itemize}
 
-At the onset of microbranching, the normalized hoop stress distribution is indicated in \cref{fig:SigMB}.
+At the onset of microbranching $t\approx t_\mc$, two arbitrary but close instants near point $B$ in \cref{fig:plate-v} are chosen and the normalized hoop stress distribution is indicated in \cref{fig:SigMB}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{SigMB.pdf}
 \caption{Normalized hoop stress distribution at the onset of micro-branching: (a) $\dot{l}_t\approx 0.36c_\mathrm{R}$ and (b) $\dot{l}_t\approx 0.43c_\mathrm{R}$} \label{fig:SigMB}
 \end{figure}
+Compared to situation at point $A$, several qualitative behaviors of the stress distribution near the crack tip are noteworthy. Using the angular variation at $r=D$, a slight mode-II perturbation $\widehat{K}_\RN{2}\approx 0.09$ is detected at the onset of microbranching. The existence of such perturbations may be due to structural effects and has already been observed in dynamic fracture experiments, see \cite{BoueCohenFineberg:2015}. A mode-II component in the stress tensor contributes to the crack branching instability, but it is not taken into account in many theoretic approaches to crack branching. From \cref{fig:SigMB}, we observe that the maximum of the normalized hoop stress begins to deviate from the propagation direction $\theta=0$, especially for the curve $r=0.5D$. This indicates that the microbranching phenomenon satisfies a generalized Yoffe's criterion, since in gradient damage models the angular variation depends also on the distance $r$ to the crack. Such criterion should be only considered as a necessary condition of crack branching. However it could be used to indicate a possible crack branching event. Only mode-I asymptotic expansions are considered in the original Yoffe's criterion, which leads to a higher branching speed $v_\mc\approx 0.6c_\mathrm{R}$. According to \cref{fig:SigMB}, this critical velocity can be reduced by including a mode-II perturbation.
 
 \subsection*{Conclusion}
 The dynamic gradient damage model could be computationally more demanding compared to traditional approaches based on a sharp description of cracks. Griffith's law combined with specialized numerical methods could perform reasonably well with much less computational cost for fracture problems in absence of crack nucleation and complex topology changes. The major advantage of phase-field modeling reside in its generality in treating 2d and 3d crack evolution problems by providing a unified framework from onset to structural failure. Thanks to an efficient parallelization of the solving algorithm (\cref{algo:explicit}), the computing time can also be significantly reduced as demonstrated in \cref{fig:scaling}.
 
 Two particular damage constitutive laws \eqref{eq:at2} and \eqref{eq:at1} are compared both from a computational and physical point of view. On one hand, the widely used crack surface density function \eqref{eq:at2} is less suitable to model brittle fracture since an elastic domain is absent. On the other hand the actual solving of the damage minimization problem \eqref{eq:crackstdis} is more costly than the damage constitutive law \eqref{eq:at1} which possesses an optimal damage profile of finite band. It is also illustrated that the cost of a general quadratic bound-constrained minimization solver (GPCG) is acceptable.
+
+Finally a better understanding of crack branching predicted by the dynamic gradient damage model is provided. The nucleation of micro-cracks and their subsequent interaction with the main crack is macroscopically identified by a widening of the damage profile perpendicular to the gradient-damage crack. Through numerical simulations, a critical velocity $v_\mc\approx 0.4c_\mathrm{R}$ is detected above which micro-branching events take place, which implies an over-dissipation of energy as the main crack propagates. This critical velocity agrees with the experimental findings and gives a better prediction compared to other theoretical approaches based on a sharp-interface description of cracks which neglects the a nonlinear fracture process zone near the crack tip.
+
+Before microbranching, the stress distribution agrees well with the Griffith's theory especially outside the damage process zone with a pure mode-I contribution. However at the onset of microbranching, a mode-II component perturbs the stress distribution. It provides a necessary condition toward an explanation of the branching instability reproduced in the dynamic gradient damage model. Future work will be devoted to a thorough investigation of this point. In particular, the exact role played by the internal length should be analyzed.
 
 \section{Edge-Cracked Plate Under Shearing Impact} \label{sec:kalthoff}
 We consider in this section a pre-notched two-dimensional plane strain plate impacted by a projectile. In the dynamic fracture community this is often referred as the Kalthoff-Winkler experiment reported by \emph{e.g.} \cite{Kalthoff:2000} where a failure mode transition from brittle to ductile fracture is observed for a high strength maraging steel when the impact velocity is increased. The objective here is to investigate the use of several tension-compression asymmetry formulations analyzed in \cref{sec:TC} in a dynamic brittle fracture problem. The widely used elastic energy density split proposed in \cite{MieheHofackerWelschinger:2010} among the phase-field community is compared. Furthermore, some dynamic fracture phenomena as reproduced by the gradient damage model are also presented. The thematic subjects covered here are thus summarized in \cref{tab:summkalthoff}.
@@ -894,18 +924,18 @@ $\rho$ & $E$ & $\nu$ & $\gc$ & $\sigma_\mc$ & $h$ \\ \midrule
 \end{tabular}
 \end{table}
 
-\subsection{Path prediction with a relatively large internal length}
-The internal length here $\eta\approx \SI{72}{mm}$ is not small by comparison with the dimension of the body (with a side length $\SI{250}{mm}$). We had the same situation for the Brazilian test in \cref{sec:brazilian} with $D=\SI{200}{mm}$. However due to symmetry crack nucleates and propagates along the central diameter direction away from the boundary. Furthermore dynamic effects are not important and diffuse damage is not observed. In this problem however, crack path prediction is one of the objectives of the simulation and a large internal length, which implies a large damage band and a more smeared description of cracks, may complicate the identification of the crack path. In \cref{fig:v7401500sigm} the final damage field obtained with $\ell\approx\SI{72}{mm}$ for two different loading speeds is indicated.
+\subsection{Path prediction}
+The internal length here $\eta\approx \SI{72}{mm}$ is not small by comparison with the dimension of the body (with a side length $\SI{250}{mm}$). We had the same situation for the Brazilian test in \cref{sec:brazilian} with $D=\SI{200}{mm}$. However in \cref{sec:brazilian} due to symmetry crack nucleates and propagates along the central diameter direction away from the boundary. Furthermore dynamic effects are not important and diffuse damage is not observed. In this problem however, crack path prediction is one of the objectives of the simulation and a large internal length, which implies a large damage band and a more smeared description of cracks, may complicate the identification of the crack path.
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{v740-1200-sigm.pdf}
+\includegraphics[width=0.9\textwidth]{v740-1200-sigm.pdf}
 \caption{Damage field $\alpha_t$ ranging from 0 (blue) to 1 (red) for two different loading speeds obtained with $\ell\approx\SI{72}{mm}$: (a) $v=\SI{0.74}{m/s}$ and (b) $v=\SI{1.2}{m/s}$} \label{fig:v7401200sigm}
 \end{figure}
 
-The simulation results (\cref{fig:v7401200sigm}) are to be compared with the experimental fracture patterns indicated in \cref{fig:v7401200exp}. For a lower loading speed $v=\SI{0.74}{m/s}$, the initial nucleation angle is close to the experimental one. However the damage field simulated seems to indicate a crack branching event which is not observed in the experiment. For a higher loading speed $v=\SI{1.2}{m/s}$, a relatively large diffusive damage zone is produced near the nucleation corner. The crack branching is reproduced, however the branching location and subsequent crack propagation path do not agree with the experimental results.
+In \cref{fig:v7401200sigm} the final damage field obtained with $\eta\approx\SI{72}{mm}$ for two different loading speeds is indicated. The simulation results are to be compared with the experimental fracture patterns indicated in \cref{fig:v7401200exp}. For a lower loading speed $v=\SI{0.74}{m/s}$, the initial nucleation angle is close to the experimental one. However the damage field simulated seems to indicate a crack branching event which is not observed in the experiment. For a higher loading speed $v=\SI{1.2}{m/s}$, a relatively large diffusive damage zone is produced near the nucleation corner. The crack branching is reproduced, however the branching location and subsequent crack propagation path do not agree with the experimental results.
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{v740-1200-exp.pdf}
+\includegraphics[width=0.9\textwidth]{v740-1200-exp.pdf}
 \caption{Fracture patterns observed in experiments conducted by \cite{OzboltBedeSharmaMayer:2015}} \label{fig:v7401200exp}
 \end{figure}
 
@@ -916,47 +946,28 @@ The failure to reproduce the experimentally observed fracture pattern in this ex
 \item With the damage constitutive law \eqref{eq:at1} (but also with \eqref{eq:at2}), since no additional parameters are introduced, the internal length is directly computed from \eqref{eq:gcingd} from the fracture toughness and the maximal material stress. For brittle materials such as PMMA considered in \cref{sec:gregoire}, it leads to an extremely small internal length ($\eta\approx\SI{0.0375}{mm}$ is used there) compared to industrial specimen or structures. It calls for a computationally costly numerical simulation with parallel computing techniques, however a confined damage process zone leads to a separation of scales described above and a link between damage and fracture can be achieved. For concrete on the other hand, one obtains with \eqref{eq:gcingd} an internal length of several centimeters. The modeling of fracture phenomena in small concrete specimens with these kind of constitutive laws is questionable.
 \end{itemize}
 
-%From Figs. \ref{fig:L-specimen} and \ref{fig:alpha_L}, we observe that the initial propagation angle slightly increases with the prescribed velocity (see also Tab. \ref{tab:initial_angle}) and crack branching may produce, as it is also reported in experiments.
-%\begin{table}[htbp]
-%\centering
-%\caption{Initial crack propagation direction with different loading speeds for the L-specimen problem.} \label{tab:initial_angle}
-%\begin{tabular}{llll} \toprule
-%& $\SI{0.74}{m/s}$ & $\SI{1}{m/s}$ & $\SI{1.5}{m/s}$ \\ \midrule
-%Initial propagation direction & $\SI{64}{\degree}$ & $\SI{71}{\degree}$ & $\SI{77}{\degree}$ \\ \bottomrule
-%\end{tabular}
-%\end{table}
+Due to this reason, another series of simulation is performed with $\eta=\SI{1}{mm}$. Using the definition of the maximal stress \eqref{eq:sigc0} and the fracture toughness \eqref{eq:gcingd}, it leads to an overestimation of the maximal tensile strength $\sigma_m\approx \SI{27}{MPa}$ of the concrete. At a lower loading speed $v=\SI{0.74}{m/s}$, the final fracture pattern indicated by the damage field with $\eta=\SI{1}{mm}$ is illustrated in \cref{fig:L-specimen}. A better agreement between the simulation and the experimental observed crack path is found.
+
+The temporal evolution of the applied force is then analyzed for two different internal lengths. In \cref{fig:F_v740_ell}, it can be observed that the they predict different global structural behaviors only during the post-crack initiation phase. In particular, the peak load is not sensible to the internal length. It could be explained by the presence of geometric singularity where the damage initiates, which implies that the material critical stress is quickly reached when the waves arrive at the corner.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.5\textwidth]{F_v740_ell.pdf}
+\caption{Temporal evolution of the applied force with $v=\SI{0.74}{m/s}$} \label{fig:F_v740_ell}
+\end{figure}
 
 \subsection{Dynamical effects}
-%We then turn to the global dynamic structural response obtained with different loading rates. As it is expected, the peak load increases with the prescribed velocity, cf. Fig. \ref{fig:F-t-L-sim}. A good agreement with the experimental measurement is also found at $v=\SI{1.5}{m/s}$ as illustrated in Fig. \ref{fig:F-t-L}. Knowing that no strain rates effects is taken into account during material constitutive modeling, this increase of peak load for higher loading rates can be attributed to inertial itself. According to \cite{OzboltBedeSharmaMayer:2015}, this progressive increase of resistance is a pure consequence of inertial effects and not from velocity-dependent material strength or fracture energy.
-%\begin{figure}[htbp]
-%\centering
-%\begin{subfigure}[b]{0.48\textwidth}
-%\centering
-%\includegraphics[height=5cm]{F_v.pdf}
-%\caption{Simulation results.} \label{fig:F-t-L-sim}
-%\end{subfigure}
-%\begin{subfigure}[b]{0.48\textwidth}
-%\centering
-%\includegraphics[height=5cm]{F_v1500.pdf}
-%\caption{Comparison with experimental measurement at $v=\SI{1.5}{m/s}$.} \label{fig:F-t-L}
-%\end{subfigure}
-%\caption{Load-time histories for different loading speeds.}
-%\end{figure}
-%
-%It should be noted that these calculations have been performed with a relatively small internal length $\eta=\SI{1}{mm}$, which amounts to overestimate the tensile strength $\sigma_\mathrm{max}\approx \SI{27}{MPa}$ of the concrete. If we use instead the correct value of $\sigma_\mathrm{max}=\SI{3.12}{MPa}$ as indicated in \cite{OzboltBedeSharmaMayer:2015}, the internal length becomes \SI{73}{mm}, a size comparable to that of the specimen and which may undermine the approximation of brittle fracture via damage. Hopefully as the crack initiates at the center corner in presence of a stress singularity, the internal length should not influence much crack initiation, contrary to what is claimed in \cite{MesgarnejadBourdinKhonsari:2014}. The peak load as well as the global structural response is not sensible to the internal length, as can be seen from Fig. \ref{fig:alphav1500ell2x0F}. However with $\eta=\SI{2}{mm}$ the damage field obtained is slightly different from the case $\eta=\SI{1}{mm}$ in Fig. \ref{fig:v15ell1}, and crack nucleation from the foundation is also observed due to a smaller maximal tensile stress $\sigma_\mathrm{max}\approx \SI{19}{MPa}$ (yet still larger than the real value). Since in experiments no secondary crack initiation is present, we must ask the question how the critical stress $\sigma_\mathrm{max}=\SI{3.12}{MPa}$ is obtained in \cite{OzboltBedeSharmaMayer:2015}.
-%\begin{figure}[htbp]
-%\centering
-%\begin{subfigure}[b]{0.48\textwidth}
-%\centering
-%\includegraphics[height=5cm]{v1500-ell2x0.png}
-%\caption{Damage field with $\eta=\SI{2}{mm}$.} \label{fig:alphav1500ell2x0}
-%\end{subfigure}
-%\begin{subfigure}[b]{0.48\textwidth}
-%\centering
-%\includegraphics[height=5cm]{F_v1500_ell.pdf}
-%\caption{Load-time histories.} \label{fig:alphav1500ell2x0F}
-%\end{subfigure}
-%\caption{Influence of the internal length $\ell$ on damage field and global structural response at $v=\SI{1.5}{m/s}$.}
-%\end{figure}
+We then turn to the global dynamic structural response obtained with different loading rates. As it is expected, the peak load increases with the prescribed velocity, cf. \cref{fig:F-v-exp}(a). A good agreement with the experimental measurement is also found at $v=\SI{1.5}{m/s}$ as illustrated in \cref{fig:F-v-exp}(b). Knowing that no strain rates effects is currently taken into account in the material constitutive modeling, this increase of peak load for higher loading rates can be attributed to inertia. According to \cite{OzboltBedeSharmaMayer:2015}, this progressive increase of resistance is a pure consequence of inertial effects and not from velocity-dependent material strength or fracture energy.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{F-v-exp.pdf}
+\caption{Temporal evolution of the applied force: (a) dynamical effects illustrated by two loading speeds and (b) comparison with experimental measurement at $v=\SI{1.5}{m/s}$} \label{fig:F-v-exp}
+\end{figure}
+
+The final crack pattern for $v=\SI{1.5}{m/s}$ is also indicated in \cref{fig:F-v-exp}(b). As it is observed in experiments, crack branching is reproduced. However the crack path corresponds not exactly to what is seen in real concrete specimens. We suspect that it is mainly due to the loading condition which is not described in detail in \cite{OzboltBedeSharmaMayer:2015}. Another possible reason is to a smaller internal length chosen due to the small size of the specimen. Using the true internal length derived from the maximal tensile strength of the concrete, a different branching direction appears to take place in \cref{fig:v7401200sigm}.
+
+\subsection*{Conclusion}
+The dynamic gradient damage model is here applied to a relatively small concrete structure with the \eqref{eq:at1} damage constitutive model. Since the internal length deduced from the fracture toughness and the tensile strength is not small compared to the dimension of the body, relatively diffuse damage takes place and the gradient damage model can no longer be considered as a good approximation of brittle fracture. The damage process zone where strain softening dominates is large and the link between damage and fracture outlined in \cref{sec:linkDF} and numerically verified in \cref{sec:antiplane} is not possible. The dynamic gradient damage model does not give a satisfactory prediction of the experimentally observed crack path.
+
+The difficulty resides in the simplicity of the \eqref{eq:at1} damage constitutive model. No additional parameters are introduced and the internal length $\ell$, which determines the damage band, is fixed as long as $\gc$ and $\sigma_\mathrm{m}$ are. Future work will be devoted to the use of more sophisticated constitutive models proposed by \cite{LorentzCuvilliezKazymyrenko:2011,AlessiMarigoVidoli:2015} which introduce additional modeling parameters. Note however that this implies that the minimization problem for the damage variable \eqref{eq:crackmin} is no more quadratic, \emph{i.e.} a higher computational cost.
 
 \section{CEA Impact Test on Beams} \label{sec:beam}
