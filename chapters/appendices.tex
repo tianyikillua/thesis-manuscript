@@ -1,8 +1,7 @@
 %!TEX root=../main.tex
 \appendix
-\minitoc
-
 \chapter{Griffith Revisited} \label{chap:griffithrevis}
+
 In this chapter we revisit the Griffith's theory of dynamic fracture and provide a variational formulation of Griffith's law \eqref{eq:gtgc}. The basic problem setting is similar to that assumed in \cref{sec:linkDF}. Here the symbol $\Gamma_t$ refers to a sharp-interface crack inside a two-dimensional linear elastic body.
 
 \section{Reformulation Based on a Space-Time Action Integral} \label{sec:reformulationtheta}
@@ -96,7 +95,7 @@ The dynamic energy release rate $G_t$ is equivalent to the classical dynamic $J$
 \end{proposition}
 
 \begin{proof}
-For theoretic analysis purpose a specific integration path $C_r$ is used in \eqref{eq:Jdyn}. The symbol $\vec{n}$ is assumed to be the normal pointing out of the ball $B_r(\vec{P}_t)$ with $C_r=\partial B_r(\vec{P}_t)$ its boundary. To removing any singularities near the crack tip $\vec{P}_t$, we will partition the cracked domain $\domaint$ into the part $\tilde{B}_r=B_r(\vec{P}_t)\setminus\Gamma_t$ included in the ball $B_r(\vec{P}_t)$, and the part $\Omega_r=\Omega\setminus\bigl(\Gamma_t\cup B_r(\vec{P}_t)\bigr)$ outside the ball, see Fig. \ref{fig:partition}.
+For theoretic analysis purpose a specific integration path $C_r$ is used in \eqref{eq:Jdyn}. The symbol $\vec{n}$ is assumed to be the normal pointing out of the ball $B_r(\vec{P}_t)$ with $C_r=\partial B_r(\vec{P}_t)$ its boundary. To removing any singularities near the crack tip $\vec{P}_t$, we will partition the cracked domain $\domaint$ into the part $\tilde{B}_r=B_r(\vec{P}_t)\setminus\Gamma_t$ included in the ball $B_r(\vec{P}_t)$, and the part $\Omega_r=\Omega\setminus\bigl(\Gamma_t\cup B_r(\vec{P}_t)\bigr)$ outside the ball, see \cref{fig:partition}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.45\textwidth]{remove_singularity.pdf}
@@ -124,7 +123,7 @@ where the second equality follows from dynamic equilibrium \eqref{eq:classicalwa
 \end{equation}
 The last term involving the body force density $\vec{f}_t$ will have a vanishing contribution as $r\to 0$, since $\vec{f}_t$ is supposed to be regular and asymptotically $\vec{u}_t$ is of order $\mathcal{O}(r^{1/2})$ in linear elastic fracture mechanics.
 
-To solve the contradiction \cite{Maugin:1994} of having the Lagrangian density in \eqref{eq:Eshelby} and the Hamiltonian density in \eqref{eq:Jdyn}, contributions from the integral on $\tilde{B}_r$ must be considered. By classical singularity analysis and the steady state condition $\dot{\vec{q}}_t\approx-\nabla\vec{q}_t\dot{l}_t\vtau_t$ verified for all (tensorial) fields $\vec{q}$ near the crack tip \cite{Freund:1990}, the first two terms of $G_t$ in \eqref{eq:Gt} are of order $\mathcal{O}(r^{-1})$ and hence have a vanishing contribution when integrated with the area element $r\D{r}\D{\theta}$ on $\tilde{B}_r$ as $r$ tends to zero. Similarly the term involving the body force density $\vec{f}_t$ is not singular enough to contribute. However the last two terms $\rho\ddot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t+\rho\dot{\vec{u}}_t\cdot\nabla\dot{\vec{u}}_t\vtheta_t$ are integrable \cite{NishiokaAtluri:1983} and will yield a finite value in the limit. Using the real velocity field $\dot{\vec{u}}_t$ in the steady state condition and the fact that $\vtheta_t\to\vtau_t$ when $r$ becomes small due to continuity, we have
+To solve the contradiction of having the Lagrangian density in \eqref{eq:Eshelby} and the Hamiltonian density in \eqref{eq:Jdyn}, contributions from the integral on $\tilde{B}_r$ must be considered, see \cite{Maugin:1994}. By classical singularity analysis and the steady state condition $\dot{\vec{q}}_t\approx-\nabla\vec{q}_t\dot{l}_t\vtau_t$ verified for all (tensorial) fields $\vec{q}$ near the crack tip \cite{Freund:1990}, the first two terms of $G_t$ in \eqref{eq:Gt} are of order $\mathcal{O}(r^{-1})$ and hence have a vanishing contribution when integrated with the area element $r\D{r}\D{\theta}$ on $\tilde{B}_r$ as $r$ tends to zero. Similarly the term involving the body force density $\vec{f}_t$ is not singular enough to contribute. However the last two terms $\rho\ddot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t+\rho\dot{\vec{u}}_t\cdot\nabla\dot{\vec{u}}_t\vtheta_t$ are integrable \cite{NishiokaAtluri:1983} and will yield a finite value in the limit. Using the real velocity field $\dot{\vec{u}}_t$ in the steady state condition and the fact that $\vtheta_t\to\vtau_t$ when $r$ becomes small due to continuity, we have
 \[
 \rho\ddot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t=\rho\dot{\vec{u}}_t\cdot\nabla\dot{\vec{u}}_t\vtheta_t\quad\text{as}\quad r\to 0.
 \]
@@ -141,7 +140,7 @@ where the last term in \eqref{eq:magicformula} vanishes in the limit $r\to 0$. W
 \begin{equation}
 G_t=\lim_{r\to 0}\int_{C_r}(\vec{E}_t+2\kappa(\dot{\vec{u}}_t)\mathbb{I})\vec{n}\cdot\vtheta_t\ds=\lim_{r\to 0}\int_{C_r}\vec{J}_t\vec{n}\cdot\vtau_t\ds.
 \end{equation}
-which completes the proof. \qed
+which completes the proof.
 \end{proof}
 
 \begin{remark}
@@ -149,7 +148,7 @@ Compared to the classical $J$-integral, the advantage of the dynamic energy rele
 \end{remark}
 
 \begin{remark}[Generalization to curved or kinked crack paths]
-Let us recall that the crack $l\mapsto\vec{\gamma}(l)$ is supposed to follow a pre-defined straight path in this paper. It can be generalized to arbitrary but smooth enough \emph{pre-defined} curved paths without much technical difficulties. It suffices to carefully reconstruct the virtual perturbation $\vtheta_t$ along the crack path, as a solution to a particular Cauchy evolution problem \cite{KhludnevSokolowskiSzulc:2010}. The obtained \emph{scalar} crack equation of motion will be formally the same as \eqref{eq:gtgc}, which predicts the crack length $l_t$ as a function of time along the this path. Note however that crack propagation direction should be at least continuous in time (curved path) so that the shape derivative method embodied by the diffeomorphism $\philt$ makes sense. In presence of a crack kinking associated with a temporal discontinuity of the crack tangent (Fig. \ref{fig:kink}), the shape derivative methods should be adapted to capture the topology change due to the kinking \cite{Hintermuller:2011}.
+Let us recall that the crack $l\mapsto\vec{\gamma}(l)$ is supposed to follow a pre-defined straight path in this paper. It can be generalized to arbitrary but smooth enough \emph{pre-defined} curved paths without much technical difficulties. It suffices to carefully reconstruct the virtual perturbation $\vtheta_t$ along the crack path, as a solution to a particular Cauchy evolution problem \cite{KhludnevSokolowskiSzulc:2010}. The obtained \emph{scalar} crack equation of motion will be formally the same as \eqref{eq:gtgc}, which predicts the crack length $l_t$ as a function of time along the this path. Note however that crack propagation direction should be at least continuous in time (curved path) so that the shape derivative method embodied by the diffeomorphism $\philt$ makes sense. In presence of a crack kinking associated with a temporal discontinuity of the crack tangent (cf. \cref{fig:kink}), the shape derivative methods should be adapted to capture the topology change due to the kinking \cite{Hintermuller:2011}.
 
 When the crack path is unknown, an interesting attempt is to include the crack tangent angle into the action integral \eqref{eq:action} and evaluate the variation induced by arbitrary crack direction change. Remark that the propagation criterion derived in \cite{Oleaga:2001,Adda-BediaAriasAmarLund:1999} corresponds in fact to a vectorial extension of the scalar propagation law \eqref{eq:gtgc}
 \[
@@ -272,3 +271,10 @@ Comparing \eqref{eq:eblocal1} and \eqref{eq:eblocal2}, we obtain the desired loc
 
 \chapter{Publications and Presentations}
 The present work leads to the publication of the following articles:
+\begin{itemize}
+\item \fullcite{Li:2016aa}
+\item \fullcite{LiMarigo:2016}
+\item \fullcite{LiMarigoGuilbaudPotapov:2016}
+\item \fullcite{LiMarigoGuilbaudPotapov:2015}
+\end{itemize}
+

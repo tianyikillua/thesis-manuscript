@@ -1,6 +1,6 @@
 %% General packages
 \usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
+\usepackage[american]{babel}
 \usepackage{caption}
 \usepackage[top=2.5cm,bottom=2cm,left=3cm,right=2.5cm,headheight=15pt]{geometry}
 \usepackage{fancyhdr}
@@ -9,7 +9,7 @@
 \usepackage{booktabs}
 \usepackage{xspace}
 \usepackage{xcolor}
-\usepackage[pagebackref]{hyperref}
+\usepackage{hyperref}
 \usepackage{quotchap}
 \usepackage[nottoc,notindex,notlot,notlof]{tocbibind}
 \usepackage{newtxtext}
@@ -20,8 +20,9 @@
 \usepackage{microtype}
 \usepackage[framemethod=tikz]{mdframed}
 \usepackage{dingbat}
-\usepackage[square]{natbib}
-\usepackage{bibentry}
+\usepackage{csquotes}
+\usepackage[style=apa,backend=biber,apabackref=true,hyperref=true,doi=false,abbreviate=false,eprint=false]{biblatex}
+\usepackage[normalem]{ulem}
 
 \let\openbox\relax
 \usepackage{amsmath}
@@ -44,16 +45,41 @@
 
 \hypersetup{unicode=true,colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue,breaklinks=true}
 \newcommand{\print}{\hypersetup{linkcolor=black,citecolor=black,urlcolor=black}}
-\renewcommand*{\backreflastsep}{ and }
-\renewcommand*{\backreftwosep}{ and }
-\renewcommand*{\backref}[1]{}
-\renewcommand*{\backrefalt}[4]{\ifcase #1 \relax
-\or Cited on page #2.
-\else Cited on pages #2.
-\fi}
+\DeclareLanguageMapping{american}{american-apa}
+\DeclareListFormat{pageref}{%
+\ifthenelse{\value{listcount}=1}%
+{\hyperpage{#1}}%
+{\ifthenelse{\value{listcount}<\value{liststop}}%
+{\addcomma\addspace\hyperpage{#1}}%
+{\ifnumequal{\value{listcount}}{\value{liststop}}%
+{\addspace{}and\addspace\hyperpage{#1}}{}}}}
 
-\renewcommand{\cite}{\citep}
-\setlength{\bibsep}{0pt plus 0.3ex}
+\renewbibmacro{in:}{%
+\ifentrytype{article}{}{%
+\printtext{\bibstring{in}\intitlepunct}}}
+
+\AtEveryBibitem{
+\clearfield{month}{}
+\clearlist{language}{}}
+
+\let\citep\cite
+\let\cite\parencite
+
+\setlength{\bibitemsep}{0pt plus 0.3ex}
+\renewcommand*{\bibfont}{\small}
+
+\makeatletter
+\let\abx@macro@citeOrig\abx@macro@cite
+\renewbibmacro{cite}{%
+\bibhyperref{%
+\let\bibhyperref\relax\relax%
+\abx@macro@citeOrig}}
+\let\abx@macro@parenciteOrig\abx@macro@parencite
+\renewbibmacro{parencite}{%
+\bibhyperref{%
+\let\bibhyperref\relax\relax%
+\abx@macro@parenciteOrig}}
+\makeatother
 
 \fancyhf{}
 \fancyhead[LE,RO]{\thepage}
@@ -105,7 +131,7 @@
 \newcommand{\vtheta}{\vec{\theta}}
 \newcommand{\vtau}{\vec{\tau}}
 \newcommand{\vphi}{\vec{\varphi}}
-\newcommand{\RN}[1]{\textup{\uppercase\expandafter{\romannumeral#1}}}
+%\newcommand{\RN}[1]{\textup{\uppercase\expandafter{\romannumeral#1}}}
 \newcommand{\symgrad}{\nabla^\mathrm{s}}
 \newcommand{\uvec}{\underline{\vec{u}}}
 \newcommand{\dvec}{\underline{\vec{\alpha}}}
