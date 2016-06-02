@@ -1,6 +1,7 @@
 %% General packages
 \usepackage[utf8]{inputenc}
 \usepackage[american]{babel}
+\usepackage{hyperref}
 \usepackage{caption}
 \usepackage[top=2.5cm,bottom=2cm,left=3cm,right=2.5cm,headheight=15pt]{geometry}
 \usepackage{fancyhdr}
@@ -9,7 +10,6 @@
 \usepackage{booktabs}
 \usepackage{xspace}
 \usepackage{xcolor}
-\usepackage{hyperref}
 \usepackage{quotchap}
 \usepackage[nottoc,notindex,notlot,notlof]{tocbibind}
 \usepackage{newtxtext}
@@ -21,7 +21,9 @@
 \usepackage[framemethod=tikz]{mdframed}
 \usepackage{dingbat}
 \usepackage{csquotes}
-\usepackage[style=apa,backend=biber,apabackref=true,hyperref=true,doi=false,abbreviate=false,eprint=false]{biblatex}
+\usepackage[style=apa,backend=biber,apabackref=true,
+            hyperref=true,doi=false,abbreviate=false,
+            uniquename=false,eprint=false]{biblatex}
 \usepackage[normalem]{ulem}
 
 \let\openbox\relax
@@ -36,14 +38,16 @@
 \usepackage[all,pdf]{xy}
 \usepackage[capitalise,noabbrev]{cleveref}
 
-%% Settings
-\setcounter{minitocdepth}{2}
-\WarningFilter{minitoc(hints)}{W0023}
-\WarningFilter{minitoc(hints)}{W0024}
-\WarningFilter{minitoc(hints)}{W0028}
-\WarningFilter{minitoc(hints)}{W0030}
+\declaretheorem[within=chapter]{theorem}
+\declaretheorem[style=plain]{proposition}
+\declaretheorem[sibling=theorem,style=definition]{definition}
+\declaretheorem[sibling=theorem,style=definition]{hypothesis}
+\declaretheorem[style=remark,numbered=no]{remark}
 
-\hypersetup{unicode=true,colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue,breaklinks=true}
+\setcounter{minitocdepth}{2}
+
+\hypersetup{unicode=true,colorlinks=true,linkcolor=blue,
+            citecolor=blue,urlcolor=blue,breaklinks=true}
 \newcommand{\print}{\hypersetup{linkcolor=black,citecolor=black,urlcolor=black}}
 \DeclareLanguageMapping{american}{american-apa}
 \DeclareListFormat{pageref}{%
@@ -62,9 +66,6 @@
 \clearfield{month}{}
 \clearlist{language}{}}
 
-\let\citep\cite
-\let\cite\parencite
-
 \setlength{\bibitemsep}{0pt plus 0.3ex}
 \renewcommand*{\bibfont}{\small}
 
@@ -75,11 +76,17 @@
 \let\bibhyperref\relax\relax%
 \abx@macro@citeOrig}}
 \let\abx@macro@parenciteOrig\abx@macro@parencite
-\renewbibmacro{parencite}{%
+\newbibmacro{parencite}{%
 \bibhyperref{%
 \let\bibhyperref\relax\relax%
 \abx@macro@parenciteOrig}}
 \makeatother
+\renewcommand{\cite}{\parencite}
+
+\WarningFilter{minitoc(hints)}{W0023}
+\WarningFilter{minitoc(hints)}{W0024}
+\WarningFilter{minitoc(hints)}{W0028}
+\WarningFilter{minitoc(hints)}{W0030}
 
 \fancyhf{}
 \fancyhead[LE,RO]{\thepage}
@@ -92,17 +99,11 @@
 
 \graphicspath{{../thesis/Papers/figs/model/}{../thesis/Papers/figs/kalthoff/}{../thesis/Papers/figs/plate/}{../thesis/Papers/figs/antiplane/}{../thesis/Papers/figs/brazilian/}{../thesis/Papers/figs/num/}{../thesis/Papers/figs/TC/}{../thesis/Papers/figs/others/}{../thesis/Papers/figs/gregoire/}{../thesis/Papers/figs/L-specimen/}{../thesis/Papers/figs/branching/}{../thesis/Papers/figs/kinking/}{../thesis/Papers/figs/bar/}{../thesis/Papers/figs/beam/}}
 
-\makeindex
-
-\declaretheorem[within=chapter]{theorem}
-\declaretheorem[style=plain]{proposition}
-\declaretheorem[sibling=theorem,style=definition]{definition}
-\declaretheorem[sibling=theorem,style=definition]{hypothesis}
-\declaretheorem[style=remark,numbered=no]{remark}
-
 \makeatletter
 \newcommand{\pushright}[1]{\ifmeasuring@#1\else\omit\hfill$\displaystyle#1$\fi\ignorespaces}
 \makeatother
+
+\makeindex
 
 %% Definitions
 \def\vec#1{\ensuremath{\mathchoice
