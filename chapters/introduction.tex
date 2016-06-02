@@ -113,8 +113,8 @@ with $c_\mathrm{s}=\sqrt{\mu/\rho}$ denoting the shear wave speed. For a general
 In presence of a crack $\Gamma$, the displacement and stress present a well-known $\mathcal{O}(r^{1/2})$ and $\mathcal{O}(r^{-1/2})$ asymptotic behaviors at the crack tip when the elastodynamic equation \eqref{eq:navier} is solved in the bulk of $\Omega\setminus\Gamma$. In the case of an in-plane fracture problem, these two fields admit the following near-tip form
 \begin{equation} \label{eq:singularform}
 \begin{aligned}
-\vec{u}(r,\theta) &\approx \frac{K_\RN{1}(t)\sqrt{r}}{\sqrt{2\pi}\mu}\vec{\Theta}_\RN{1}(\theta,\dot{l})+\frac{K_\RN{2}(t)\sqrt{r}}{\sqrt{2\pi}\mu}\vec{\Theta}_\RN{2}(\theta,\dot{l})+\ldots \\
-\sig(r,\theta) &\approx \frac{K_\RN{1}(t)}{\sqrt{2\pi r}}\vec{\Sigma}_\RN{1}(\theta,\dot{l})+\frac{K_\RN{2}(t)}{\sqrt{2\pi r}}\vec{\Sigma}_\RN{2}(\theta,\dot{l})
+\vec{u}(r,\theta) &\approx \frac{K_\RNN{1}(t)\sqrt{r}}{\sqrt{2\pi}\mu}\vec{\Theta}_\RNN{1}(\theta,\dot{l})+\frac{K_\RNN{2}(t)\sqrt{r}}{\sqrt{2\pi}\mu}\vec{\Theta}_\RNN{2}(\theta,\dot{l})+\ldots \\
+\sig(r,\theta) &\approx \frac{K_\RNN{1}(t)}{\sqrt{2\pi r}}\vec{\Sigma}_\RNN{1}(\theta,\dot{l})+\frac{K_\RNN{2}(t)}{\sqrt{2\pi r}}\vec{\Sigma}_\RNN{2}(\theta,\dot{l})
 \end{aligned}
 \end{equation}
 where the $K's$ are the stress intensity factors\index{stress intensity factors}. Compared to the quasi-static regime, the angular functions $\vec{\Theta}$'s and $\vec{\Sigma}$'s depend on the current crack speed. When the crack propagates $\dot{l}>0$, the near tip behaviors for the velocity and the acceleration fields develop the following steady state form
@@ -123,7 +123,7 @@ where the $K's$ are the stress intensity factors\index{stress intensity factors}
 \end{equation}
 In particular, the asymptotic expansion of the velocity reads
 \begin{equation} \label{eq:vasymp}
-\dot{\vec{u}}(r,\theta)\approx\frac{\dot{l}K_\RN{1}(t)}{\sqrt{2\pi r}\mu}\vec{V}_\RN{1}(\theta,\dot{l})+\frac{\dot{l}K_\RN{2}(t)}{\sqrt{2\pi r}\mu}\vec{V}_\RN{2}(\theta,\dot{l}).
+\dot{\vec{u}}(r,\theta)\approx\frac{\dot{l}K_\RNN{1}(t)}{\sqrt{2\pi r}\mu}\vec{V}_\RNN{1}(\theta,\dot{l})+\frac{\dot{l}K_\RNN{2}(t)}{\sqrt{2\pi r}\mu}\vec{V}_\RNN{2}(\theta,\dot{l}).
 \end{equation}
 
 We now turn to the governing equation of the crack growth in the Griffith's theory. Assume that the crack propagates currently in the direction $\vtau$. Based on the thermodynamic energy balance law, the rate of energy that flows into the crack region delimited by an arbitrary contour $C$ encircling the crack tip (see \cref{fig:crackedconfig}) can be evaluated by the following energy flux\index{energy flux}
@@ -136,7 +136,7 @@ G=J=\lim_{r\to 0}\int_{C_r}\vec{J}\vec{n}\cdot\vtau\ds\quad\text{with}\quad\vec{
 \end{equation}
 It can be regarded as the dynamic extension of the classical $J$-integral\index{J@$J$-integral} in the sense of \cite{Cherepanov:1967aa,Rice:1968aa}. By using the asymptotic near-tip behavior of the fields \eqref{eq:singularform} and \eqref{eq:vasymp}, the dynamic energy release rate can be related to the stress intensity factors via the following equation
 \begin{equation} \label{eq:GasafunctionofK}
-G=\frac{1}{\overline{E}}\left(A_\RN{1}(\dot{l})K_\RN{1}(t)^2+A_\RN{2}(\dot{l})K_\RN{2}(t)^2\right)
+G=\frac{1}{\overline{E}}\left(A_\RNN{1}(\dot{l})K_\RNN{1}(t)^2+A_\RNN{2}(\dot{l})K_\RNN{2}(t)^2\right)
 \end{equation}
 where $\overline{E}=E/(1-\nu^2)$ for plane strain problems, $\overline{E}=E$ for plane stress problems and $A$'s are two universal material-dependent functions \cite[p.~234]{Freund:1990}. This is the generalization of the Irwin's formula \cite{Irwin:1957aa} since when the crack is stationary $\dot{l}\to 0$, these two functions converge to 1\index{Irwin's formula}.
 
