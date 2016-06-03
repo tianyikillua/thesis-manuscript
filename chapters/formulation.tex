@@ -50,9 +50,9 @@ The material density $\rho$ is independent of the damage, which implies total ma
 \mathcal{S}(\alpha_t)=\int_\Omega\varsigma(\alpha_t,\nabla\alpha_t)\dx=\int_\Omega\bigl(w(\alpha_t)+\frac{1}{2}w_1\ell^2\nabla\alpha_t\cdot\nabla\alpha_t\bigr)\dx\,,
 \end{equation}
 where $\alpha\mapsto w(\alpha)$ describes local damage dissipation during a homogeneous damage evolution and its maximal value $w(1)=w_1$ is the energy completely dissipated during such process when damage attains 1. For numerical implementation purposes, see \cite{BourdinMarigoMauriniSicsic:2014,MesgarnejadBourdinKhonsari:2014}, a non-essential rescaling of the internal length $\ell=\sqrt{2}\eta$ is usually performed and \eqref{eq:surface} is rewritten as follows
-\begin{equation} \label{eq:surfaceGc}
+\begin{align} \label{eq:surfaceGc}
 \mathcal{S}(\alpha_t)=\int_\Omega\varsigma(\alpha_t,\nabla\alpha_t)\dx=\int_\Omega\frac{\gc}{c_w}\left(\frac{\mathsf{w}(\alpha_t)}{\eta}+\eta\nabla\alpha_t\cdot\nabla\alpha_t\right)\dx\,,\tag{\ref*{eq:surface}${}^\prime$}.
-\end{equation}
+\end{align}
 To ensure equivalence between these two definitions, we have necessarily $w(\alpha)=w_1\mathsf{w}(\alpha)$ and $\gc=c_ww_1\eta$, where $\alpha\mapsto\mathsf{w}(\alpha)$ denotes the adimensional damage dissipation function. In the sequel, both $\ell$ and $\eta$ denote the material internal length. 
 \end{itemize}
 
@@ -69,18 +69,18 @@ To ensure equivalence between these two definitions, we have necessarily $w(\alp
 Depending on the specific damage constitutive laws $\alpha\mapsto\tens{a}(\alpha)$ and $\alpha\mapsto \mathsf{w}(\alpha)$ used, the material and structural behaviors could be quantitatively or even qualitatively different. An abundant literature is devoted to a theoretic or numerical analysis of these damage constitutive laws. The interested readers are referred to \cite{PhamAmorMarigoMaurini:2011,PhamMarigoMaurini:2011,LorentzCuvilliezKazymyrenko:2012,PhamMarigo:2013} and references therein for a discussion on this point. In the numerical simulation part of this work, two particular damage constitutive laws will be considered. They both involve only polynomial functions of the damage up to degree 2, thus the elastic energy $\mathcal{E}$ as well as the damage dissipation energy $\mathcal{S}$ are \emph{quadratic} with respect to damage, a rather interesting property from a computational cost point of view since the Hessian matrix is constant.
 \begin{itemize}
 \item The Pham, Amor, Marigo and Maurini model initially introduced in \cite{PhamAmorMarigoMaurini:2011} and named after their initials:
-\begin{equation} \label{eq:at1}
+\begin{align} \label{eq:at1}
 \mathsf{a}(\alpha)=(1-\alpha)^2\,,\quad \mathsf{w}(\alpha)=\alpha. \tag{PAMM}
-\end{equation}
+\end{align}
 Damage does not evolve as long as a non-zero critical stress is not reached, a rather appreciated property when modeling brittle fracture. Then a strain-softening behavior is observed as damage grows for $\alpha\in(0,1)$, which implies that the critical stress coincides with the maximal stress. According to \eqref{eq:sigc0}, we have
 \[
 \sigma_\mathrm{c}=\sigma_\mathrm{m}=\sqrt{w_1E}.
 \]
 
 \item The original Ambrosio and Tortorelli regularization model introduced in \cite{BourdinFrancfortMarigo:2000}:
-\begin{equation} \label{eq:at2}
+\begin{align} \label{eq:at2}
 \mathsf{a}(\alpha)=(1-\alpha)^2\,,\quad \mathsf{w}(\alpha)=\alpha^2. \tag{AT}
-\end{equation}
+\end{align}
 In this model a purely elastic domain is absent $\sigma_\mathrm{c}=0$ and the strain-softening property is satisfied only for $\alpha\in(\frac{1}{4},1)$. At $\alpha=\frac{1}{4}$ the stress reaches its maximal value and is given by
 \[
 \sigma_\mathrm{m}=\frac{3\sqrt{6}}{16}\sqrt{w_1E}.
@@ -192,9 +192,9 @@ In the first-order stability condition \eqref{eq:vi}, we evaluate the directiona
 where $\vec{w}=\vec{v}-\vec{u}$ denotes a displacement evolution variation and $\vec{s}_t=(\vec{u}_t,\dot{\vec{u}}_t,\alpha_t)$ corresponds to a state of the dynamical system. Remark that \eqref{eq:vi} is written as a variational inequality to take into account the unilateral effects introduced by the irreversibility condition in the definition of the damage admissible space \eqref{eq:Dalphat}. It can be regarded as an extension of Hamilton's principle applied to systems with irreversible dissipation.
 
 The energy balance condition \eqref{eq:dyngdeb} characterizes the energy flow into the system: the external work is balanced by the mechanical energy variation of the system consisting of the elastic energy \eqref{eq:elasticG} and the kinetic energy \eqref{eq:kineticG}, and the energy dissipated in the process of crack production \eqref{eq:surface}. Observe that \eqref{eq:dyngdeb} also applies to non-smooth evolutions in presence of possible velocity shocks, since no higher spatial or temporal derivatives of the displacement and the damage are involved other than that needed for the definition of the Lagrangian density. With the help of integration by parts, the regularity is transferred to the boundary conditions $t\mapsto \vec{U}_t$ and the external work potential $t\mapsto \mathcal{W}_t$. If in particular the acceleration field $\ddot{\vec{u}}_t$ is sufficiently regular, the energy balance condition admits an equivalent formulation which reads after an integration by parts in the time domain
-\begin{equation} \label{eq:dyngdeb2}
+\begin{align} \label{eq:dyngdeb2}
 \mathcal{H}_t=\mathcal{H}_0+\int_0^t\left(\int_\Omega\bigl(\sig_s\cdot\eps(\dot{\vec{U}}_s)+\rho\ddot{\vec{u}}_s\cdot\dot{\vec{U}}_s\bigr)\dx-\mathcal{W}_s(\dot{\vec{U}}_s)-\dot{\mathcal{W}}_s(\vec{u}_s)\right)\D{s}. \tag{\ref*{eq:dyngdeb}${}^\prime$}
-\end{equation}
+\end{align}
 
 \subsection{Equivalent local interpretations} \label{sec:equivalentlocal}
 By developing the Gâteaux derivative of the action integral, further physical insights into the first-order stability condition \eqref{eq:vi} can be obtained if sufficient spatial and temporal regularities of the involved fields are assumed. Writing the variation $\vec{v}-\vec{u}$ by $\vec{w}$ and testing \eqref{eq:vi} with $\beta=\alpha$, we obtain after an integration by parts in the time domain
@@ -235,9 +235,9 @@ If the body is initially undamaged inside a particular region (where the damage 
 Y_t|_{\alpha_t=0}=0\implies -\frac{1}{2}\mathsf{a}'(0)\tens{A}_0\eps(\vec{u}_t)\cdot\eps(\vec{u}_t)-w'(0)=0.
 \end{equation}
 This criterion can be equivalently written in the stress-space, which reads
-\begin{equation} \label{eq:damageinitiationsound2}
+\begin{align} \label{eq:damageinitiationsound2}
 -\frac{1}{2}\mathsf{a}'(0)\tens{S}_0\sig_t\cdot\sig_t-w'(0)=0\,, \tag{\ref*{eq:damageinitiationsound}${}^\prime$}
-\end{equation}
+\end{align}
 where $\tens{S}_0=\tens{A}_0^{-1}$ denotes the compliance tensor.
 
 \paragraph{Construction of the optimal damage profile}
@@ -469,7 +469,7 @@ We then turn to the tension-compression separation proposed in \cite{MieheHofack
 \sigma_0^+ &= \sqrt{\frac{(1+\nu)}{(1-\nu)(1+2\nu)}w_1E}, \\
 \sigma_0^- &= -\sqrt{\frac{1+\nu}{2\nu^2}w_1E}\to\infty\text{ as $\nu\to 0$}.
 \end{align*}
-It can be seen that the critical stress $\sigma_0^+$ increases with the Poisson ratio but stays bounded in tension. The compressive threshold $\sigma_0^-$ goes to infinity when $\nu$ is near zero, hence no damage will occur in this case. We use the tensile threshold $\sigma_0^+$ as well as its corresponding strain $\varepsilon_0^+$ both evaluated at $\nu=0.2$ to normalize the results shown in Fig. \ref{fig:miehe}.
+It can be seen that the critical stress $\sigma_0^+$ increases with the Poisson ratio but stays bounded in tension. The compressive threshold $\sigma_0^-$ goes to infinity when $\nu$ is near zero, hence no damage will occur in this case. We use the tensile threshold $\sigma_0^+$ as well as its corresponding strain $\varepsilon_0^+$ both evaluated at $\nu=0.2$ to normalize the results shown in \cref{fig:miehe}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{TC5.pdf}
@@ -482,7 +482,7 @@ In contrast, for any damage constitutive laws the model proposed in \cite{Freddi
 \[
 \sigma_0^+=\sqrt{\frac{(1-\nu)}{(1-2\nu)(1+\nu)}w_1E}\to\infty\text{ as $\nu\to\frac{1}{2}$}
 \]
-so cracks cannot appear for incompressible materials. We again use the tensile stress threshold $\sigma_0^+$ as well as its corresponding strain $\varepsilon_0^+$ both evaluated at $\nu=0.2$ to normalize the results shown in Fig. \ref{fig:freddi}. A classical softening behavior is observed after damage initiation. Analyses show that snapbacks are present for $\nu>(\sqrt{33}-1)/16\approx 0.3$. However it is only limited to the \eqref{eq:at1} case.
+so cracks cannot appear for incompressible materials. We again use the tensile stress threshold $\sigma_0^+$ as well as its corresponding strain $\varepsilon_0^+$ both evaluated at $\nu=0.2$ to normalize the results shown in \cref{fig:freddi}. A classical softening behavior is observed after damage initiation. Analyses show that snapbacks are present for $\nu>(\sqrt{33}-1)/16\approx 0.3$. However it is only limited to the \eqref{eq:at1} case.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.98\textwidth]{TC6.pdf}
@@ -516,7 +516,7 @@ Numerics & & & & \\ \bottomrule
 \end{table}
 
 \subsection{Lagrangian description in the initial cracked configuration}
-This section will be devoted to a rigorous energetic approach to deriving dynamic energy release rates. The basic assumptions will be a two-dimensional body $\Omega$ containing a smoothly propagating crack $\Gamma_t$ with a pre-defined path $l\mapsto\vec{\gamma}(l)\in\mathbb{R}^2$ parametrized by its arc length $t\mapsto l_t\geq 0$, see Fig. \ref{fig:philt}. The symbol $\vec{P}_t=\vec{\gamma}(l_t)$ will be used to represent the crack tip at time $t$. The current cracked configuration will be denoted by $\domaint$ on which the kinematic quantities are defined. For the sake of simplicity, the crack $\Gamma_t$ is assumed to remain far from the boundary $\partial\Omega$. The spatial crack path $l\mapsto\vec{\gamma}(l)$ can be curved but in this contribution we will only consider a straight crack with a constant tangent $\vec{\gamma}'(l_t)=\vtau_t=\vtau_0$. Generalization to a curved crack path will be briefly discussed at the end of \cref{chap:griffithrevis}.
+This section will be devoted to a rigorous energetic approach to deriving dynamic energy release rates. The basic assumptions will be a two-dimensional body $\Omega$ containing a smoothly propagating crack $\Gamma_t$ with a pre-defined path $l\mapsto\vec{\gamma}(l)\in\mathbb{R}^2$ parametrized by its arc length $t\mapsto l_t\geq 0$, see \cref{fig:philt}. The symbol $\vec{P}_t=\vec{\gamma}(l_t)$ will be used to represent the crack tip at time $t$. The current cracked configuration will be denoted by $\domaint$ on which the kinematic quantities are defined. For the sake of simplicity, the crack $\Gamma_t$ is assumed to remain far from the boundary $\partial\Omega$. The spatial crack path $l\mapsto\vec{\gamma}(l)$ can be curved but in this contribution we will only consider a straight crack with a constant tangent $\vec{\gamma}'(l_t)=\vtau_t=\vtau_0$. Generalization to a curved crack path will be briefly discussed at the end of \cref{chap:griffithrevis}.
 \begin{remark}
 For sharp-interface models (Griffith's theory for example), the crack $\Gamma_t$ refers to an evolving strong discontinuity in the body. For gradient damage models, the crack $\Gamma_t$ stands for a totally damage zone where $\alpha_t=1$, see the local damage criterion \eqref{eq:localdamagefirstorder} and the consistency condition \eqref{eq:damageconsis}. This interpretation will be formalized in \cref{hypo:damageband}. The essential requirement here is that the energetic quantities of the body can be written in the current cracked configuration $\domaint$.
 \end{remark}
@@ -526,9 +526,9 @@ For sharp-interface models (Griffith's theory for example), the crack $\Gamma_t$
 \caption{Definition of a diffeomorphism $\philt_{l_t}:\domaini\to\domaint$ transforming the current cracked material configuration $\domaint$ to the initial one $\domaini$. It should not be confused with the actual deformation $\vec{\varphi}_t$ of the body which takes a particular material point $\vec{x}\in\domaint$ to its spatial location $\vec{\varphi}_t(\vec{x})$ in the deformed configuration $\vec{\varphi}_t(\domaint)$} \label{fig:philt}
 \end{figure}
 
-The displacement $\vec{u}_t$ is defined in the current crack configuration $\domaint$, consequently its total variation depends on that of the crack. A Lagrangian description of the fracture problem is thus preferred if ones needs to rigorously define an energy release rate with respect to the crack length, see \cite{Destuynder:1981}. The current cracked \emph{material} configuration $\domaint$ is transformed to the initial one $\domaini$ thanks to a well-defined bijection $\philt_{l_t}$ whose inverse as well as itself is differentiable, see Fig. \ref{fig:philt}. Proving existence of such diffeomorphisms may be technical \cite{KhludnevSokolowskiSzulc:2010} and consequently will be directly admitted. This bijection $\philt_{l_t}$ should not be confused with the actual deformation $\vec{\varphi}_t$ of the body which takes a particular material point $\vec{x}\in\domaint$ to its spatial location $\vec{\varphi}_t(\vec{x})$ in the deformed configuration $\vec{\varphi}_t(\domaint)$. Recall that the displacement field $\vec{u}_t$ is defined by $\vec{\varphi}_t(\vec{x})=\vec{x}+\vec{u}_t(\vec{x})$ for all $\vec{x}$ in $\domaint$.
+The displacement $\vec{u}_t$ is defined in the current crack configuration $\domaint$, consequently its total variation depends on that of the crack. A Lagrangian description of the fracture problem is thus preferred if ones needs to rigorously define an energy release rate with respect to the crack length, see \cite{Destuynder:1981}. The current cracked \emph{material} configuration $\domaint$ is transformed to the initial one $\domaini$ thanks to a well-defined bijection $\philt_{l_t}$ whose inverse as well as itself is differentiable, see \cref{fig:philt}. Proving existence of such diffeomorphisms may be technical \cite{KhludnevSokolowskiSzulc:2010} and consequently will be directly admitted. This bijection $\philt_{l_t}$ should not be confused with the actual deformation $\vec{\varphi}_t$ of the body which takes a particular material point $\vec{x}\in\domaint$ to its spatial location $\vec{\varphi}_t(\vec{x})$ in the deformed configuration $\vec{\varphi}_t(\domaint)$. Recall that the displacement field $\vec{u}_t$ is defined by $\vec{\varphi}_t(\vec{x})=\vec{x}+\vec{u}_t(\vec{x})$ for all $\vec{x}$ in $\domaint$.
 
-In this particular case of a straight crack path, we can explicit this domain transformation by using a virtual perturbation $\vtheta^*$ defined on the initial configuration \cite{Destuynder:1981,KhludnevSokolowskiSzulc:2010}. An example of such virtual perturbations is given in Fig. \ref{fig:exampletheta}.
+In this particular case of a straight crack path, we can explicit this domain transformation by using a virtual perturbation $\vtheta^*$ defined on the initial configuration \cite{Destuynder:1981,KhludnevSokolowskiSzulc:2010}. An example of such virtual perturbations is given in \cref{fig:exampletheta}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.55\textwidth]{thetaGriffith.pdf}
@@ -569,11 +569,11 @@ All the properties discussed in \cref{def:velocityfield} for the initial virtual
 By virtue of \eqref{eq:grad} and \eqref{eq:v}, we can thus formulate the energetic quantities of the body $\Omega$ using the transported displacement in the initial cracked configuration. In \cref{chap:griffithrevis}, this approach is applied to revisit the Griffith's theory of dynamic fracture reviewed in \cref{sec:griffithfreund}. The desired evolution laws for the cracked body (elastodynamic equation) and the crack itself (Griffith's law) automatically follow by considering variations of a space-time action integral written in the initial configuration. In particular, a rigorous variational interpretation of the dynamic $J$-integral \eqref{eq:Jdyn} is obtained: it can be identified by performing the shape derivative of a space-time action integral involving the Griffith's surface energy \eqref{eq:StGriffith}.
 
 \subsection{Generalized Griffith criterion for a propagating damage band}
-This section is devoted to the application of the shape derivative methods to the dynamic gradient damage model outlined in \cref{def:dynagraddamanew}. An evolution law similar to that of the Griffith's law \eqref{eq:gtgc} will be obtained which governs the \emph{crack tip} equation of motion in the gradient damage model. As in \cite{SicsicMarigo:2013}, we are interested in the smooth dynamic propagation phase of a damage band concentrated along a certain path. An example of such damage evolution is illustrated in Fig. \ref{fig:kalthoff} where numerical simulations results of an edge-cracked plate under dynamic shearing impact are indicated.
+This section is devoted to the application of the shape derivative methods to the dynamic gradient damage model outlined in \cref{def:dynagraddamanew}. An evolution law similar to that of the Griffith's law \eqref{eq:gtgc} will be obtained which governs the \emph{crack tip} equation of motion in the gradient damage model. As in \cite{SicsicMarigo:2013}, we are interested in the smooth dynamic propagation phase of a damage band concentrated along a certain path. An example of such damage evolution is illustrated in \cref{fig:kalthoffF} where numerical simulations results of an edge-cracked plate under dynamic shearing impact are indicated.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.35\textwidth]{kalthoff_damage.pdf}
-\caption{Numerical simulation of an edge-cracked plate under dynamic shearing impact that will be considered in \cref{sec:kalthoff}. The damage is concentrated inside a band and varies from 0 (blue zones) to 1 (red zones). It serves as a phase-field indicator of the crack propagating currently in the direction of $\vtau_t$ with its tip located at $\vec{P}_t$} \label{fig:kalthoff}
+\caption{Numerical simulation of an edge-cracked plate under dynamic shearing impact that will be considered in \cref{sec:kalthoff}. The damage is concentrated inside a band and varies from 0 (blue zones) to 1 (red zones). It serves as a phase-field indicator of the crack propagating currently in the direction of $\vtau_t$ with its tip located at $\vec{P}_t$} \label{fig:kalthoffF}
 \end{figure}
 We observe initiation of the edge crack and subsequent propagation of the damage band representing the crack. The objective here is to understand the current crack tip $\vec{P}_t$ evolution during such \emph{simple} propagation phase. Complex topology changes such as crack kinking, branching or coalescence indicated by the phase-field $\alpha_t$ remain beyond the scope of the present section. Formally, we admit the following
 \begin{hypothesis}[Damage Band Structuration] \label{hypo:damageband}
@@ -641,9 +641,9 @@ Remark that the boundary $\partial\Omega$ is invariant under the transformation 
 \end{itemize}
 
 The definition of the admissible evolution spaces for the triplet $(\vec{u}^*,\alpha^*,l)$ are discussed as follows. The admissible function space for the displacement \eqref{eq:Du} is slightly modified to reflect the fact that now the displacement is defined in the uncracked bulk:
-\begin{equation} \label{eq:Cu}
+\begin{align} \label{eq:Cu}
 \mathcal{C}(\vec{u}^*)=\set{\vec{v}^*:I\times(\Omega\setminus\Gamma_0)\to\mathbb{R}^\mathrm{dim}|\vec{v}^*_t\in\mathcal{C}_t\text{ for all $t\in I$ and }\vec{v}^*_{\partial I}=\vec{u}^*_{\partial I}}\,, \tag{\ref*{eq:Du}${}^\prime$}
-\end{equation}
+\end{align}
 where $\mathcal{C}_t=\mathcal{C}_0+\vec{U}_t$ and the associated vector space $\mathcal{C}_0$ is given by
 \[
 \mathcal{C}_0=\set{\vec{u}^*_t:\Omega\setminus\Gamma_0\to\mathbb{R}^\mathrm{dim}|\vec{u}^*_t=\vec{0}\text{ on }\partial\Omega_U}.
@@ -655,7 +655,7 @@ For the admissible crack evolution, we require that the evolution of the crack t
 \end{equation}
 where it can be observed that the crack length value is also fixed at both time ends $l_{\partial I}=(l_0,l_T)$.
 
-The damage profile $\alpha^*$ is merely a component contributing to the total damage evolution, hence the temporal irreversibility still applies to the true damage evolution $t\mapsto\alpha_t$, which reads $\dot{\alpha}_t\geq 0$. Given an arbitrary such evolution verifying Hypothesis \ref{hypo:damageband}, we want to consider admissible variation of the current damage state $\alpha_t$ corresponding to a crack length $l_t$, based on an admissible crack length variation $\delta l_t=s_t-l_t\geq 0$ and a crack profile variation $\beta_t^*-\alpha_t^*$. At time $t\in(0,T)$ the induced admissible non-negative variation of the true damage reads
+The damage profile $\alpha^*$ is merely a component contributing to the total damage evolution, hence the temporal irreversibility still applies to the true damage evolution $t\mapsto\alpha_t$, which reads $\dot{\alpha}_t\geq 0$. Given an arbitrary such evolution verifying \cref{hypo:damageband}, we want to consider admissible variation of the current damage state $\alpha_t$ corresponding to a crack length $l_t$, based on an admissible crack length variation $\delta l_t=s_t-l_t\geq 0$ and a crack profile variation $\beta_t^*-\alpha_t^*$. At time $t\in(0,T)$ the induced admissible non-negative variation of the true damage reads
 \begin{equation} \label{eq:unilateral}
 \beta_t-\alpha_t=\beta_t^*\circ\philt_{s_t}^{-1}-\alpha_t^*\circ\philt_{l_t}^{-1}\geq 0.
 \end{equation}
@@ -664,9 +664,9 @@ As can be seen, the damage profile variation $\beta_t^*-\alpha_t^*$ and the crac
 \item If the crack length variation is zero $\delta l_t=0$, then the damage profile variation $\beta_t^*-\alpha_t^*$ corresponds exactly to the true damage variation $\beta_t-\alpha_t$. Thus it suffices that $\beta_t^*-\alpha_t^*\geq 0$ to ensure irreversibility.
 \item However if a finite extension of the crack length is considered $\delta l_t>0$, then the damage profile variation depends non-trivially on the $\delta l_t$ via \eqref{eq:unilateral} to obtain $\beta_t-\alpha_t\geq 0$.
 \end{itemize}
-In practice, it means that if crack length variation is not considered, then the variation of the action integral with respect to the displacement and to the damage (profile) can be separately computed. Otherwise when $\delta l_t>0$, then damage variation must also be taken into account. Given an admissible crack length evolution $s\in\mathcal{Z}(l)$, the admissible evolution space for the damage profile will be denoted by $\mathcal{D}_s(\alpha^*)$, where the dependence on $s$ is explicitly indicated by the subscript and $\alpha^*$ describes the profile of a damage evolution verifying Hypothesis \ref{hypo:damageband}. As usual, at both ends of the time interval $I$, no variations of true damage profile are considered.
+In practice, it means that if crack length variation is not considered, then the variation of the action integral with respect to the displacement and to the damage (profile) can be separately computed. Otherwise when $\delta l_t>0$, then damage variation must also be taken into account. Given an admissible crack length evolution $s\in\mathcal{Z}(l)$, the admissible evolution space for the damage profile will be denoted by $\mathcal{D}_s(\alpha^*)$, where the dependence on $s$ is explicitly indicated by the subscript and $\alpha^*$ describes the profile of a damage evolution verifying \cref{hypo:damageband}. As usual, at both ends of the time interval $I$, no variations of true damage profile are considered.
 
-Associated with an admissible triplet of displacement, damage profile and crack length evolutions $(\vec{u}^*,\alpha^*,l)\in\mathcal{C}(\vec{u}^*)\times\mathcal{D}_l(\alpha^*)\times\mathcal{Z}(l)$, we can now reformulate the dynamic gradient damage model under Hypothesis \ref{hypo:damageband} by the following
+Associated with an admissible triplet of displacement, damage profile and crack length evolutions $(\vec{u}^*,\alpha^*,l)\in\mathcal{C}(\vec{u}^*)\times\mathcal{D}_l(\alpha^*)\times\mathcal{Z}(l)$, we can now reformulate the dynamic gradient damage model under \cref{hypo:damageband} by the following
 \begin{definition}[Dynamic Gradient Damage Evolution Law for a Propagating Crack] \label{def:dynagraddamanew}
 \begin{enumerate}
 \item[]
@@ -687,7 +687,7 @@ where the total energy is defined by
 \end{enumerate}
 \end{definition}
 
-We then exploit the first-order stability condition \eqref{eq:vi2} by carefully developing the Gâteaux derivative of the action integral \eqref{eq:actionGG}. With the help of detailed calculations provided in Appendix \ref{sec:calactionvariation} and using the same arguments developed before, the first-order action variation testing with $\beta^*-\alpha^*=0$ and $s-l=0$ leads to the elastic-damage dynamic wave equation on the uncracked domain similar to \eqref{eq:wavedyn}
+We then exploit the first-order stability condition \eqref{eq:vi2} by carefully developing the Gâteaux derivative of the action integral \eqref{eq:actionGG}. With the help of detailed calculations provided in \cref{chap:detailedcal} and using the same arguments developed before, the first-order action variation testing with $\beta^*-\alpha^*=0$ and $s-l=0$ leads to the elastic-damage dynamic wave equation on the uncracked domain similar to \eqref{eq:wavedyn}
 \begin{equation} \label{eq:waveequation}
 \rho\ddot{\vec{u}}_t-\div\sig_t=\vec{f}_t\quad\text{in }\domaint\,,\quad\sig_t\vec{n}=\vec{F}_t\quad\text{on }\partial\Omega_F\quad\text{and}\quad\sig_t\vec{n}=\vec{0}\quad\text{on }\Gamma_t
 \end{equation}
@@ -714,7 +714,7 @@ and the damage dissipation rate\index{energy release rate!damage dissipation rat
 \end{equation}
 In \eqref{eq:staball}, although the crack length variation is non-negative $\delta l_t\geq 0$, the sign of the generalized dynamic energy release rate is undetermined in general, since the first two terms are both positive due to \eqref{eq:localdamagefirstorder} and \eqref{eq:unilateral}.
 
-It remains to use the energy balance \eqref{eq:dyngdeb3} to derive the consistency conditions. With the help of calculations given in Appendix \ref{sec:ebcalc}, we obtain
+It remains to use the energy balance \eqref{eq:dyngdeb3} to derive the consistency conditions. With the help of the detailed calculations given in \cref{chap:detailedcal}, we obtain
 \begin{equation} \label{eq:crackconsistency}
 \int_\domaint-(Y_t+\div\vec{q}_t)(\dot{\alpha}_t+\dot{l}_t\nabla\alpha\cdot\vtheta)\dx+\int_{\partial\Omega\setminus\Gamma_t}(\vec{q}_t\cdot\vec{n})\dot{\alpha}_t\ds-\widehat{G}_t\dot{l}_t=0
 \end{equation}
@@ -762,7 +762,7 @@ Due to the local damage criterion \eqref{eq:localdamagefirstorder} and the irrev
 \begin{equation} \label{eq:ebG}
 (Y_t+\div\vec{q}_t)\dot{\alpha}_t=0\quad\text{in }\domaint\,,\quad(\vec{q}_t\cdot\vec{n})\dot{\alpha}_t=0\quad\text{on }\partial\Omega\setminus\Gamma_t\quad\text{and}\quad\widehat{J}_t\dot{l}_t=0\,,
 \end{equation}
-which represent local energy balances. We note that the first two equalities correspond to the consistency condition \eqref{eq:damageconsis} derived without Hypothesis \ref{hypo:damageband}.
+which represent local energy balances. We note that the first two equalities correspond to the consistency condition \eqref{eq:damageconsis} derived without \cref{hypo:damageband}.
 
 It can be seen from \eqref{eq:stab} and the last equation in \eqref{eq:ebG} that the generalized dynamic $\widehat{J}$-integral plays the role of $G_t-\gc$ in the classical Griffith's law \eqref{eq:gtgc}. It involves a path integral on a contour $C_r$ that shrinks to the crack tip $r\to 0$, which may lead to difficulties in a finite element calculation. From a numerical point of view, the generalized dynamic energy release rate $\widehat{G}_t$ defined in \eqref{eq:GtG} should be preferred since it is written as a cell integral on a finite domain. It turns out that under a particular circumstance, these two objects are equivalent and they both define the following generalized Griffith criterion.
 \begin{proposition} \label{prop:Ggriffithlaw}
@@ -815,7 +815,7 @@ In this elastodynamic problem we assume that the body contains a sharp-interface
 \end{equation}
 
 The behaviors of the fields are described in \cref{sec:griffithfreund}. In particular, the rescaled stress $\sig_t$ and the rescaled velocity $\dot{\vec{u}}_t$ admit the following asymptotic form
-\begin{equation} \label{eq:singularform}
+\begin{equation} \label{eq:singularforms}
 \begin{aligned}
 \sig_t(r,\theta) &\approx \frac{\overline{K}_\RNN{1}(t)}{\sqrt{2\pi r}}\vec{\Sigma}_\RNN{1}(\theta,\dot{l}_t)+\frac{\overline{K}_\RNN{2}(t)}{\sqrt{2\pi r}}\vec{\Sigma}_\RNN{2}(\theta,\dot{l}_t)\,, \\
 \dot{\vec{u}}_t(r,\theta) &\approx \frac{\dot{l}_t\overline{K}_\RNN{1}(t)}{\sqrt{2\pi r}\mu}\vec{V}_\RNN{1}(\theta,\dot{l}_t)+\frac{\dot{l}_t\overline{K}_\RNN{2}(t)}{\sqrt{2\pi r}\mu}\vec{V}_\RNN{2}(\theta,\dot{l}_t)\,,
@@ -824,7 +824,7 @@ The behaviors of the fields are described in \cref{sec:griffithfreund}. In parti
 where $\overline{K}$'s is the rescaled stress intensity factors. The true stress intensity factors $K^\ell$'s are given by $K_i^\ell=\sqrt{\ell}\,\overline{K}_i$ since they are of order $\mathcal{O}(\sqrt{\ell})$ due to \eqref{eq:dependenceell}.
 
 An equivalent dynamic energy release rate $G_t^\ell$ associated with this outer problem is of order $\mathcal{O}(\ell)$. The rescaled dynamic energy release rate under the plane strain condition is given by
-\begin{equation} \label{eq:GasafunctionofK}
+\begin{equation} \label{eq:GasafunctionofKs}
 \overline{G}_t=\frac{1-\nu^2}{E}\left(A_\RNN{1}(\dot{l}_t)\overline{K}_\RNN{1}(t)^2+A_\RNN{2}(\dot{l}_t)\overline{K}_\RNN{2}(t)^2\right)\,,
 \end{equation}
 where the rescaling condition reads
@@ -868,7 +868,7 @@ with $\vec{u}_t(\vec{P}_t)$ the displacement of the crack tip given by the outer
 \ddot{\vec{u}}_t &\approx -\dot{l}_t\nabla\dot{\vec{u}}_t\vtau_t=\mathcal{O}(1).
 \end{aligned}
 \end{equation}
-These equations illustrate in fact the steady-state condition \eqref{eq:steadystatecondition} for the crack tip problem. We note that here the stress, the velocity and the acceleration are of order $\mathcal{O}(1)$ while they are of order $\mathcal{O}(\sqrt{\ell})$ in the outer problem. Using the expressions given in \eqref{eq:singularform}, the behavior of $\overline{\sig}_t$ and $\dot{\vec{u}}_t$ far from the crack tip can thus be obtained by virtue of the following matching conditions
+These equations illustrate in fact the steady-state condition \eqref{eq:steadystatecondition} for the crack tip problem. We note that here the stress, the velocity and the acceleration are of order $\mathcal{O}(1)$ while they are of order $\mathcal{O}(\sqrt{\ell})$ in the outer problem. Using the expressions given in \eqref{eq:singularforms}, the behavior of $\overline{\sig}_t$ and $\dot{\vec{u}}_t$ far from the crack tip can thus be obtained by virtue of the following matching conditions
 \begin{equation} \label{eq:asymgradu}
 \begin{aligned}
 \lim_{r\to\infty}\left(\overline{\sig}_t(r,\theta)-\frac{\overline{K}_\RNN{1}(t)}{\sqrt{2\pi r}}\vec{\Sigma}_\RNN{1}(\theta,\dot{l}_t)-\frac{\overline{K}_\RNN{2}(t)}{\sqrt{2\pi r}}\vec{\Sigma}_\RNN{2}(\theta,\dot{l}_t)\right)=\vec{0}, \\
@@ -904,16 +904,16 @@ Since all conditions in \eqref{eq:transportbigalphadevneg} are satisfied in the 
 \end{equation}
 
 \begin{proposition} \label{prop:Gammattogc}
-Using virtual perturbations defined in Fig. \ref{fig:theta}, the damage dissipation rate \eqref{eq:Gammat} converges to the fracture toughness \eqref{eq:gcindamage} defined in the damage band problem in the limit $r\to\infty$.
+Using virtual perturbations defined in \cref{fig:theta}, the damage dissipation rate \eqref{eq:Gammat} converges to the fracture toughness \eqref{eq:gcindamage} defined in the damage band problem in the limit $r\to\infty$.
 \end{proposition}
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.5\textwidth]{theta.pdf}
-\caption{A particular virtual perturbation $\vtheta_t$ in the scaled coordinate system $\vec{y}=(\vec{x}-\vec{P}_t)/\ell$ adapted from Fig. \ref{fig:exampletheta}} \label{fig:theta}
+\caption{A particular virtual perturbation $\vtheta_t$ in the scaled coordinate system $\vec{y}=(\vec{x}-\vec{P}_t)/\ell$ adapted from \cref{fig:exampletheta}} \label{fig:theta}
 \end{figure}
 
 \begin{proof}
-Within the scaled coordinate system we will construct a particular family of virtual perturbations of form $\vtheta_t(\vec{y})=\theta_t(\vec{y})\vec{e}_1$ as illustrated in Fig.~\ref{fig:theta}. As can be seen, the definition is adapted from Fig. \ref{fig:exampletheta}. The asymptotic behavior of the rescaled damage dissipation rate $\overline{\gamma}_t$ is analyzed when the inner radius $r$ goes to infinity with a fixed ratio of $R/r$. As $\nabla\theta_t=\vec{0}$ inside $B_r(\vec{P}_t)$, the scaled damage dissipation rate $\overline{\gamma}_t$ reads
+Within the scaled coordinate system we will construct a particular family of virtual perturbations of form $\vtheta_t(\vec{y})=\theta_t(\vec{y})\vec{e}_1$ as illustrated in \cref{fig:theta}. As can be seen, the definition is adapted from \cref{fig:exampletheta}. The asymptotic behavior of the rescaled damage dissipation rate $\overline{\gamma}_t$ is analyzed when the inner radius $r$ goes to infinity with a fixed ratio of $R/r$. As $\nabla\theta_t=\vec{0}$ inside $B_r(\vec{P}_t)$, the scaled damage dissipation rate $\overline{\gamma}_t$ reads
 \[
 \overline{\gamma}_t=\int_{\circledcirc_r}\left(\overline{\varsigma}(\overline{\alpha}_t,\nabla\overline{\alpha}_t)\div\vtheta_t-\overline{\vec{q}}_t\cdot\nabla\vtheta_t\nabla\overline{\alpha}_t\right)\D{\vec{y}}
 \]
@@ -933,11 +933,11 @@ where the last equality comes from the definition of $\overline{G}_\mc$ in \eqre
 \end{proof}
 
 \begin{proposition} \label{prop:GalphatoG}
-Using virtual perturbations defined in Fig. \ref{fig:theta}, the conventional dynamic energy release rate \eqref{eq:GtC} converges to the equivalent dynamic energy release rate of the outer problem \eqref{eq:GasafunctionofK} in the limit $r\to\infty$,
+Using virtual perturbations defined in \cref{fig:theta}, the conventional dynamic energy release rate \eqref{eq:GtC} converges to the equivalent dynamic energy release rate of the outer problem \eqref{eq:Gtell} in the limit $r\to\infty$,
 \end{proposition}
 
 \begin{proof}
-The conventional dynamic energy release rate will still be calculated with the above introduced virtual perturbation of Fig.~\ref{fig:theta}. The term involving the body force density in \eqref{eq:GtC} will be neglected since it is of higher order. By denoting the uncracked inner ball by $\tilde{B}_r=B_r(\vec{P}_t)\setminus\Gamma_t$, we will partition $\overline{G}^\alpha_t$ defined on $B_R(\vec{P}_t)\setminus\Gamma_t$ into two parts
+The conventional dynamic energy release rate will still be calculated with the above introduced virtual perturbation of \cref{fig:theta}. The term involving the body force density in \eqref{eq:GtC} will be neglected since it is of higher order. By denoting the uncracked inner ball by $\tilde{B}_r=B_r(\vec{P}_t)\setminus\Gamma_t$, we will partition $\overline{G}^\alpha_t$ defined on $B_R(\vec{P}_t)\setminus\Gamma_t$ into two parts
 \begin{multline} \label{eq:Galphaintwoparts}
 \overline{G}^\alpha_t=\int_{\circledcirc_r}\Bigl(\bigl(\kappa(\dot{\vec{u}}_t)-\psi\bigl(\eps(\overline{\vec{u}}_t),\overline{\alpha}_t\bigr)\bigr)\div\vtheta_t+\sig\bigl(\eps(\overline{\vec{u}}_t),\overline{\alpha}_t\bigr)\cdot(\nabla\overline{\vec{u}}_t\nabla\vtheta_t)+\rho\ddot{\vec{u}}_t\cdot\nabla\overline{\vec{u}}_t\vtheta_t+\rho\dot{\vec{u}}_t\cdot\nabla\dot{\vec{u}}_t\vtheta_t\Bigr)\D{\vec{y}} \\
 +\int_{\tilde{B}_r}\left(\rho\ddot{\vec{u}}_t\cdot\nabla\overline{\vec{u}}_t\vtau_t+\rho\dot{\vec{u}}_t\cdot\nabla\dot{\vec{u}}_t\vtau_t\right)\D{\vec{y}}
@@ -982,7 +982,7 @@ Irreversibility follows directly by the generalized Griffith criterion \eqref{eq
 \[
 \widehat{G}^\ell_t=\ell(\overline{G}_t^\alpha-\overline{\gamma}_t)
 \]
-Thanks to the two asymptotic results from Props. \ref{prop:Gammattogc} and \ref{prop:GalphatoG} and the rescaling conditions \eqref{eq:Gtell} and \eqref{eq:gcindamage}, the desired crack stability and energy balance conditions can be obtained by passing the limit $r\to\infty$ using virtual perturbations defined in Fig. \ref{fig:theta}.
+Thanks to the two asymptotic results from \cref{prop:Gammattogc,prop:GalphatoG} and the rescaling conditions \eqref{eq:Gtell} and \eqref{eq:gcindamage}, the desired crack stability and energy balance conditions can be obtained by passing the limit $r\to\infty$ using virtual perturbations defined in \cref{fig:theta}.
 \end{proof}
 
 \section*{Summary of this Chapter}

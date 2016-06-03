@@ -4,7 +4,7 @@
 
 In this chapter we revisit the Griffith's theory of dynamic fracture and provide a variational formulation of Griffith's law \eqref{eq:gtgc}. The basic problem setting is similar to that assumed in \cref{sec:linkDF}. Here the symbol $\Gamma_t$ refers to a sharp-interface crack inside a two-dimensional linear elastic body.
 
-\section{Reformulation Based on a Space-Time Action Integral} \label{sec:reformulationtheta}
+\section*{Reformulation Based on a Space-Time Action Integral}
 The sharp-interface dynamic fracture problem will be formulated in line with the dynamic gradient damage model outlined in \cref{def:dynagraddama}. We will construct a space-time action integral similar to that introduced in \cite{Adda-BediaAriasAmarLund:1999} and then calculate directly the action variation corresponding to arbitrary virtual displacement variation and crack advance. The basic energetic ingredients of the dynamic fracture problem are defined as follows. By virtue of \eqref{eq:grad} and \eqref{eq:v}, they can be directly formulated in the initial configuration.
 \begin{itemize}
 \item The elastic energy is given by
@@ -50,8 +50,8 @@ where the total energy is defined by
 
 In the first-order stability principle \eqref{eq:stability}, the notation $\mathcal{A}'(\vec{u}^*,l)(\vec{v}^*-\vec{u}^*,s-l)$ denotes the Gâteaux derivative of the action functional with respect to the displacement variation $\vec{w}^*=\vec{v}^*-\vec{u}^*$ and crack advance $\delta l=s-l$. Recall that the transported displacement $\vec{u}_t^*$ is defined on the initial configuration $\Omega\setminus\Gamma_0$ which is fixed during the (virtual) crack increment, thanks to the introduction of the diffeomorphism $\philt$. The displacement variation $\vec{w}^*$ is thus independent from that of the crack $\delta l$, and induces automatically a variation $\vec{w}$ in the current material configuration via a pushforward operation $\vec{w}\circ\philt=\vec{w}^*$.
 
-\section{Equivalence with the Classical Formulations}
-We will show in this section that the variational approach to dynamic fracture summarized by \cref{def:griffith} is equivalent to the usual elastodynamic equation in the uncracked bulk and Griffith's law of crack evolution \eqref{eq:gtgc}. However, it should be noted that the variational formulation is more general. To achieve this goal, we will carefully evaluate the derivative of the action functional with respect to arbitrary displacement variation $\vec{w}^*=\vec{v}^*-\vec{u}^*$ and crack advance $\delta l=s-l$. Lengthy calculations are detailed in \cref{sec:calactionvariation} and \cref{sec:ebcalc}. Only the main results are presented here.
+\section*{Equivalence with the Classical Formulations}
+We will show in this section that the variational approach to dynamic fracture summarized by \cref{def:griffith} is equivalent to the usual elastodynamic equation in the uncracked bulk and Griffith's law of crack evolution \eqref{eq:gtgc}. However, it should be noted that the variational formulation is more general. To achieve this goal, we will carefully evaluate the derivative of the action functional with respect to arbitrary displacement variation $\vec{w}^*=\vec{v}^*-\vec{u}^*$ and crack advance $\delta l=s-l$. Lengthy calculations are detailed in \cref{chap:detailedcal}, and only the main results are presented here.
 
 By firstly evaluating the action variation corresponding to zero virtual crack advance $\delta l=s-l=0$ and using the fact that $\vec{v}_t^*-\vec{u}_t^*=\vec{w}_t^*\in\mathcal{C}_0$ is a vector space, one obtains by virtue of the regularity hypotheses
 \begin{equation} \label{eq:actionvariationzerocrackadvance}
@@ -77,7 +77,7 @@ From \eqref{eq:actionvariationzerodisplacement}, we retrieve the desired crack s
 \[
 (G_t-\gc)\dot{l}_t=0
 \]
-can then be derived thanks to the energy balance principle \eqref{eq:eb} and calculations in Appendix \ref{sec:ebcalc}. The combination of these two conditions along with the irreversiblity condition leads to the desired Griffith's law of crack propagation \eqref{eq:gtgc}.
+can then be derived thanks to the energy balance principle \eqref{eq:eb} and detailed calculations in \cref{chap:detailedcal}. The combination of these two conditions along with the irreversibility condition leads to the desired Griffith's law of crack propagation \eqref{eq:gtgc}.
 
 Note that we retrieve the static energy release rate \cite{Destuynder:1981} by setting the velocity $\dot{\vec{u}}_t$ and the acceleration $\ddot{\vec{u}}_t$ in \eqref{eq:Gt} to zero. A similar formula for $G_t$ is obtained in \cite{AttiguiPetit:1996} by constructing an \emph{ad-hoc} field $0\leq\norm{\vtheta_t}\leq 1$ which transforms surface (line) integrals to volume (surface) integrals. Here the dynamic energy release rate $G_t$ is identified by calculating the variation of the space-time action integral \eqref{eq:action} with respect to crack increment \emph{evolution}. Using the Euler-Lagrange equation 
 \[
@@ -157,8 +157,9 @@ When the crack path is unknown, an interesting attempt is to include the crack t
 and the component perpendicular to the crack propagation direction $\vtau_t$ determines the crack path.  
 \end{remark}
 
-\chapter{Detailed Calculations}
-\section{Calculation of the First-Order Action Variation} \label{sec:calactionvariation}
+\chapter{Detailed Calculations} \label{chap:detailedcal}
+
+\section*{Calculation of the First-Order Action Variation}
 We will carefully explore the first-order stability principle \eqref{eq:stability} by calculating the action variation with respect to arbitrary displacement and crack variations. The following easily established identities
 \begin{align*}
 \frac{\md}{\md l_t}\det\nabla\philt(\vec{x}^*) &= \det\nabla\philt(\vec{x}^*)\tr(\nabla\vtheta^*(\vec{x}^*)\nabla\philt(\vec{x}^*)^{-1})=\div\vtheta_t(\vec{x})\det\nabla\philt(\vec{x}^*), \\
@@ -246,7 +247,7 @@ R=\int_I\delta l_t\D{t}\int_\domaint(\rho\ddot{\vec{u}}_t\cdot\nabla\vec{u}_t\vt
 \]
 which permits with \eqref{eq:aprime3} to deduce the desired equations \eqref{eq:actionvariationzerodisplacement} and \eqref{eq:Gt}.
 
-\section{Local Energy Balance Condition} \label{sec:ebcalc}
+\section*{Local Energy Balance Condition}
 In this section we will derive the equivalent local condition of the global energy balance \eqref{eq:eb}, which gives the desired Griffith's law of motion \eqref{eq:gtgc} when combined with the local stability condition \eqref{eq:actionvariationzerodisplacement}. The Lagrangian density defined in \eqref{eq:action} is explicitly dependent on time solely through the external work potential \eqref{eq:externalworki}. Its total derivative can thus be given by
 \begin{equation} \label{eq:lagrangianderivativetime}
 \frac{\md\mathcal{L}}{\md t}=\frac{\partial\mathcal{L}}{\partial\vec{u}_t^*}\dot{\vec{u}}_t^*+\frac{\partial\mathcal{L}}{\partial\dot{\vec{u}}_t^*}\ddot{\vec{u}}_t^*+\frac{\partial\mathcal{L}}{\partial l_t}\dot{l}_t+\frac{\partial\mathcal{L}}{\partial\dot{l}_t}\ddot{l}_t+\frac{\partial\mathcal{L}}{\partial t}.
@@ -269,12 +270,13 @@ Comparing \eqref{eq:eblocal1} and \eqref{eq:eblocal2}, we obtain the desired loc
 \left(\frac{\partial\mathcal{L}}{\partial l_t}-\frac{\md}{\md t}\frac{\partial\mathcal{L}}{\partial\dot{l}_t}\right)\cdot\dot{l}_t=0.
 \]
 
-\chapter{Publications and Presentations}
+\chapter{Publications}
 The present work leads to the publication of the following articles:
 \begin{itemize}
-\item \fullcite{Li:2016aa}
-\item \fullcite{LiMarigo:2016}
-\item \fullcite{LiMarigoGuilbaudPotapov:2016}
-\item \fullcite{LiMarigoGuilbaudPotapov:2015}
+\item \fullcite{Li:2016aa}. \mybibexclude{Li:2016aa}
+\item \fullcite{LiMarigo:2016}. \mybibexclude{LiMarigo:2016}
+\item \fullcite{LiMarigoGuilbaudPotapov:2016}. \mybibexclude{LiMarigoGuilbaudPotapov:2016}
+\item \fullcite{LiMarigoGuilbaudPotapov:2015} \mybibexclude{LiMarigoGuilbaudPotapov:2015}
 \end{itemize}
 
+\chapter{Résumé substantiel en français}

@@ -15,14 +15,13 @@ pdfkeywords={Dynamic fracture, gradient damage models, variational methods, nume
 \begin{document}
 \dominitoc
 \frontmatter
+\pagestyle{plain}
 
 \input{auxfiles/titlepage}
-\input{auxfiles/backcover}
+\include{chapters/frontmatter}
 
-\pagestyle{plain}
 \setcounter{tocdepth}{1}
 \tableofcontents
-\include{auxfiles/frontmatter}
 
 \mainmatter
 \pagestyle{fancy}
@@ -34,6 +33,10 @@ pdfkeywords={Dynamic fracture, gradient damage models, variational methods, nume
 \include{chapters/appendices}
 
 \backmatter
-\printbibliography
+\printbibliography[notcategory=fullcited]
 \printindex
+
+\cleartoleftpage
+\let\cleardoublepage\clearpage
+\input{chapters/backcover}
 \end{document}

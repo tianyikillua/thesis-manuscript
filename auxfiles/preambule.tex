@@ -83,6 +83,9 @@
 \makeatother
 \renewcommand{\cite}{\parencite}
 
+\DeclareBibliographyCategory{fullcited}
+\newcommand{\mybibexclude}[1]{\addtocategory{fullcited}{#1}}
+
 \WarningFilter{minitoc(hints)}{W0010}
 \WarningFilter{minitoc(hints)}{W0023}
 \WarningFilter{minitoc(hints)}{W0024}
@@ -102,6 +105,19 @@
 
 \makeatletter
 \newcommand{\pushright}[1]{\ifmeasuring@#1\else\omit\hfill$\displaystyle#1$\fi\ignorespaces}
+\makeatother
+
+\newcommand*\cleartoleftpage{%
+\clearpage
+\ifodd\value{page}\hbox{}\vspace*{\fill}\thispagestyle{empty}\newpage\fi}
+
+\makeatletter
+\newcounter{algorithmicH}
+\let\oldalgorithmic\algorithmic
+\renewcommand{\algorithmic}{
+\stepcounter{algorithmicH}
+\oldalgorithmic}
+\renewcommand{\theHALG@line}{ALG@line.\thealgorithmicH.\arabic{ALG@line}}
 \makeatother
 
 \makeindex

@@ -6,11 +6,11 @@ This chapter exposes the reader to the general physical context and outlines the
 
 \section{Dynamic Brittle Fracture in a Nutshell} \label{sec:dynafrac}
 \subsection{Kinematics and physics} \label{sec:kinematics}
-The concept of cracks constitutes the \emph{raison d'être} of fracture mechanics\index{fracture}. Specifically, fracture mechanics focuses on the evolution of cracks as well as their impact on the structural behaviors. The objective of fracture mechanics is to better understand different crack evolution phases by providing their corresponding governing physical criteria. They can then be used by civil engineers and material scientists to optimize the structural dimensioning and design, and to readjust the chemical composition to ensure integrity of the composite for instance. From a kinematic point of view, cracks $\Gamma$ are naturally defined in the reference configuration as a moving interface in the uncracked configuration $\Omega$, see \cref{fig:crackedconfig}. Due to external loading conditions, the deformed configuration $\vphi(\Omega\setminus\Gamma)$ of the cracked body may be described by the usual displacement vector $\vec{u}$. The presence of cracks often leads to separation of the body into two or more pieces, where the displacement vector defined in the reference configuration becomes discontinuous across them. This constitutes a major difficulty when modeling cracks and their evolutions in a continuum mechanics framework, since displacements are in general considered to be at least continuous inside the body.
+The concept of cracks constitutes the \emph{raison d'être} of fracture mechanics\index{fracture}. Specifically, fracture mechanics focuses on the evolution of cracks as well as their impact on the structural behaviors. The objective of fracture mechanics is to better understand different crack evolution phases by providing their corresponding governing physical criteria. They can then be used by civil engineers and material scientists to optimize the structural dimensioning and design, and to readjust the chemical composition to ensure integrity of the composite for instance. From a kinematic point of view, cracks $\Gamma_t$ are naturally defined in the reference configuration as a moving interface in the uncracked configuration $\Omega_t$, see \cref{fig:crackedconfig}. Due to external loading conditions, the deformed configuration $\vphi_t(\Omega\setminus\Gamma_t)$ of the cracked body may be described by the usual displacement vector $\vec{u}_t$. The presence of cracks often leads to separation of the body into two or more pieces, where the displacement vector defined in the reference configuration becomes discontinuous across them. This constitutes a major difficulty when modeling cracks and their evolutions in a continuum mechanics framework, since displacements are in general considered to be at least continuous inside the body.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.6\textwidth]{crakced_config.pdf}
-\caption{Current cracked reference configuration $\Omega\setminus\Gamma$ and its deformation defined by the displacement vector $\vec{u}$} \label{fig:crackedconfig}
+\caption{Current cracked reference configuration $\Omega\setminus\Gamma$ and its deformation defined by the displacement vector $\vec{u}_t$} \label{fig:crackedconfig}
 \end{figure}
 
 Cracks can be regarded as a macroscopic manifestation of material defects at a microscopic scale. Hence different materials are in general associated with a different failure mechanism. In the present work only brittle fracture phenomenon is considered, as opposed to ductile fracture.
@@ -78,69 +78,69 @@ Based on the kinematic description of cracks in the continuum body, different fr
 \section{Griffith's Theory of Dynamic Fracture} \label{sec:griffithfreund}
 Several formulations of the Griffith's theory of dynamic fracture mechanics exist. The Newtonian approach \cite{Freund:1990} is the most classical one and is herein summarized. The Eshelbian point of view \cite{Eshelby:1975} exploits the symmetry possessed by an generalized action integral but the derived so-called energy-momentum tensor still needs to be combined with local momentum and energy balance conditions to produce the crack equation of motion \cite{Maugin:1994,Adda-BediaAriasAmarLund:1999}.
 
-The fundamental assumption underlying the Griffith's theory of fracture concerns the energy dissipation of a propagating crack $\Gamma$. It is modeled as a sharp-interface surface in the bulk $\Omega$. Griffith postulates in his pioneering work \cite{Griffith:1921} that the creation of a crack calls for an energy consumption that is proportional to its total area $\abs{\Gamma}$ which characterizes the amount of energy needed to break the atomic bonds on the crack surface at a microscopic scale. The crack surface can thus be regarded to possess a surface energy which reads
+The fundamental assumption underlying the Griffith's theory of fracture concerns the energy dissipation of a propagating crack $\Gamma_t$. It is modeled as a sharp-interface surface in the bulk $\Omega$. Griffith postulates in his pioneering work \cite{Griffith:1921} that the creation of a crack calls for an energy consumption that is proportional to its total area $\abs{\Gamma_t}$ which characterizes the amount of energy needed to break the atomic bonds on the crack surface at a microscopic scale. The crack surface can thus be regarded to possess a surface energy which reads
 \begin{equation} \label{eq:StGriffith}
-\mathcal{S}=\gc\cdot\abs{\Gamma}
+\mathcal{S}_t=\gc\cdot\abs{\Gamma_t}
 \end{equation}
 where $\gc$ is called the fracture toughness\index{fracture toughness}, \emph{i.e.} the energy required to create a crack of unit surface in the body $\Omega$. Griffith assumes that $\gc$ is a material constant that characterizes the resistance of the material to crack formation.
 
 \subsection{Boundary-value evolution problem}
-The boundary-value evolution problem is obtained by considering local momentum equilibrium in the uncracked bulk and an energy flux integral entering into the crack tip which balances the energy dissipated due to crack propagation \cite{NakamuraShihFreund:1985,Cherepanov:1989}. Consider a two-dimensional homogeneous and isotropic cracked body as illustrated in \cref{fig:crackedconfig}. In this case the crack can be parametrized by its current arc-length denoted by $l$. We often place ourselves under the small displacement hypothesis for brittle materials, which leads to the definition of the linearized strain tensor $\eps=\eps(\vec{u})=\frac{1}{2}(\nabla\vec{u}+\nabla^\mT\vec{u})$. Hence, the Griffith's theory of fracture is usually referred as the linear elastic fracture mechanics (LEFM) theory\index{linear elastic fracture mechanics (LEFM)} in the literature. Away from the crack, the classical elastodynamic equation governs the kinematics of the body, which in absence of body forces reads
+The boundary-value evolution problem is obtained by considering local momentum equilibrium in the uncracked bulk and an energy flux integral entering into the crack tip which balances the energy dissipated due to crack propagation \cite{NakamuraShihFreund:1985,Cherepanov:1989}. Consider a two-dimensional homogeneous and isotropic cracked body as illustrated in \cref{fig:crackedconfig}. In this case the crack can be parametrized by its current arc-length denoted by $l_t$. We often place ourselves under the small displacement hypothesis for brittle materials, which leads to the definition of the linearized strain tensor $\eps_t=\eps(\vec{u}_t)=\frac{1}{2}(\nabla\vec{u}_t+\nabla^\mT\vec{u}_t)$. Hence, the Griffith's theory of fracture is usually referred as the linear elastic fracture mechanics (LEFM) theory\index{linear elastic fracture mechanics (LEFM)} in the literature. Away from the crack, the classical elastodynamic equation governs the kinematics of the body, which in absence of body forces reads
 \begin{equation} \label{eq:elastogriffith}
 \begin{aligned}
-& \rho\ddot{\vec{u}}=\div\sig\quad\text{in $\Omega\setminus\Gamma$} \\
-& \sig\vec{n}=\vec{F}\quad\text{on $\partial\Omega_F$}
+& \rho\ddot{\vec{u}}_t=\div\sig_t\quad\text{in $\Omega\setminus\Gamma_t$} \\
+& \sig_t\vec{n}=\vec{F}_t\quad\text{on $\partial\Omega_F$}
 \end{aligned}
 \end{equation}
-where $\rho$ refers to the material density and $\vec{F}$ denotes the surface traction density applied on the subset $\partial\Omega_F$ of the boundary. The stress tensor $\sig=\tens{A}\eps$ admits an explicit expression via the use of Lamé coefficients
+where $\rho$ refers to the material density and $\vec{F}_t$ denotes the surface traction density applied on the subset $\partial\Omega_F$ of the boundary. The stress tensor $\sig_t=\tens{A}\eps_t$ admits an explicit expression via the use of Lamé coefficients
 \[
-\sig=\lambda\tr(\eps)\mathbb{I}+2\mu\eps
+\sig_t=\lambda\tr(\eps_t)\mathbb{I}+2\mu\eps_t
 \]
 with $\mathbb{I}$ the identity tensor of rank 2. Plugging this expression into the dynamic equilibrium equation in the bulk gives the Navier's equations of motion
 \begin{equation} \label{eq:navier}
-\rho\ddot{\vec{u}}=(\lambda+\mu)\nabla(\div\vec{u})+\mu\div(\nabla\vec{u})
+\rho\ddot{\vec{u}}_t=(\lambda+\mu)\nabla(\div\vec{u}_t)+\mu\div(\nabla\vec{u}_t)
 \end{equation}
-where $\div(\nabla\vec{u})$ denotes the vectorial Laplacian of $\vec{u}$. Suppose that the displacement is irrotational $\operatorname{rot}\vec{u}=\vec{0}$, then \eqref{eq:navier} reduces to
+where $\div(\nabla\vec{u}_t)$ denotes the vectorial Laplacian of $\vec{u}_t$. Suppose that the displacement is irrotational $\operatorname{rot}\vec{u}_t=\vec{0}$, then \eqref{eq:navier} reduces to
 \[
-\ddot{\vec{u}}=c_\mathrm{d}^2\div(\nabla\vec{u})
+\ddot{\vec{u}}_t=c_\mathrm{d}^2\div(\nabla\vec{u}_t)
 \]
-where $c_\mathrm{d}=\sqrt{(\lambda+2\mu)/\rho}$ is the dilatational wave speed. On the other hand, considering equivoluminal waves that satisfy $\div\vec{u}=\vec{0}$ in \eqref{eq:navier}, we obtain
+where $c_\mathrm{d}=\sqrt{(\lambda+2\mu)/\rho}$ is the dilatational wave speed. On the other hand, considering equivoluminal waves that satisfy $\div\vec{u}_t=\vec{0}$ in \eqref{eq:navier}, we obtain
 \[
-\ddot{\vec{u}}=c_\mathrm{s}^2\div(\nabla\vec{u})
+\ddot{\vec{u}}_t=c_\mathrm{s}^2\div(\nabla\vec{u}_t)
 \]
-with $c_\mathrm{s}=\sqrt{\mu/\rho}$ denoting the shear wave speed. For a general wave evolution, it can be partitioned into a purely dilatational component and a purely shearing component, see for example \cite{Sternberg:1960aa}. Suppose that the crack evolution $t\mapsto\Gamma$ is known, the displacement time evolution problem can then completed by the Dirichlet boundary conditions of $\vec{u}$ prescribed on a subset $\partial\Omega_U$ of the boundary, as well as a set of initial conditions $(\vec{u}_0,\dot{\vec{u}}_0)$ defined on the initial cracked configuration $\Omega\setminus\Gamma_0$.
+with $c_\mathrm{s}=\sqrt{\mu/\rho}$ denoting the shear wave speed. For a general wave evolution, it can be partitioned into a purely dilatational component and a purely shearing component, see for example \cite{Sternberg:1960aa}. Suppose that the crack evolution $t\mapsto\Gamma_t$ is known, the displacement time evolution problem can then completed by the Dirichlet boundary conditions of $\vec{u}_t$ prescribed on a subset $\partial\Omega_U$ of the boundary, as well as a set of initial conditions $(\vec{u}_0,\dot{\vec{u}}_0)$ defined on the initial cracked configuration $\Omega\setminus\Gamma_0$.
 
-In presence of a crack $\Gamma$, the displacement and stress present a well-known $\mathcal{O}(r^{1/2})$ and $\mathcal{O}(r^{-1/2})$ asymptotic behaviors at the crack tip when the elastodynamic equation \eqref{eq:navier} is solved in the bulk of $\Omega\setminus\Gamma$. In the case of an in-plane fracture problem, these two fields admit the following near-tip form
+In presence of the crack $\Gamma_t$, the displacement and stress present a well-known $\mathcal{O}(r^{1/2})$ and $\mathcal{O}(r^{-1/2})$ asymptotic behaviors at the crack tip when the elastodynamic equation \eqref{eq:navier} is solved in the bulk of $\Omega\setminus\Gamma_t$. In the case of an in-plane fracture problem, these two fields admit the following near-tip form
 \begin{equation} \label{eq:singularform}
 \begin{aligned}
-\vec{u}(r,\theta) &\approx \frac{K_\RNN{1}(t)\sqrt{r}}{\sqrt{2\pi}\mu}\vec{\Theta}_\RNN{1}(\theta,\dot{l})+\frac{K_\RNN{2}(t)\sqrt{r}}{\sqrt{2\pi}\mu}\vec{\Theta}_\RNN{2}(\theta,\dot{l})+\ldots \\
-\sig(r,\theta) &\approx \frac{K_\RNN{1}(t)}{\sqrt{2\pi r}}\vec{\Sigma}_\RNN{1}(\theta,\dot{l})+\frac{K_\RNN{2}(t)}{\sqrt{2\pi r}}\vec{\Sigma}_\RNN{2}(\theta,\dot{l})
+\vec{u}_t(r,\theta) &\approx \frac{K_\RNN{1}(t)\sqrt{r}}{\sqrt{2\pi}\mu}\vec{\Theta}_\RNN{1}(\theta,\dot{l}_t)+\frac{K_\RNN{2}(t)\sqrt{r}}{\sqrt{2\pi}\mu}\vec{\Theta}_\RNN{2}(\theta,\dot{l}_t)+\ldots \\
+\sig_t(r,\theta) &\approx \frac{K_\RNN{1}(t)}{\sqrt{2\pi r}}\vec{\Sigma}_\RNN{1}(\theta,\dot{l}_t)+\frac{K_\RNN{2}(t)}{\sqrt{2\pi r}}\vec{\Sigma}_\RNN{2}(\theta,\dot{l}_t)
 \end{aligned}
 \end{equation}
-where the $K's$ are the stress intensity factors\index{stress intensity factors}. Compared to the quasi-static regime, the angular functions $\vec{\Theta}$'s and $\vec{\Sigma}$'s depend on the current crack speed. When the crack propagates $\dot{l}>0$, the near tip behaviors for the velocity and the acceleration fields develop the following steady state form
+where the $K's$ are the stress intensity factors\index{stress intensity factors}. Compared to the quasi-static regime, the angular functions $\vec{\Theta}$'s and $\vec{\Sigma}$'s depend on the current crack speed. When the crack propagates $\dot{l}_t>0$, the near tip behaviors for the velocity and the acceleration fields develop the following steady state form
 \begin{equation} \label{eq:steadystatecondition}
-\dot{\vec{u}}(\vec{x})\approx -\dot{l}\nabla\vec{u}\vtau=\mathcal{O}(r^{-1/2})\qquad\text{and}\qquad\ddot{\vec{u}}(\vec{x})\approx -\dot{l}\nabla\dot{\vec{u}}\vtau=\mathcal{O}(r^{-3/2}).
+\dot{\vec{u}}_t(\vec{x})\approx -\dot{l}\nabla\vec{u}_t\,\vtau_t=\mathcal{O}(r^{-1/2})\qquad\text{and}\qquad\ddot{\vec{u}}(\vec{x})\approx -\dot{l}\nabla\dot{\vec{u}}_t\,\vtau_t=\mathcal{O}(r^{-3/2})\,,
 \end{equation}
-In particular, the asymptotic expansion of the velocity reads
+where $\vtau_t$ denotes the current propagation direction. The asymptotic expansion of the velocity reads
 \begin{equation} \label{eq:vasymp}
-\dot{\vec{u}}(r,\theta)\approx\frac{\dot{l}K_\RNN{1}(t)}{\sqrt{2\pi r}\mu}\vec{V}_\RNN{1}(\theta,\dot{l})+\frac{\dot{l}K_\RNN{2}(t)}{\sqrt{2\pi r}\mu}\vec{V}_\RNN{2}(\theta,\dot{l}).
+\dot{\vec{u}}_t(r,\theta)\approx\frac{\dot{l}_tK_\RNN{1}(t)}{\sqrt{2\pi r}\mu}\vec{V}_\RNN{1}(\theta,\dot{l}_t)+\frac{\dot{l}_tK_\RNN{2}(t)}{\sqrt{2\pi r}\mu}\vec{V}_\RNN{2}(\theta,\dot{l}_t).
 \end{equation}
 
-We now turn to the governing equation of the crack growth in the Griffith's theory. Assume that the crack propagates currently in the direction $\vtau$. Based on the thermodynamic energy balance law, the rate of energy that flows into the crack region delimited by an arbitrary contour $C$ encircling the crack tip (see \cref{fig:crackedconfig}) can be evaluated by the following energy flux\index{energy flux}
+We now turn to the governing equation of the crack growth in the Griffith's theory. Based on the thermodynamic energy balance law, the rate of energy that flows into the crack region delimited by an arbitrary contour $C$ encircling the crack tip (see \cref{fig:crackedconfig}) can be evaluated by the following energy flux\index{energy flux}
 \begin{equation} \label{eq:energyflux}
-F=\int_C\Bigl((\sig\vec{n})\cdot\dot{\vec{u}}+\bigl(\psi(\eps)+\kappa(\dot{\vec{u}})\bigr)\dot{l}(\vec{n}\cdot\vtau)\Bigr)\ds.
+F_t=\int_C\Bigl((\sig_t\vec{n})\cdot\dot{\vec{u}}_t+\bigl(\psi(\eps_t)+\kappa(\dot{\vec{u}}_t)\bigr)\dot{l}_t(\vec{n}\cdot\vtau_t)\Bigr)\ds.
 \end{equation}
-where $\psi$ and $\kappa$ denote respectively the elastic energy density and the kinetic energy density and $\vec{n}$ is the normal vector pointing out of the contour $C$. The thickness of the body $\Omega$ is neglected and quantities are defined per unit thickness as usual for plane problems. The first term in \eqref{eq:energyflux} stands for the rate of work applied to the crack region inside $C$ while the second terms corresponds to the energy transport due to crack propagation. A detailed derivation of \eqref{eq:energyflux} can be found for example in \cite{Freund:1972,NakamuraShihFreund:1985}. From this energy flux, a dynamic energy release rate $G$ that\index{energy release rate!dynamic energy release rate} corresponds to the amount of energy released per unit crack extension can be defined by dividing \eqref{eq:energyflux} by the current crack velocity $\dot{l}$ and taking a contour thank shrinks onto the crack tip. It is physically meaningful since near the crack tip the energy flux is indeed path-independent due to the steady state condition \eqref{eq:steadystatecondition}. If $r$ denotes the maximum distance of $C$ to the crack tip, we have
+where $\psi$ and $\kappa$ denote respectively the elastic energy density and the kinetic energy density and $\vec{n}$ is the normal vector pointing out of the contour $C$. The thickness of the body $\Omega$ is neglected and quantities are defined per unit thickness as usual for plane problems. The first term in \eqref{eq:energyflux} stands for the rate of work applied to the crack region inside $C$ while the second terms corresponds to the energy transport due to crack propagation. A detailed derivation of \eqref{eq:energyflux} can be found for example in \cite{Freund:1972,NakamuraShihFreund:1985}. From this energy flux, a dynamic energy release rate $G_t$ that\index{energy release rate!dynamic energy release rate} corresponds to the amount of energy released per unit crack extension can be defined by dividing \eqref{eq:energyflux} by the current crack velocity $\dot{l}_t$ and taking a contour thank shrinks onto the crack tip. It is physically meaningful since near the crack tip the energy flux is indeed path-independent due to the steady state condition \eqref{eq:steadystatecondition}. If $r$ denotes the maximum distance of $C$ to the crack tip, we have
 \begin{equation} \label{eq:Jdyn}
-G=J=\lim_{r\to 0}\int_{C_r}\vec{J}\vec{n}\cdot\vtau\ds\quad\text{with}\quad\vec{J}=\Bigl(\psi\bigl(\eps(\vec{u})\bigr)+\kappa(\dot{\vec{u}})\Bigr)\mathbb{I}-\nabla\vec{u}^\mT\sig.
+G_t=J_t=\lim_{r\to 0}\int_{C_r}\vec{J}_t\vec{n}\cdot\vtau_t\ds\quad\text{with}\quad\vec{J}=\Bigl(\psi\bigl(\eps(\vec{u}_t)\bigr)+\kappa(\dot{\vec{u}}_t)\Bigr)\mathbb{I}-\nabla\vec{u}_t^\mT\sig_t.
 \end{equation}
 It can be regarded as the dynamic extension of the classical $J$-integral\index{J@$J$-integral} in the sense of \cite{Cherepanov:1967aa,Rice:1968aa}. By using the asymptotic near-tip behavior of the fields \eqref{eq:singularform} and \eqref{eq:vasymp}, the dynamic energy release rate can be related to the stress intensity factors via the following equation
 \begin{equation} \label{eq:GasafunctionofK}
-G=\frac{1}{\overline{E}}\left(A_\RNN{1}(\dot{l})K_\RNN{1}(t)^2+A_\RNN{2}(\dot{l})K_\RNN{2}(t)^2\right)
+G_t=\frac{1}{\overline{E}}\left(A_\RNN{1}(\dot{l}_t)K_\RNN{1}(t)^2+A_\RNN{2}(\dot{l}_t)K_\RNN{2}(t)^2\right)
 \end{equation}
-where $\overline{E}=E/(1-\nu^2)$ for plane strain problems, $\overline{E}=E$ for plane stress problems and $A$'s are two universal material-dependent functions \cite[p.~234]{Freund:1990}. This is the generalization of the Irwin's formula \cite{Irwin:1957aa} since when the crack is stationary $\dot{l}\to 0$, these two functions converge to 1\index{Irwin's formula}.
+where $\overline{E}=E/(1-\nu^2)$ for plane strain problems, $\overline{E}=E$ for plane stress problems and $A$'s are two universal material-dependent functions \cite[p.~234]{Freund:1990}. This is the generalization of the Irwin's formula \cite{Irwin:1957aa} since when the crack is stationary $\dot{l}_t\to 0$, these two functions converge to 1\index{Irwin's formula}.
 
-Due to the fundamental assumption of a Griffith crack \eqref{eq:StGriffith}, the amount of energy consumed per unit crack advance in the case of a sharp-interface surface is simply $\gc$, a material constant. The stress-free condition $\sig\vec{n}=\vec{0}$ is found on the crack lip. Owing to the energy balance of the cracked body, the following Griffith criterion holds
+Due to the fundamental assumption of a Griffith crack \eqref{eq:StGriffith}, the amount of energy consumed per unit crack advance in the case of a sharp-interface surface is simply $\gc$, a material constant. The stress-free condition $\sig_t\vec{n}=\vec{0}$ is found on the crack lip. Owing to the energy balance of the cracked body, the following Griffith criterion holds
 \begin{equation} \label{eq:gtgc}
 \dot{l}_t\geq0\,,\quad G_t\leq\gc\quad\text{and}\quad(G_t-\gc)\dot{l}_t=0.
 \end{equation}
@@ -169,9 +169,9 @@ To circumvent the crack nucleation deficiency present in the classical Griffith'
 \begin{enumerate}
 \item The first one concerns the introduction of a \emph{strength} criterion which bounds the maximal stress magnitude in the body. Still adopting a sharp-interface description of cracks, the cohesive zone\index{cohesive zone model} model \cite{Barenblatt:1962,ElicesGuineaGomezPlanas:2002} falls into this category. It revisits the Griffith's modeling of cracks \eqref{eq:StGriffith} by providing a new description of the crack surface energy
 \begin{equation} \label{eq:cohesiveSt}
-\mathcal{S}=\int_{\Gamma}\phi(\llbracket\vec{u}\rrbracket)\ds
+\mathcal{S}_t=\int_{\Gamma_t}\phi(\llbracket\vec{u}_t\rrbracket)\ds
 \end{equation}
-where the potential $\phi$ characterizes the local material toughness that corresponds to a displacement jump $\llbracket\vec{u}\rrbracket$ on the crack lip. The derivative of $\phi$ gives then the traction acting on the crack lips. It regularizes the initial Griffith theory by introducing a critical/maximal stress $\sigma_\mc=\norm{\phi'(\vec{0})}$ that the material can support. When the displacement jump becomes sufficiently big, the potential $\phi$ converges to the Griffith fracture toughness $\gc$, corresponding to a completely open crack  portion free of stress traction.
+where the potential $\phi$ characterizes the local material toughness that corresponds to a displacement jump $\llbracket\vec{u}_t\rrbracket$ on the crack lip. The derivative of $\phi$ gives then the traction acting on the crack lips. It regularizes the initial Griffith theory by introducing a critical/maximal stress $\sigma_\mc=\norm{\phi'(\vec{0})}$ that the material can support. When the displacement jump becomes sufficiently big, the potential $\phi$ converges to the Griffith fracture toughness $\gc$, corresponding to a completely open crack  portion free of stress traction.
 
 \item Crack nucleation with the Griffith's surface energy \eqref{eq:StGriffith} can be predicted in the variational approach to fracture through the use of global minimizations. It will be discussed in \cref{sec:fm98}.
 
@@ -211,17 +211,17 @@ A mere retranslation of Griffith's original idea, the variational formulation fo
 
 The first one concerns the surface energy
 \begin{equation} \label{eq:SGamma}
-\mathcal{S}(\Gamma)=\int_\Gamma\gc\D{\mathcal{H}^{\mathrm{dim}-1}}\,,
+\mathcal{S}(\Gamma_t)=\int_{\Gamma_t}\gc\D{\mathcal{H}^{\mathrm{dim}-1}}\,,
 \end{equation}
 where $\mathcal{H}^{\mathrm{dim}-1}$ denotes the $\mathrm{dim}-1$ dimensional Hausdorff measure, which yields a non-zero finite value when $\Omega$ is a sharp-interface surface or curve for 3-d or 2-d problems. It can be considered as a generalization of the Griffith's surface energy \eqref{eq:StGriffith} for a large class of crack topologies. Remark that cohesive effects can be as well accounted for, by replacing the $\gc$ constant by the potential $\phi$ in \eqref{eq:cohesiveSt}.
 
-The second energy is the elastic stored energy of the body at equilibrium corresponding to the crack state $\Gamma$. It reads
+The second energy is the elastic stored energy of the body at equilibrium corresponding to the crack state $\Gamma_t$. It reads
 \begin{equation} \label{eq:EGamma}
-\mathcal{E}(\Gamma)=\inf_{\vec{u}\in\mathcal{C}}\int_{\Omega\setminus\Gamma}\psi\bigl(\eps(\vec{u})\bigr)\dx\,,
+\mathcal{E}(\Gamma_t)=\inf_{\vec{u}\in\mathcal{C}}\int_{\Omega\setminus\Gamma_t}\psi\bigl(\eps(\vec{u})\bigr)\dx\,,
 \end{equation}
 where $\mathcal{C}$ is an appropriate function space that takes into account the Dirichlet boundary conditions prescribed on a portion of the boundary. Unilateral effects, see for example \cite{FrancfortMarigo:1998,AmorMarigoMaurini:2009}, may be as well considered. The total potential energy of the cracked body is the sum of the previous two energetic quantities in absence of body forces and surface tractions, which leads to
 \begin{equation} \label{eq:PES}
-\mathcal{P}(\Gamma)=\mathcal{E}(\Gamma)+\mathcal{S}(\Gamma).
+\mathcal{P}(\Gamma_t)=\mathcal{E}(\Gamma_t)+\mathcal{S}(\Gamma_t).
 \end{equation}
 
 The variational approach to fracture sees the crack evolution as a minimization movement of the total energy under an irreversibility condition to prevent self-healing of cracks. Formally, with an arbitrary temporal discretization $t^n$ with $1\leq n\leq N$, the governing equations are given by
@@ -241,7 +241,7 @@ Suppose that the crack at the previous time step is described by $\Gamma^{n-1}$.
 \subsection{Elliptic regularization} \label{sec:ellipticregul}
 Stated in the form of \eqref{eq:fm98}, the variational approach to fracture can be regarded as a Free Discontinuity Problem where the unknown crack set introduces displacement discontinuities somewhere in the body, see \cite{Braides:1998aa} for a mathematical treatment on this topic. The total potential energy \eqref{eq:PES} which we minimize in the fracture mechanics context resembles the Mumford-Shah functional \cite{Mumford:1989aa} defined in the image segmentation context. This latter energy functional admits the so-called Ambrosio-Tortorelli\index{Ambrosio-Tortorelli regularization} regularization \cite{Ambrosio:1990aa} which can be regarded as an elliptic approximation converging to the initial model in a certain sense. Based on these two observations, authors of \cite{BourdinFrancfortMarigo:2000} introduce a mathematically-sound $\ell$-parametrized two-field functional approximation of \eqref{eq:PES}. As we shall see in \cref{sec:graddamage}, this lays down a theoretic foundation of the latter gradient damage approaches \cite{PhamAmorMarigoMaurini:2011} and phase-field models \cite{MieheHofackerWelschinger:2010}.
 
-Their method consists of introducing an auxiliary continuous scalar continuous field defined on $\Omega$, which we note here $\alpha\in[0,1]$ anticipating its interpretation as a damage variable, representing the unknown location of cracks $\Gamma$. We adopt the convention that $\alpha(\vec{x})=1$ when $\vec{x}\in\Gamma$ and $\alpha(\vec{x})=0$ otherwise. The approximation of the discrete crack by a continuous field is parametrized by a small numerical parameter $\ell$, see \cref{fig:fiss3}. As $\ell\to 0$, the $\alpha$-field should collapse into a sharp-interface description of $\Gamma$. Remark that the introduction of such fields constitute exactly a smeared description of cracks which we reviewed in \cref{sec:discretemodels}. However here it is mainly motivated by a numerical implementation of the initial sharp-interface variational model \eqref{eq:fm98}.
+Their method consists of introducing an auxiliary continuous scalar continuous field defined on $\Omega$, which we note here $\alpha_t\in[0,1]$ anticipating its interpretation as a damage variable, representing the unknown location of cracks $\Gamma_t$. We adopt the convention that $\alpha_t(\vec{x})=1$ when $\vec{x}\in\Gamma$ and $\alpha_t(\vec{x})=0$ otherwise. The approximation of the discrete crack by a continuous field is parametrized by a small numerical parameter $\ell$, see \cref{fig:fiss3}. As $\ell\to 0$, the $\alpha$-field should collapse into a sharp-interface description of $\Gamma_t$. Remark that the introduction of such fields constitute exactly a smeared description of cracks which we reviewed in \cref{sec:discretemodels}. However here it is mainly motivated by a numerical implementation of the initial sharp-interface variational model \eqref{eq:fm98}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.55\textwidth]{fiss3.pdf}
@@ -250,9 +250,9 @@ Their method consists of introducing an auxiliary continuous scalar continuous f
 
 The regularized energy functional of \eqref{eq:PES} reads
 \begin{equation} \label{eq:Pualpha}
-\mathcal{P}_\ell(\vec{u},\alpha)=\mathcal{E}_\ell(\vec{u},\alpha)+\mathcal{S}_\ell(\alpha)=\int_\Omega(1-\alpha)^2\psi\bigl(\eps(\vec{u})\bigr)\dx+\int_\Omega\gc\left(\frac{\alpha^2}{4\ell}+\ell\nabla\alpha\cdot\nabla\alpha\right)\dx
+\mathcal{P}_\ell(\vec{u}_t,\alpha_t)=\mathcal{E}_\ell(\vec{u}_t,\alpha_t)+\mathcal{S}_\ell(\alpha_t)=\int_\Omega(1-\alpha)^2\psi\bigl(\eps(\vec{u}_t)\bigr)\dx+\int_\Omega\gc\left(\frac{\alpha_t^2}{4\ell}+\ell\nabla\alpha_t\cdot\nabla\alpha_t\right)\dx
 \end{equation}
-from which we readily recognize $\mathcal{E}_\ell$ as a regularized version of the elastic energy \eqref{eq:EGamma} when using $\vec{u}$ at equilibrium at a fixed crack state $\alpha$. The second part of \eqref{eq:Pualpha}, \emph{i.e.} $\mathcal{S}_\ell(\alpha)$, corresponds to an approximation of the Griffith crack surface energy \eqref{eq:SGamma} of the Ambrosio-Tortorelli type. Note however that an extension to the cohesive surface energy \eqref{eq:cohesiveSt} is also possible, see \cite{ContiFocardiIurlano:2015}. The evolutions of the $(\vec{u},\alpha)$ couple inherits from the original sharp-interface model \eqref{eq:fm98}: at every time step $t^n$, they achieve a global minimum of the total regularized potential functional $\mathcal{P}_\ell$, under the condition that the evolution of $\alpha$ is irreversible, \emph{i.e.} $\dot{\alpha}\geq 0$.
+from which we readily recognize $\mathcal{E}_\ell$ as a regularized version of the elastic energy \eqref{eq:EGamma} when using $\vec{u}_t$ at equilibrium at a fixed crack state $\alpha_t$. The second part of \eqref{eq:Pualpha}, \emph{i.e.} $\mathcal{S}_\ell(\alpha_t)$, corresponds to an approximation of the Griffith crack surface energy \eqref{eq:SGamma} of the Ambrosio-Tortorelli type. Note however that an extension to the cohesive surface energy \eqref{eq:cohesiveSt} is also possible, see \cite{ContiFocardiIurlano:2015}. The evolutions of the $(\vec{u},\alpha)$ couple inherits from the original sharp-interface model \eqref{eq:fm98}: at every time step $t^n$, they achieve a global minimum of the total regularized potential functional $\mathcal{P}_\ell$, under the condition that the evolution of $\alpha$ is irreversible, \emph{i.e.} $\dot{\alpha}_t\geq 0$.
 
 The convergence of this regularized model toward the initial model is made in a special setting involving $\Gamma$-convergence theories \cite{Braides:2002}. Specifically, one can prove that the global minimum attained in the regularized model \eqref{eq:Pualpha} converges to that of the original sharp-interface model \eqref{eq:PES}, when $\ell\to 0$. Using this fundamental result, the real crack evolution governed by the global minimization principle can thus be predicted through a $\ell$-parametrized approximation functional. In particular, Griffith crack surface energy \eqref{eq:SGamma} can be approximated by the regularized crack surface energy $\mathcal{S}_\ell(\alpha_t)$ in \eqref{eq:Pualpha}. In the classical two-dimensional Griffith setting for a single crack of length $l_t$, we have thus
 \begin{equation} \label{eq:Selllt}
@@ -260,9 +260,9 @@ The convergence of this regularized model toward the initial model is made in a 
 \end{equation}
 This equation can be used to deduce the current crack length from the knowledge of the regularized crack surface energy $\mathcal{S}_(\alpha_t)$.
 
-Classical $C^0$ finite element methods can therefore be used to discretize in space the displacement $\vec{u}$ and the newly introduced scalar field $\alpha$. Thanks to the variational approach, direct numerical implementation based on mathematical optimization methods can be applied. We observe that $\mathcal{P}_\ell$ is not convex in the couple $(\vec{u},\alpha)$. It is not a surprising result since the prediction of crack nucleation or further evolution essentially lies in its non-convexity. From a numerical point of view, we remark that the regularized functional $\mathcal{P}_\ell$ is separately convex in both variables, which leads intuitively to the use of an alternate minimization procedure proposed in \cite{BourdinFrancfortMarigo:2000}.
+Classical $C^0$ finite element methods can therefore be used to discretize in space the displacement $\vec{u}_t$ and the newly introduced scalar field $\alpha_t$. Thanks to the variational approach, direct numerical implementation based on mathematical optimization methods can be applied. We observe that $\mathcal{P}_\ell$ is not convex in the couple $(\vec{u}_t,\alpha_t)$. It is not a surprising result since the prediction of crack nucleation or further evolution essentially lies in its non-convexity. From a numerical point of view, we remark that the regularized functional $\mathcal{P}_\ell$ is separately convex in both variables, which leads intuitively to the use of an alternate minimization procedure proposed in \cite{BourdinFrancfortMarigo:2000}.
 
-At every time step, it consists of alternately minimizing $\mathcal{P}_\ell$ at fixed $\alpha$ and then at fixed $\vec{u}$ until numerical convergence upon an appropriate error norm and a tolerance. A detailed numerical analysis of the discretized model is performed in \cite{BourdinFrancfortMarigo:2008}. The converged solution couple $(\vec{u},\alpha)$ can only be guaranteed to be a stationary point or at best a local minimum of the regularized energy \eqref{eq:Pualpha}. Numerically global minimization remains far beyond the scope of traditional gradient-based numerical algorithms and constitutes one of the difficulties of the variational approach to fracture in the sense of \eqref{eq:fm98}, see \cite{BourdinFrancfortMarigo:2008}. For a triangulation with a typical mesh size $h$, a linear convergence $\mathcal{O}(h)$ can be observed for the approximation $\mathcal{S}_\ell(\alpha_t)$ of the Griffith crack surface energy \eqref{eq:SGamma}. Hence the estimation \eqref{eq:Selllt} reads specifically
+At every time step, it consists of alternately minimizing $\mathcal{P}_\ell$ at fixed $\alpha_t$ and then at fixed $\vec{u}_t$ until numerical convergence upon an appropriate error norm and a tolerance. A detailed numerical analysis of the discretized model is performed in \cite{BourdinFrancfortMarigo:2008}. The converged solution couple $(\vec{u}_t,\alpha_t)$ can only be guaranteed to be a stationary point or at best a local minimum of the regularized energy \eqref{eq:Pualpha}. Numerically global minimization remains far beyond the scope of traditional gradient-based numerical algorithms and constitutes one of the difficulties of the variational approach to fracture in the sense of \eqref{eq:fm98}, see \cite{BourdinFrancfortMarigo:2008}. For a triangulation with a typical mesh size $h$, a linear convergence $\mathcal{O}(h)$ can be observed for the approximation $\mathcal{S}_\ell(\alpha_t)$ of the Griffith crack surface energy \eqref{eq:SGamma}. Hence the estimation \eqref{eq:Selllt} reads specifically
 \begin{equation} \label{eq:gammaconvergence}
 \mathcal{S}_\ell(\alpha_t)\approx\left(1+c\frac{h}{\ell}\right)\gc\cdot l_t.
 \end{equation}
@@ -277,7 +277,7 @@ Another numerical difficulty of the regularized fracture model concerns the para
 \subsection{Extension to dynamics}
 Formulating a variational model to dynamic fracture in the same spirit of the Francfort-Marigo model \eqref{eq:fm98} is still an active on-going research and has not reached a relatively mature state. Let us just note that a naive adaption of the (global) energy minimization principle \eqref{eq:fm98} by including the kinetic energy into the total potential energy \eqref{eq:PES} is doomed in dynamics, due to the hyperbolic nature of the dynamic wave equation. According to \cite{Larsen:2010}, a reasonable variational dynamic fracture model thats frees itself with an \emph{a priori} crack topology, \emph{i.e.} the Griffith's theory \eqref{eq:gtgc}, should verify the following conditions:
 \begin{enumerate}
-\item The displacement $\vec{u}$ satisfies the elastodynamic equation \eqref{eq:elastogriffith} in the uncracked bulk $\Omega\setminus\Gamma$ just like the Griffith case.
+\item The displacement $\vec{u}_t$ satisfies the elastodynamic equation \eqref{eq:elastogriffith} in the uncracked bulk $\Omega\setminus\Gamma_t$ just like the Griffith case.
 
 \item If the crack surface energy \eqref{eq:SGamma} is taken into account, then the system ensures an energy balance such that the rate of change of the total energy is equal to external power applied to the body via hard or soft devices.
 
@@ -302,12 +302,12 @@ From a formulational point of view, these two equations can be embedded into a g
 \centering
 \[
 \begin{CD}
-\mathcal{P}(\Gamma) @>\text{dynamics}>> \text{?} \\
+\mathcal{P}(\Gamma_t) @>\text{dynamics}>> \text{?} \\
 @VV\text{$\ell$-regul.}V @AA{\ell\to 0}A \\
-\mathcal{P}_\ell(\vec{u},\alpha) @>\text{dynamics}>> \mathcal{A}_\ell(\vec{u},\alpha)
+\mathcal{P}_\ell(\vec{u}_t,\alpha_t) @>\text{dynamics}>> \mathcal{A}_\ell(\vec{u},\alpha)
 \end{CD}
 \]
-\caption{In the quasi-static setting the regularized two-field fracture model $\mathcal{P}_\ell(\vec{u},\alpha)$ in \eqref{eq:Pualpha} is regarded as an approximation of the sharp-interface Francfort-Marigo model $\mathcal{P}(\Gamma)$ of \eqref{eq:fm98} and convergence is achieved when $\ell\to 0$. In the dynamic case, we merely know how to add inertial effects into $\mathcal{P}_\ell(\vec{u},\alpha)$ to obtain a dynamic regularized model $\mathcal{A}_\ell(\vec{u},\alpha)$. Formulating a precise sharp-interface dynamic fracture model or investigating the limit of $\mathcal{A}_\ell(\vec{u},\alpha)$ as $\ell\to 0$ are at present a formidable challenge both from the mechanics and mathematics point of view} \label{fig:fourmodels}
+\caption{In the quasi-static setting the regularized two-field fracture model $\mathcal{P}_\ell(\vec{u}_t,\alpha_t)$ in \eqref{eq:Pualpha} is regarded as an approximation of the sharp-interface Francfort-Marigo model $\mathcal{P}(\Gamma_t)$ of \eqref{eq:fm98} and convergence is achieved when $\ell\to 0$. In the dynamic case, we merely know how to add inertial effects into $\mathcal{P}_\ell(\vec{u}_t,\alpha_t)$ to obtain a dynamic regularized model $\mathcal{A}_\ell(\vec{u},\alpha)$. Formulating a precise sharp-interface dynamic fracture model or investigating the limit of $\mathcal{A}_\ell(\vec{u},\alpha)$ as $\ell\to 0$ are at present a formidable challenge both from the mechanics and mathematics point of view} \label{fig:fourmodels}
 \end{figure}
 
 \section{Gradient Damage Modeling of Fracture} \label{sec:graddamage}
@@ -318,9 +318,9 @@ The current formulation of the gradient damage model in the rate-independent evo
 
 The scalar field $\alpha$ introduced in the elliptic regularization (see \cref{sec:ellipticregul}) of the variational approach to fracture is now interpreted as a damage variable ranging from 0 (intact material) to 1 (totally damaged material). It constitutes a genuine smeared description of cracks and is no longer regarded as a numerical artifact during the $\ell$-regularization.
 
-The elastic-damage evolution is governed by several physics-motivated principles based on the definition of a potential energy $\mathcal{P}(\vec{u},\alpha)$ of the body $\Omega$. Adopting the notation used in a review paper \cite{PhamAmorMarigoMaurini:2011} of gradient damage models, in absence of external work potential, the potential energy $\mathcal{P}(\vec{u},\alpha)$ reads
+The elastic-damage evolution is governed by several physics-motivated principles based on the definition of a potential energy $\mathcal{P}(\vec{u}_t,\alpha_t)$ of the body $\Omega$. Adopting the notation used in a review paper \cite{PhamAmorMarigoMaurini:2011} of gradient damage models, in absence of external work potential, the potential energy $\mathcal{P}(\vec{u}_t,\alpha_t)$ reads
 \begin{equation} \label{eq:Pgd}
-\mathcal{P}(\vec{u},\alpha)=\int_\Omega\left( a(\alpha)\psi\bigl(\eps(\vec{u})\bigr)+w(\alpha)+\frac{1}{2}w_1\ell^2\nabla\alpha\cdot\nabla\alpha\right)\dx
+\mathcal{P}(\vec{u}_t,\alpha_t)=\int_\Omega\left( a(\alpha_t)\psi\bigl(\eps(\vec{u}_t)\bigr)+w(\alpha_t)+\frac{1}{2}w_1\ell^2\nabla\alpha_t\cdot\nabla\alpha_t\right)\dx
 \end{equation}
 where $\alpha\mapsto a(\alpha)$ and $\alpha\mapsto w(\alpha)$ denote two damage constitutive functions and $w_1=w(1)$. An appropriate choice of these functions calls for a systematic study of the material and structural behaviors of a gradient damage body, see for example \cite{PhamMarigo:2013,PhamAmorMarigoMaurini:2011,PhamMarigoMaurini:2011}. The two-field $(\vec{u},\alpha)$ evolution is then governed by the following
 \begin{definition}[Quasi-Static Gradient Damage Evolution Law] \label{def:qsgraddama}
@@ -343,7 +343,7 @@ The spaces $\mathcal{C}_t$ and $\mathcal{D}(\alpha_t)$ denote respectively the k
 
 The formulation is variational in essence, which guarantees generality of the approach in which specific material constitutive behaviors can be taken into account, see \cite{PhamMarigoMaurini:2011,PhamMarigo:2013}. Similar to the variational approach to fracture, the complex crack evolution, including initiation, nucleation, propagation and branching, can be predicted within a unified framework. Several properties of the gradient damage model also rely on the fundamental variational principles on which the gradient damage model is based, see for example \cite{SicsicMarigo:2013,SicsicMarigoMaurini:2013}. It also permits a direct numerical implementation based on mathematical optimization methods similar for the regularized fracture problem, for example in \cite{AmorMarigoMaurini:2009,PhamAmorMarigoMaurini:2011}. The variational nature of damage models can be justified via the following two approaches:
 \begin{enumerate}
-\item On the one hand, thanks to the Drucker-Ilyushin postulate \cite{Marigo:2002}, one shows that the strain work of a local elastic-damage material is necessarily a state function independent of the strain path undertaken, see for example \cite{PhamMarigo:2010}. The state function is the sum of the elastic energy density $\psi$ and the damage dissipation potential $w$ in \eqref{eq:Pgd}. The evolution laws for the $(\vec{u},\alpha)$ can thus be obtained by considering variations of the local potential energy $\mathcal{P}_0(\vec{u},\alpha)$ by setting $\ell=0$ in \eqref{eq:Pgd}.
+\item On the one hand, thanks to the Drucker-Ilyushin postulate \cite{Marigo:2002}, one shows that the strain work of a local elastic-damage material is necessarily a state function independent of the strain path undertaken, see for example \cite{PhamMarigo:2010}. The state function is the sum of the elastic energy density $\psi$ and the damage dissipation potential $w$ in \eqref{eq:Pgd}. The evolution laws for the $(\vec{u},\alpha)$ can thus be obtained by considering variations of the local potential energy $\mathcal{P}_0(\vec{u}_t,\alpha_t)$ by setting $\ell=0$ in \eqref{eq:Pgd}.
 
 \item On the other hand, the gradient damage evolution laws can also be interpreted as a Generalized Standard Material (with an extension of the classical point-wise normality rule to the structural scale) in the sense of \cite{Halphen:1975aa} which is automatically variational in nature, see the work of \cite{LorentzAndrieux:1999,LorentzBenallal:2005}.
 \end{enumerate}
@@ -367,34 +367,34 @@ These two interpretations are schematized in \cref{fig:twointerpretationdamage}.
 \centering
 \[
 \begin{CD}
-\mathcal{P}_0(\vec{u},\alpha) @>\text{+$\nabla\alpha$}>> \mathcal{P}(\vec{u},\alpha) \\
+\mathcal{P}_0(\vec{u}_t,\alpha_t) @>\text{+$\nabla\alpha$}>> \mathcal{P}(\vec{u}_t,\alpha_t) \\
 @. @VV\text{$\ell\to 0$}V \\
-@. \mathcal{P}(\Gamma)
+@. \mathcal{P}(\Gamma_t)
 \end{CD}
 \]
-\caption{The gradient damage model represented by the potential energy $\mathcal{P}$ admits two different interpretations: on the one hand, it can be considered as a regularization of local damage models denoted by $\mathcal{P}_0$ (by setting $\ell=0$ in $\mathcal{P}(\vec{u},\alpha)$); on the other hand, the sharp-interface Francfort-Marigo variational model $\mathcal{P}(\Gamma)$ defined in \eqref{eq:fm98} can be regarded as a limit behavior of gradient damage models in terms of rigorous $\Gamma$-convergence theories \cite{Braides:2002}} \label{fig:twointerpretationdamage}
+\caption{The gradient damage model represented by the potential energy $\mathcal{P}$ admits two different interpretations: on the one hand, it can be considered as a regularization of local damage models denoted by $\mathcal{P}_0$ (by setting $\ell=0$ in $\mathcal{P}(\vec{u}_t,\alpha_t)$); on the other hand, the sharp-interface Francfort-Marigo variational model $\mathcal{P}(\Gamma_t)$ defined in \eqref{eq:fm98} can be regarded as a limit behavior of gradient damage models in terms of rigorous $\Gamma$-convergence theories \cite{Braides:2002}} \label{fig:twointerpretationdamage}
 \end{figure}
 
 \subsection{Modeling of tension-compression asymmetry} \label{sec:tcmodeling}
-Due to its specific microstructural damage mechanism, brittle materials such as concrete are characterized by different macroscopic failure behaviors in tension and in compression\index{tension-compression asymmetry}, see for instance \cite{KupferGerstle:1973,LeeSongH:2004} for experimental illustrations. This aspect is particularly important in dynamic calculations due to reflection of waves at the body boundary, see for example \cite{MoreauMoesPicartStainier:2015}. The original gradient damage approach displays an identical behavior under tensile and compressive loading conditions. Accounting for this tension-compression asymmetry into the potential energy \eqref{eq:Pgd} has already been considered in \cite{PieroLancioniMarch:2007,AmorMarigoMaurini:2009,FreddiRoyer-Carfagni:2010}. It consists mainly of redevising the elastic behaviors of the gradient damage material through the stored elastic energy density $\psi$. The newly obtained potential functional is here denoted by $\widehat{\mathcal{P}}(\vec{u},\alpha)$.
+Due to its specific microstructural damage mechanism, brittle materials such as concrete are characterized by different macroscopic failure behaviors in tension and in compression\index{tension-compression asymmetry}, see for instance \cite{KupferGerstle:1973,LeeSongH:2004} for experimental illustrations. This aspect is particularly important in dynamic calculations due to reflection of waves at the body boundary, see for example \cite{MoreauMoesPicartStainier:2015}. The original gradient damage approach displays an identical behavior under tensile and compressive loading conditions. Accounting for this tension-compression asymmetry into the potential energy \eqref{eq:Pgd} has already been considered in \cite{PieroLancioniMarch:2007,AmorMarigoMaurini:2009,FreddiRoyer-Carfagni:2010}. It consists mainly of redevising the elastic behaviors of the gradient damage material through the stored elastic energy density $\psi$. The newly obtained potential functional is here denoted by $\widehat{\mathcal{P}}(\vec{u}_t,\alpha_t)$.
 
 It turns out this tension-compression asymmetry is closely related to the modeling of the unilateral contact condition in fracture mechanics, see \cite{AmorMarigoMaurini:2009}. With a sharp-interface description of cracks, in a small displacement theory this condition reads
 \[
-\llbracket\vec{u}\rrbracket\cdot\vec{n}\geq 0\text{ on $\Gamma$}\,,
+\llbracket\vec{u}_t\rrbracket\cdot\vec{n}\geq 0\text{ on $\Gamma$}\,,
 \]
-where $\llbracket\vec{u}\rrbracket$ denotes the displacement jump on the crack lip. It can be interpreted as an injectivity constraint prescribed on the displacement field, see \cite{CiarletNecas:1987}. This constraint can be readily included into the minimization procedure \eqref{eq:fm98} in the variational approach to fracture through an adaptation of the kinematic admissible space $\mathcal{C}$ for the displacement problem \eqref{eq:EGamma}, and hence leads to a new definition of the potential energy \eqref{eq:PES} denoted here by $\widehat{\mathcal{P}}(\Gamma)$. Mathematical analysis of the variational problem accounting for non-interpenetration in the sense of \cite{CiarletNecas:1987} is performed for example in \cite{MasoLazzaroni:2010}.
+where $\llbracket\vec{u}_t\rrbracket$ denotes the displacement jump on the crack lip. It can be interpreted as an injectivity constraint prescribed on the displacement field, see \cite{CiarletNecas:1987}. This constraint can be readily included into the minimization procedure \eqref{eq:fm98} in the variational approach to fracture through an adaptation of the kinematic admissible space $\mathcal{C}$ for the displacement problem \eqref{eq:EGamma}, and hence leads to a new definition of the potential energy \eqref{eq:PES} denoted here by $\widehat{\mathcal{P}}(\Gamma_t)$. Mathematical analysis of the variational problem accounting for non-interpenetration in the sense of \cite{CiarletNecas:1987} is performed for example in \cite{MasoLazzaroni:2010}.
 
-After having taken into account the tension-compression asymmetry effects into the gradient damage model and the unilateral condition into the variational fracture model, we would like to consider the link between $\widehat{\mathcal{P}}(\Gamma)$ and the limit behavior of $\widehat{\mathcal{P}}(\vec{u},\alpha)$ when $\ell\to 0$. Unfortunately an answer to this question seems to remain out of reach in  the two directions. On the one hand, an elliptic regularization of the sharp-interface model with non-interpenetration seems lacking at present. On the other hand, the $\Gamma$-convergence result for the limit $\ell\to 0$ is still unclear, see \cite{AmorMarigoMaurini:2009,FreddiRoyer-Carfagni:2010}. This point is illustrated in \cref{fig:TCunilateral}. We believe this constitutes a difficulty for compressive loading conditions when using the gradient damage model as a phase-field approach to fracture.
+After having taken into account the tension-compression asymmetry effects into the gradient damage model and the unilateral condition into the variational fracture model, we would like to consider the link between $\widehat{\mathcal{P}}(\Gamma_t)$ and the limit behavior of $\widehat{\mathcal{P}}(\vec{u}_t,\alpha_t)$ when $\ell\to 0$. Unfortunately an answer to this question seems to remain out of reach in  the two directions. On the one hand, an elliptic regularization of the sharp-interface model with non-interpenetration seems lacking at present. On the other hand, the $\Gamma$-convergence result for the limit $\ell\to 0$ is still unclear, see \cite{AmorMarigoMaurini:2009,FreddiRoyer-Carfagni:2010}. This point is illustrated in \cref{fig:TCunilateral}. We believe this constitutes a difficulty for compressive loading conditions when using the gradient damage model as a phase-field approach to fracture.
 \begin{figure}[htbp]
 \centering
 \[
 \begin{CD}
-\mathcal{P}(\Gamma) @>\text{unilateral effects}>> \widehat{\mathcal{P}}(\Gamma) \\
+\mathcal{P}(\Gamma_t) @>\text{unilateral effects}>> \widehat{\mathcal{P}}(\Gamma_t) \\
 @VV\text{$\ell$-regul.}V @AA{\ell\to 0?}A \\
-\mathcal{P}(\vec{u},\alpha) @>\text{T-C asymmetry}>> \widehat{\mathcal{P}}(\vec{u},\alpha)
+\mathcal{P}(\vec{u}_t,\alpha_t) @>\text{T-C asymmetry}>> \widehat{\mathcal{P}}(\vec{u}_t,\alpha_t)
 \end{CD}
 \]
-\caption{The link between the sharp-interface model with non-interpenetration $\widehat{\mathcal{P}}(\Gamma)$ and the gradient-damage model with tension-compression asymmetry effects $\widehat{\mathcal{P}}(\vec{u},\alpha)$ remains unclear} \label{fig:TCunilateral}
+\caption{The link between the sharp-interface model with non-interpenetration $\widehat{\mathcal{P}}(\Gamma_t)$ and the gradient-damage model with tension-compression asymmetry effects $\widehat{\mathcal{P}}(\vec{u}_t,\alpha_t)$ remains unclear} \label{fig:TCunilateral}
 \end{figure}
 
 \section{Research Scope and Objectives} \label{sec:scope}
