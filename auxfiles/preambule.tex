@@ -15,7 +15,6 @@
 \usepackage{newtxtext}
 \usepackage{multicol}
 \usepackage{minitoc}
-\usepackage{makeidx}
 \usepackage{silence}
 \usepackage{microtype}
 \usepackage[framemethod=tikz]{mdframed}
@@ -83,9 +82,6 @@
 \makeatother
 \renewcommand{\cite}{\parencite}
 
-\DeclareBibliographyCategory{fullcited}
-\newcommand{\mybibexclude}[1]{\addtocategory{fullcited}{#1}}
-
 \WarningFilter{minitoc(hints)}{W0010}
 \WarningFilter{minitoc(hints)}{W0023}
 \WarningFilter{minitoc(hints)}{W0024}
@@ -119,8 +115,6 @@
 \oldalgorithmic}
 \renewcommand{\theHALG@line}{ALG@line.\thealgorithmicH.\arabic{ALG@line}}
 \makeatother
-
-\makeindex
 
 %% Definitions
 \def\vec#1{\ensuremath{\mathchoice

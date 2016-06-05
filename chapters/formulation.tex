@@ -103,7 +103,7 @@ Their constitutive behaviors are illustrated in the \cref{fig:at1at2} during a h
 \end{equation}
 While for the damage constitutive model \eqref{eq:at2}, one derives
 \begin{equation} \label{eq:at2alpha}
-\alpha_*(x)=\exp\left(\frac{\abs{x}}{\eta}\right).
+\alpha_*(x)=\exp\left(-\frac{\abs{x}}{\eta}\right).
 \end{equation}
 These two damage profiles are illustrated in \cref{fig:at12}. It can be observed that \eqref{eq:at2alpha} does not possess a finite support from a theoretic point of view.
 \begin{figure}[htbp]
@@ -704,11 +704,11 @@ with a generalized dynamic energy release rate defined by
 \begin{equation} \label{eq:GtG}
 \widehat{G}_t=G_t^\alpha-\gamma_t.
 \end{equation}
-This quantity contains the conventional dynamic energy release rate\index{energy release rate!conventional dynamic energy release rate}
+This quantity contains the conventional dynamic energy release rate
 \begin{equation} \label{eq:GtC}
 G_t^\alpha=\int_\domaint\Bigl(\bigl(\kappa(\dot{\vec{u}}_t)-\psi\bigl(\eps(\vec{u}_t),\alpha_t\bigr)\bigr)\div\vtheta_t+\sig_t\cdot(\nabla\vec{u}_t\nabla\vtheta_t)+\div(\vec{f}_t\otimes\vtheta_t)\cdot\vec{u}_t+\rho\ddot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t+\rho\dot{\vec{u}}_t\cdot\nabla\dot{\vec{u}}_t\vtheta_t\Bigr)\dx
 \end{equation}
-and the damage dissipation rate\index{energy release rate!damage dissipation rate} as the partial derivative of the damage dissipation energy $\mathcal{S}^*(l_t)$ with respect to the crack length
+and the damage dissipation rate as the partial derivative of the damage dissipation energy $\mathcal{S}^*(l_t)$ with respect to the crack length
 \begin{equation} \label{eq:Gammat}
 \gamma_t=\frac{\md}{\md l_t}\mathcal{S}^*(l_t)=\int_\domaint\bigl(\varsigma(\alpha_t,\nabla\alpha_t)\div\vtheta_t-\vec{q}_t\cdot\nabla\vtheta_t\nabla\alpha_t\bigr)\dx.
 \end{equation}
