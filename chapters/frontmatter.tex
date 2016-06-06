@@ -2,88 +2,30 @@
 \chapter{Avant-propos}
 
 \section*{Research Background and Outline}
-In civil engineering, evaluation the mechanical resistance and integrity of the reinforced concrete structures are frequently evaluated through computer simulations. Under severe dynamic loading conditions (such as impact or explosion), the prediction of possible crack nucleation and further space-time evolution until ultimate structural failure calls for more advanced physical and numerical methods.
+From a modeling point of view, the present work concerns the \emph{formulation} of mathematical models of the physical phenomenon in an industrial context. Due to the complexity of the problem, numerical simulation is also needed to provide an approximative solution of the previous theoretical models. To ensure the faithfulness of the numerically discretized computer model with respect to the theoretical one, the \emph{verification} step should be first carried out in terms of numerical convergence properties. Finally, \emph{validation} of the physical and the numerical models will be achieved via the comparison between simulation results and experimental observations. All these steps are covered in the present study.
 
+In civil engineering, mechanical performance and integrity of the reinforced concrete structures are of paramount importance for safety. Severe transient dynamic loading conditions (such as impact or explosion) often lead to crack nucleation and its further space-time evolution in the most vulnerable area, which results in ultimate structural failure. A better understanding of the mechanics of defects would thus guide the civil engineers to optimize the dimensioning, the shape and the topology of the initial design. An accurate assessment of structural behaviors in presence of dynamic crack propagation calls for more advanced physical models and their corresponding efficient computer implementations. In this aspect, the present work contributes thus to an improvement of the existing modeling of fracture in industrial structures, both from theoretical and numerical approaches.
 
+Numerical simulation of reinforced concrete structures requires in general a separate modeling of the concrete, the reinforcement and the steel-concrete interaction. Due to the broadness of the subject, we will only focus here on the fracture behaviors of concrete itself. A coupling with the existing steel reinforcement models and in particular the phenomenon of interfacial fracture will be throughly investigated in the future. The mechanical behaviors of concrete fall into the category of brittle materials. Defect evolution in these materials with dynamical or inertia effects are commonly studied in the branch ``dynamic fracture'' of physics of solids. Very little deformation is present away from the fractured region and the strain tensor is essentially localized along the crack band. Without loss of generality, the methodology, modeling and analyses described in the present work should apply to a large class of materials that can be characterized by such constitutive and fracture behaviors.
 
-on se propose dans le cadre de cette thèse d'étudier le comportement du béton (ou assimilé)
-par un modèle élastique endommageable en traction seulement dans le formalisme variationnel de la rupture [Francfort et Marigo, 98].
+Concretely, the mathematical modeling of dynamic brittle fracture will be performed in the framework of solid continuum mechanics with the usual Cauchy stress as the main stress measure. Adopting an engineering approach, we concentrate on a macroscopic phenomenological characterization of the constitutive behavior of brittle materials in presence of fracture. In particular, the spatial and temporal evolution of strain localization in a brittle solid will be modeled by the gradient-damage approach that is gaining popularity in the recent years. It consists of introducing a new spatial scalar field $\alpha_t$ that indicates and tracks the localization of cracks. It can be considered as a damage variable since $\alpha_t=0$ refers to an intact material point whereas $\alpha_t=1$ stands for a totally damaged region, \emph{i.e.} a crack or a strain-localization area. Compared to other existing approaches of dynamic fracture, the advantage of such approaches lies in the crack path prediction with arbitrary crack topologies from a theoretic defect evolution modeling point of view. Its variational formulation also permits a direct and consistent numerical implementation both for two-dimensional and three-dimensional problems.
 
-L'objet de la thèse est d'étendre ce formalisme régularisé par champ d'endommagement aux problèmes de dynamique transitoire traités avec un
-algorithme explicite. La prise en compte des effets d'inertie nous permettra en particulier d'observer l'influence de la vitesse de chargement sur le trajet spatio-temporel
-de fissures et sur l'apparition éventuelle de (multi-)bifurcation. Les études analytiques pourront donc être menées pour mieux comprendre le modèle.
+A brief bibliographical study of dynamic brittle fracture is provided in \cref{chap:introduction}. We describe first the kinematics and physics of fracture in brittle materials with inertia, since the objective consists of faithfully and efficiently charactering those phenomena. In order to motivate the present work and to define a research scope, several currently used physical modeling approaches are compared with respect to their aptitude to approximate brittle fracture. This includes the classical Griffith's theory, the variational approach to fracture originated from the pioneer work of \cite{FrancfortMarigo:1998} and the current gradient damage model formulated in the quasi-static setting \cite{PhamMarigo:2010-1}. Based on the literature investigation, the objectives of the present work can then be defined. They are classified depending on the methodology used (theoretical or numerical approach) and using the following four thematic subjects
+\begin{itemize}
+\item Going dynamical,
+\item Bridging the link with phase field approaches,
+\item Better understanding of gradient damage modeling of fracture, and
+\item Experimental validation.
+\end{itemize}
+To facilitate the presentation, the main novelty brought by the present study will be summarized at the beginning of each section by using the above classification.
 
-L'implantation et les développements seront réalisés dans le code de dynamique rapide EuroPlexus co-développé par le CEA et EDF. Différentes stratégies et techniques
-de la résolution du problème global déplacement-endommagement pourront être pensées : raffinement et déraffinement automatique du maillage, gestion du pas de temps,
-parallélisme...
+\cref{chap:graddama} regroups the main theoretical contribution of this work. It concerns first a dynamic extension of the previous quasi-static gradient damage model in a variationnally consistent framework. In quasi-statics, static equilibrium and the crack evolution of a solid corresponds to a minimum of the potential energy functional. In dynamics, this principle is generalized using an augmented space-time action integral and the temporal evolution of the coupled $(\vec{u},\alpha)$ field is governed by the stationarity of the former. As we shall see in the sequel, the benefits originating directly from the variational nature of the formulation are multi-fold. In explicit dynamics in presence of violent loading conditions, finite rotations of fractured regions are often observed. We also propose a possible approach to incorporate geometrical nonlinearities through the introduction of the Hencky logarithmic strain. The concrete as well as other brittle materials are characterized by asymmetric behaviors in tension and in compression. Accounting for such effects is essential especially in dynamics due to wave reflections at the boundary. We then provide a systematic review of several existing approaches and carry out a theoretic study during a uniaxial traction/compression experiment. Finally we propose a theoretic exploration of the previous variational framework in the case when the damage band is localized along a spatially propagating path. A generalized Griffith criterion is obtained in the dynamic case that governs the temporal evolution of the gradient-damage crack tip. A separation of scales is then achieved by assuming that the internal length is small by comparison with the dimension of the body.
 
-Ces dernières années, une nouvelle approche basée sur les concepts de champ de phase introduits
-par Francfort et Marigo au début des années 2000 est apparue pour le traitement des matériaux
-fragiles ou quasi fragiles sous chargements quasi statiques: elle consiste à représenter une fissure par
-un champ de variable d’endommagement variant entre 0 lorsque le matériau est sain et 1 lorsque la
-fissure est ouverte. L’endommagement ne progresse que si son augmentation contribue à libérer
-une énergie élastique suffisante pour concentrer l’endommagement et fissurer le matériau.
+Then in \cref{chap:numerics}, we present an efficient numerical implementation of the theoretic model described in the previous chapter. We follow a typical decoupling of the spatial and temporal discretization of the original continuous model and described separately these two discretization procedures. Since the gradient damage approach consists of describing material constitutive behaviors inside the strain localization region, a relatively fine mesh is needed at least along the potential fracture path. In the present work, high computational needs will be overcome via parallel computing techniques. Efficiency of the numerical model is illustrated and demonstrated by a strong scaling analysis. In terms of final numerical implementation, we provide on the one hand an open-source Python implementation of dynamic gradient damage models based on the FEniCS Project, see \cite{LiMaurini:2015}. On the other hand, the development is also conducted in the industrial explicit dynamics software EPX.
 
-L’objet de cette thèse est de développer cette approche dans un code de dynamique rapide. La
-démarche consistera à s’appuyer sur le triptyque habituel : modélisation, analyse numérique, et
-essais et se terminera par une étude de la résistance mécanique d’un élément structural sous impact.
+\cref{chap:simulation} constitutes another main contribution of the present work through several well-chosen numerical experiments. These simulations are tailored to highlight specific properties of the dynamic gradient damage model during a complete defect evolution. A \emph{divide and conquer} strategy is adopted and different temporal and spatial phases or events of dynamic fracture are investigated independently: nucleation, initiation, propagation, arrest, kinking, branching, \ldots To facilitate the reading, the ordering of the chapter as well as the objectives of each experiment is first explained. The four thematic subjects initially devised are also used to classify these numerical simulations. Verification of the numerical discretized model is achieved through convergence studies and comparison with theoretical results. We also provide an experimental validation of the proposed model via correlations between numerical and experimental observations. An application to real concrete structures with possible steel reinforcements is indicated at the end. Limitations of the present model/parameters are also given toward an improved modeling of dynamic fracture.
 
-L’objectif final étant de simuler le comportement des structures en béton armé, on choisit de
-modéliser séparément le béton, les armatures et leur interaction à l’interface acier-béton. Le sujet
-étant vaste, la thèse se limitera à l’amélioration de la modélisation du béton au moyen de l’extension
-du formalisme de régularisation par gradient de champ d’endommagement aux problèmes de
-dynamique transitoire traités avec un algorithme explicite. 
-
-Les développements seront réalisés dans
-le code de dynamique rapide EUROPLEXUS co-développé par le CEA et EDF. La refermeture des
-fissures, inévitable lors des retours d’onde, devra être représentée. Le matériau béton sera assimilé à
-un matériau élastique, endommageable en tension seulement. Si possible, le formalisme sera
-modifié pour pouvoir représenter les effets de vitesse de déformations sur la résistance du béton.
-
-
-Puisqu’un maillage fin est indispensable pour avoir des résultats corrects dans les zones de
-fissuration, il est nécessaire de mettre en place une procédure de maillage adaptatif pour raffiner les
-zones endommagées. On s’appuiera sur l’algorithme d’adaptation (raffinement-déraffinement) des
-maillages non-conformes disponible dans EUROPLEXUS en accompagnant l'adaptation de maillage
-par l'utilisation de la méthode de partitionnement disponible également dans ce code pour optimiser
-la gestion des pas de temps pour les éléments de taille différente. En outre, le modèle devra être
-pensé dans une optique de calcul parallèle.
-
-valider le modèle et/ou
-d’en préciser les limites en terme d’échelle de mécanisme de dégradation.
-Pour finir, il testera la modélisation sur des essais d’impact sur des éléments structuraux simples
-(poutre, dalle) déjà réalisés.
-
-
-
-
-\section*{Research Outline}
-From a modeling point of view, the present work concerns the formulation of mathematical and physical models of the physical phenomenon in an industrial context. Due to the complexity of the problem, numerical simulation is also needed to provide an approximative solution of the previous theoretical models. To ensure the faithfulness of the numerically discretized computer model with respect to the theoretical one, the \emph{verification} step should be first carried out in terms of numerical convergence properties. Finally, \emph{validation} of the physical and the numerical models will be achieved via the comparison between simulation results and experimental observations. The procedures involved in the present work are indicated in bold in \cref{fig:vv}.
-\begin{figure}[htbp]
-\centering
-\[
-\xymatrix{
-\text{\textbf{Mathematical modeling}} \ar[d]_{\text{\textbf{Verification}}} \ar[rd]^{\text{Theoretic validation}} & \\
-\text{\textbf{Numerical implementation}} \ar[r]_{\text{\textbf{Numerical validation}}} & \text{Physical phenomenon}
-}
-\]
-\caption{Verification and validation of theoretical and numerical models against physical observations. The procedures involved in the present work are indicated in bold} \label{fig:vv}
-\end{figure}
-
-Concretely, the mathematical modeling will be performed in the framework of solid continuum mechanics. It consists of a macroscopic constitutive 
-
-In the present work, the dynamic fracture behaviors of brittle materials will be characterized by 
-
-a macroscopic non-local constitutive model.
-
-
-
-
-\cref{chap:introduction}
-\cref{chap:graddama}
-\cref{chap:numerics}
-\cref{chap:simulation}
-\cref{chap:conclusion}
+Finally some concluding remarks are given in \cref{chap:conclusion}. It consists of a general overview of the gradient damage approach to dynamic fracture both from a theoretical formulation/analysis and numerical implementation/investigation point of view. The presentation is classified using the four thematic subjects given in \cref{chap:introduction}. Possible future work arising from the present study is also indicated. 
 
 \section*{Notation Conventions}
 General notation conventions adopted in the present work are summarized as follows:
