@@ -33,7 +33,7 @@ where $\alpha\mapsto\mathsf{a}(\alpha)$ is an adimensional function of damage ch
 \begin{equation} \label{eq:stress}
 \sig_t=\tens{A}(\alpha_t)\eps(\vec{u}_t).
 \end{equation}
-It can be observed that here the damage acts symmetrically on the undamaged elastic energy $\psi_0\bigl(\eps(\vec{u}_t)\bigr)=\psi\bigl(\eps(\vec{u}_t),0\bigr)$ such that
+It can be observed that here the damage acts symmetrically on the undamaged elastic energy density $\psi_0\bigl(\eps(\vec{u}_t)\bigr)=\psi\bigl(\eps(\vec{u}_t),0\bigr)$ such that
 \begin{equation} \label{eq:psi0}
 \psi\bigl(\eps(\vec{u}_t),\alpha_t\bigr)=\psi\bigl(-\eps(\vec{u}_t),\alpha_t\bigr)=\mathsf{a}(\alpha)\psi_0\bigl(\eps(\vec{u}_t)\bigr).
 \end{equation}
@@ -143,9 +143,9 @@ The loading conditions and the admissible function spaces are now specified. Bod
 \mathcal{W}_t(\vec{u}_t)=\int_\Omega\vec{f}_t\cdot\vec{u}_t\dx+\int_{\partial\Omega_F}\vec{F}_t\cdot\vec{u}_t\D{\vec{s}}.
 \end{equation}
 On a subset $\partial\Omega_U$ of the boundary the body is subject to a prescribed displacement $t\mapsto \vec{U}_t$ which is built into the definition of the admissible displacement space $\mathcal{C}_t$. We suppose that the admissible displacement space is an affine space of form $\mathcal{C}_t=\mathcal{C}_0+\vec{U}_t$ where the associated vector space $\mathcal{C}_0$ is given by
-\[
+\begin{equation} \label{eq:C0}
 \mathcal{C}_0=\set{\vec{u}_t:\Omega\to\mathbb{R}^\mathrm{dim}|\vec{u}_t=\vec{0}\text{ on }\partial\Omega_U}.
-\]
+\end{equation}
 Damage is here modeled as an irreversible defect evolution. Its admissible space will be built from a current damage state $0\leq\alpha_t\leq 1$ and it is defined by
 \begin{equation} \label{eq:Dalphat}
 \mathrm{D}(\alpha_t)=\set{\beta_t:\Omega\to[0,1]|0\leq\alpha_t\leq\beta_t\leq 1}.
@@ -157,7 +157,7 @@ It can be seen that a virtual damage field $\beta_t$ is admissible, if and only 
 \end{align}
 
 \begin{remark}[Spatial and temporal regularity of $\vec{u}$ and $\alpha$]
-Informally, we assume that the displacement $\vec{u}$ and the damage $\alpha$ are sufficiently regular in time and in space such that all the energetic quantities defined in \cref{sec:ingredients} make sense. Since the temporal derivative of the damage is not involved in the variational formulation, for every $t\in I$ the damage $\alpha_t$ belongs at least to $H^1(\Omega)\cap L^\infty(\Omega)$. Due to the kinetic energy \eqref{eq:kineticG}, the current velocity $\dot{\vec{u}}_t$, regarded as the temporal derivative of the displacement in the distributional sense, should be an element of $L^2(\Omega,\mathbb{R}^\mathrm{dim})$. A precise statement of the function spaces in the most general case remains beyond the scope of this work.
+Informally, we assume that the displacement $\vec{u}$ and the damage $\alpha$ are sufficiently regular in time and in space such that all the energetic quantities defined in \cref{sec:ingredients} make sense. Before the onset of fracture when the damage attains 1 somewhere in the body $\operatorname{ess\ sup}\alpha_t< 1$, the elastic energy density \eqref{eq:psi0} is strictly positive almost everywhere, hence a nature functional framework for the displacement would be $H^1(\Omega,\mathbb{R}^\mathrm{dim})$. Since the temporal derivative of the damage is not involved in the variational formulation, for every $t\in I$ the damage $\alpha_t$ belongs at least to $H^1(\Omega)\cap L^\infty(\Omega)$. Due to the kinetic energy \eqref{eq:kineticG}, the current velocity $\dot{\vec{u}}_t$, regarded as the temporal derivative of the displacement in the distributional sense, should be an element of $L^2(\Omega,\mathbb{R}^\mathrm{dim})$. A precise statement of the function spaces in the most general case remains beyond the scope of this work.
 \end{remark}
 
 With all the variational ingredients set, we are now in a position to introduce the following space-time action integral associated with an admissible pair of displacement and damage evolutions $(\vec{u},\alpha)\in\mathcal{C}(\vec{u})\times\mathcal{D}(\alpha)$, which involves an augmented Lagrangian density
@@ -246,6 +246,21 @@ As is noted in \cref{sec:ingredients}, the optimal damage profile $\alpha_*$ (fo
 w'\bigl(\alpha_*(x)\bigr)-w_1\ell^2\alpha_*''(x)=0\text{ for $x\in[-D,D]$}\,
 \end{equation}
 where $D$ measures the half-damage band or the support of the damage field where $\alpha_t> 0$. Hence we have $D=2\eta$ for the \eqref{eq:at1} model and $D=\infty$ for the \eqref{eq:at2} model. One can easily solve this autonomous second order differential equation by using the boundary conditions $\alpha_*=0$ and $\alpha_*'=0$ at $x=\pm D$. Readers are referred to \cite{PhamAmorMarigoMaurini:2011} for a detailed derivation.
+
+\paragraph{Singular surfaces and jump conditions}
+Here we discuss the presence of a possible singular surface $S_t\in\Omega$ inside the reference configuration $\Omega$ across which first derivatives of the fields involved in the variational ingredients are discontinuous: the strain $\eps(\vec{u}_t)$, the velocity $\dot{\vec{u}}_t$ or the damage gradient $\nabla\alpha_t$. The body is partitioned into two parts $\Omega^+$ and $\Omega^-$, and we note $\vec{n}$ as the normal vector of $S_t$ pointing into $\Omega^+$. Before the onset of fracture $\operatorname{ess\ sup}\alpha_t< 1$, the displacement vector and the damage field remain continuous across such surfaces: $\jump{\vec{u}_t}=\vec{0}$ and $\jump{\alpha_t}=0$.
+
+The variational approach outlined in \cref{def:dynagraddama} permits also a systematic derivation of the jump conditions across such surfaces. We assume here that the space-time evolution $t\mapsto S_t$ is known advance and its normal velocity in the reference configuration $\Omega$ is denoted by $V_t$. A perturbation to the singular surface is considered in \cite{BatraBedfordDrumheller:1986} however the formalism is similar to what will be described in \cref{sec:linkDF}. The presence of such surfaces can thus be included into the admissible spaces \eqref{eq:C0} and \eqref{eq:Dalphat}. The first-order stability condition \eqref{eq:vi} leads directly to the classical jump condition for the stress tensor
+\begin{equation}
+\jump{\rho\dot{\vec{u}}_t}V_t+\jump{\sig_t}\vec{n}=\vec{0}.
+\end{equation}
+Compared to the classical stress jump condition, note that here the stress tensor $\sig_t$ is modulated by the damage, see \eqref{eq:stress}.
+
+Similarly, the global energy balance condition \eqref{eq:dyngdeb} results in the following energy density jump condition
+\begin{equation}
+\jump{\psi\bigl(\eps(\vec{u}_t),\alpha_t\bigr)+\kappa(\dot{\vec{u}}_t)+\varsigma(\alpha_t,\nabla\alpha_t)}V_t+\jump{\sig_t\dot{\vec{u}}_t}\cdot\vec{n}=0.
+\end{equation}
+In addition to the remark concerning the stress tensor, the dissipated energy density \eqref{eq:surface} is also included.
 
 \subsection{Comparison with phase-field approaches} \label{sec:phasefields}
 Two essentially different phase-field models co-exist in the literature: one that originated from the mechanics community initiated by the work of \cite{MieheHofackerWelschinger:2010,MieheWelschingerHofacker:2010}, and the other independently proposed by the physicists via the work of \cite{KarmaKesslerLevine:2001,HakimKarma:2009}. They will be separately compared with the gradient damage approach outlined in \cref{def:dynagraddama}.
