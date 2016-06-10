@@ -248,19 +248,30 @@ w'\bigl(\alpha_*(x)\bigr)-w_1\ell^2\alpha_*''(x)=0\text{ for $x\in[-D,D]$}\,
 where $D$ measures the half-damage band or the support of the damage field where $\alpha_t> 0$. Hence we have $D=2\eta$ for the \eqref{eq:at1} model and $D=\infty$ for the \eqref{eq:at2} model. One can easily solve this autonomous second order differential equation by using the boundary conditions $\alpha_*=0$ and $\alpha_*'=0$ at $x=\pm D$. Readers are referred to \cite{PhamAmorMarigoMaurini:2011} for a detailed derivation.
 
 \paragraph{Singular surfaces and jump conditions}
-Here we discuss the presence of a possible singular surface $S_t\subset\Omega$ inside the reference configuration $\Omega$ across which first derivatives of the fields involved in the variational ingredients are discontinuous: the strain $\eps(\vec{u}_t)$, the velocity $\dot{\vec{u}}_t$ or the damage gradient $\nabla\alpha_t$. The body is partitioned into two parts $\Omega^+$ and $\Omega^-$, and we note $\vec{n}$ as the normal vector of $S_t$ pointing into $\Omega^+$. Before the onset of fracture $\operatorname{ess\ sup}\alpha_t< 1$, the displacement vector and the damage field remain continuous across such surfaces: $\jump{\vec{u}_t}=\vec{0}$ and $\jump{\alpha_t}=0$.
+Here we discuss the presence of a possible singular surface $S_t\subset\Omega$ inside the reference configuration $\Omega$ across which first derivatives of the fields involved in the variational ingredients could be discontinuous: the strain $\eps(\vec{u}_t)$, the velocity $\dot{\vec{u}}_t$ or the damage gradient $\nabla\alpha_t$. The body is partitioned into two parts $\Omega^+$ and $\Omega^-$, and we note $\vec{n}$ as the normal vector of $S_t$ pointing into $\Omega^+$. As usual we define the jump of a quantity $q$ to be
+\[
+\jump{q}(\vec{x})=\lim_{\Omega{^+}\ni\vec{y}\to\vec{x}}q(\vec{y})-\lim_{\Omega{^-}\ni\vec{y}\to\vec{x}}q(\vec{y}).
+\]
+Due to the presence of the damage gradient, the damage field remain continuous across such surfaces $\jump{\alpha_t}=0$. The same case takes place for the displacement vector $\jump{\vec{u}_t}=\vec{0}$ before the onset of fracture $\operatorname{ess\ sup}\alpha_t< 1$.
 
-The variational approach outlined in \cref{def:dynagraddama} permits also a systematic derivation of the jump conditions across such surfaces. We assume here that the space-time evolution $t\mapsto S_t$ is known advance and its normal velocity in the reference configuration $\Omega$ is denoted by $V_t$. A perturbation to the singular surface is considered in \cite{BatraBedfordDrumheller:1986} however the formalism is similar to what will be described in \cref{sec:linkDF}. The presence of such surfaces can thus be included into the admissible spaces \eqref{eq:C0} and \eqref{eq:Dalphat}. The first-order stability condition \eqref{eq:vi} leads directly to the classical jump condition for the stress tensor
-\begin{equation}
+The variational approach outlined in \cref{def:dynagraddama} permits also a systematic derivation of the jump conditions across such surfaces. We assume here that the space-time evolution $t\mapsto S_t$ is known advance and its normal velocity in the reference configuration $\Omega$ is denoted by $V_t$. A perturbation to the singular surface is considered in \cite{BatraBedfordDrumheller:1986} however the formalism is similar to what will be described in \cref{sec:linkDF}. The presence of such surfaces can thus be included into the admissible spaces \eqref{eq:C0} and \eqref{eq:Dalphat}. The first-order stability condition \eqref{eq:vi} leads directly to the classical vectorial jump condition for the stress tensor
+\[
 \jump{\rho\dot{\vec{u}}_t}V_t+\jump{\sig_t}\vec{n}=\vec{0}.
-\end{equation}
-Compared to the classical stress jump condition, note that here the stress tensor $\sig_t$ is modulated by the damage, see \eqref{eq:stress}.
+\]
+Compared to the classical stress jump condition, note that here the stress tensor $\sig_t$ is modulated by the damage, see \eqref{eq:stress}. Concerning the damage criterion, we have
+\[
+\jump{\nabla\alpha_t}\cdot\vec{n}\leq 0.
+\]
+As can be seen from \cref{fig:at12}, a discontinuity in the damage gradient often corresponds to the fracture point where $\alpha_t=1$.
 
 Similarly, the global energy balance condition \eqref{eq:dyngdeb} results in the following energy density jump condition
-\begin{equation}
+\[
 \jump{\psi\bigl(\eps(\vec{u}_t),\alpha_t\bigr)+\kappa(\dot{\vec{u}}_t)+\varsigma(\alpha_t,\nabla\alpha_t)}V_t+\jump{\sig_t\dot{\vec{u}}_t}\cdot\vec{n}=0.
-\end{equation}
-In addition to the remark concerning the stress tensor, the dissipated energy density \eqref{eq:surface} is also included.
+\]
+In addition to the remark concerning the stress tensor, the dissipated energy density \eqref{eq:surface} is also included. When the damage evolves $\dot{\alpha}_t>0$, the normal component of the damage gradient is continuous across these surfaces. We have
+\[
+\jump{\nabla\alpha_t}\cdot\dot{\alpha}_t\vec{n}=0.
+\]
 
 \subsection{Comparison with phase-field approaches} \label{sec:phasefields}
 Two essentially different phase-field models co-exist in the literature: one that originated from the mechanics community initiated by the work of \cite{MieheHofackerWelschinger:2010,MieheWelschingerHofacker:2010}, and the other independently proposed by the physicists via the work of \cite{KarmaKesslerLevine:2001,HakimKarma:2009}. They will be separately compared with the gradient damage approach outlined in \cref{def:dynagraddama}.
