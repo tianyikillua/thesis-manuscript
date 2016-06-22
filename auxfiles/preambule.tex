@@ -36,12 +36,14 @@
 \usepackage{braket}
 \usepackage{newtxmath}
 \usepackage[all,pdf]{xy}
-\usepackage[capitalise,noabbrev]{cleveref}
 
 \declaretheorem[within=chapter,style=definition]{definition}
 \declaretheorem[sibling=definition,style=definition]{hypothesis}
 \declaretheorem[sibling=definition,style=plain]{proposition}
 \declaretheorem[style=remark,numbered=no]{remark}
+\usepackage[capitalise,noabbrev]{cleveref}
+\crefname{hypothesis}{hypothesis}{hypotheses}
+\crefname{hypothesis}{Hypothesis}{Hypotheses}
 
 \setcounter{minitocdepth}{2}
 
