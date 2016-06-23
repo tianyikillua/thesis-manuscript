@@ -123,20 +123,20 @@ c_w=4\int_0^1\sqrt{\mathsf{w}(\beta)}\D{\beta}.
 \end{equation}
 A direct calculation gives $c_w=\frac{8}{3}$ for the \eqref{eq:at1} model and $c_w=2$ for the \eqref{eq:at2} one.
 
-\paragraph{Modeling parameters} The modeling parameters of the dynamic gradient damage model can thus be summarized in \cref{tab:modelgrad}. The elastodynamic parameters corresponds to the material density as well as two elastic constants. The fracture behavior can be characterized by a maximal stress defined by \eqref{eq:sigc0} and a fracture toughness $\gc$, thanks to the identification \eqref{eq:gcingd} or to the definition of the normalization coefficient in \eqref{eq:gcingdcw}.
+\paragraph{Modeling parameters} The modeling parameters of the dynamic gradient damage model can thus be summarized in \cref{tab:modelgrad}. The elastodynamic parameters corresponds to the material density as well as two elastic constants. The fracture behavior can be characterized by a maximal stress defined by \eqref{eq:sigc0} and a fracture toughness $\gc$, thanks to the identification \eqref{eq:gcingd} or to the definition of the normalization coefficient in \eqref{eq:gcingdcw}. The internal length $\ell$ can be regarded as a parameter that achieves a link between damage and fracture. It can be considered as a dependent or independent modeling parameter depending on the choice of damage constitutive functions.
 \begin{table}[htbp]
 \centering
-\caption{Modeling parameters of the dynamic gradient damage model regarded as a phase-field model of fracture} \label{tab:modelgrad}
-\begin{tabular}{cccc} \toprule
-& Elastodynamics & Fracture & Damage constitutive functions \\ \midrule
-Parameters & $\rho$, $E$ and $\nu$ & $\gc$ and $\sigma_\mathrm{m}$ &  $\mathsf{a}(\alpha)$ and $\mathsf{w}(\alpha)$ \\ \bottomrule
+\caption{Modeling parameters of the dynamic gradient damage model regarded as a genuine model of fracture} \label{tab:modelgrad}
+\begin{tabular}{ccccc} \toprule
+& Elastodynamics & Fracture & Damage $\leftrightarrow$ fracture & Constitutive functions \\ \midrule
+Parameters & $\rho$, $E$ and $\nu$ & $\gc$ and $\sigma_\mathrm{m}$ & $\ell$ & $\mathsf{a}(\alpha)$ and $\mathsf{w}(\alpha)$ \\ \bottomrule
 \end{tabular}
 \end{table}
 
 The damage constitutive functions $\mathsf{a}(\alpha)$ and $\mathsf{w}(\alpha)$ contribute to the quantitative behaviors of gradient damage models used to approximate brittle fracture. Remark that no additional parameters are introduced in the \eqref{eq:at1} and the \eqref{eq:at2} models. In particular, the internal length $\ell$ can be determined as long as the two fracture parameters $\gc$ and $\sigma_\mathrm{m}$ as known. More modeling parameters can be introduced via the use of more sophisticated constitutive functions such as that defined in \cite{LorentzCuvilliezKazymyrenko:2012,AlessiMarigoVidoli:2015}.
 
 \subsection{Dynamic evolution laws}
-In this work we propose to formulate the variational dynamic evolution problem using an extension of Hamilton's principle, cf. \cite{Hamilton:1834}. In the quasi-static case the meta-stability condition \eqref{eq:qsstability} is a physically feasible principle due to the minimization structure of static equilibrium. In dynamics however, we merely have a \emph{stationary} action integral, since the temporal minimality is not always guaranteed, see \cite{Gray:2007aa}. From a mathematical modeling point of view, Hamilton's principle applies to temporal \emph{boundary value problems} defined on an interval $[0,T]$, since the state at both time ends is fixed during arbitrary variations of the action. More sophisticated variational principles can be designed to take into account only the initial displacement $\vec{u}_0$ and the initial velocity $\dot{\vec{u}}_0$ conditions, see for example \cite{Gurtin:1964aa}. We admit that the use of Hamilton's principle may not be an optimal one from a formulation point of view. Nevertheless it is not the object of the present work. Here Hamilton's principle is mainly used to derive the equations to solve the physical \emph{initial value problem}.
+In this work we propose to formulate the variational dynamic evolution problem using an extension of Hamilton's principle, cf. \cite{Hamilton:1834}. In the quasi-static case the meta-stability condition \eqref{eq:qsstability} is a physically feasible principle due to the minimization structure of static equilibrium. In dynamics however, we merely have a \emph{stationary} action integral, since the temporal minimality is not always guaranteed, see \cite{Gray:2007aa}. From a mathematical modeling point of view, Hamilton's principle applies to temporal \emph{boundary value problems} defined in an interval $[0,T]$, since the state at both time ends is fixed during arbitrary variations of the action. More sophisticated variational principles can be designed to take into account only the initial displacement $\vec{u}_0$ and the initial velocity $\dot{\vec{u}}_0$ conditions, see for example \cite{Gurtin:1964aa}. We admit that the use of Hamilton's principle may not be an optimal one from a formulation point of view. Nevertheless it is not the object of the present work. Here Hamilton's principle is mainly used to derive the equations to solve the physical \emph{initial value problem}.
 
 The loading conditions and the admissible function spaces are now specified. Body forces $\vec{f}_t$ and surface tractions $\vec{F}_t$ applied to the body through a subset $\partial\Omega_F$ of the boundary are characterized by an external work potential $\mathcal{W}_t$ given by
 \begin{equation} \label{eq:power}
@@ -165,9 +165,8 @@ With all the variational ingredients set, we are now in a position to introduce 
 \mathcal{A}(\vec{u},\alpha)=\int_I\mathcal{L}_t(\vec{u}_t,\dot{\vec{u}}_t,\alpha_t)\,\mathrm{d}t=\int_I\mathcal{E}(\vec{u}_t,\alpha_t)+\mathcal{S}(\alpha_t)-\mathcal{K}(\dot{\vec{u}}_t)-\mathcal{W}_t(\vec{u}_t)\D{t}.
 \end{equation}
 The coupled two-field time-continuous dynamic gradient damage problem can then be formulated by the following
-\begin{definition}[Dynamic Gradient Damage Evolution Law] \label{def:dynagraddama}
+\begin{definition}[Dynamic Gradient Damage Evolution Law] \label{def:dynagraddama} \noindent
 \begin{enumerate}
-\item[]
 \item \textbf{Irreversibility}: the damage $t\mapsto\alpha_t$ is a non-decreasing function of time.
 \item \textbf{First-order stability}: the first-order action variation is non-negative with respect to arbitrary admissible displacement and damage evolutions
 \begin{equation} \label{eq:vi}
@@ -285,11 +284,11 @@ which agrees exactly with that used in \cite{MieheHofackerWelschinger:2010,Miehe
 
 Another difference between the gradient damage model and these phase-field approaches lies in the irreversibility condition (cf. a discussion on this point in \cite{AmorMarigoMaurini:2009}). In our approach the damage is assumed to be an irreversible evolution, \emph{i.e.} $\dot{\alpha}_t\geq 0$. This condition is enforced during the energy minimization principle \eqref{eq:crackmin} as an optimization constraint prescribed in the damage admissible space \eqref{eq:Dalphat}. By doing so, \eqref{eq:crackmin} corresponds to a bound-constrained optimization problem which requires specially designed numerical algorithms. On the contrary, in these phase-field approaches the irreversibility condition is only weakly prescribed:
 \begin{itemize}
-\item In \cite{MieheHofackerWelschinger:2010,MieheWelschingerHofacker:2010,BordenVerhooselScottHughesLandis:2012,KlinsmannRosatoKamlahMcMeeking:2015,MayVignolletBorst:2015} for instance, the irreversible constraint is dropped during energy minimization and \eqref{eq:crackmin} corresponds to an unconstrained optimization problem, of which the minimizing phase-field corresponds to the solution of the underlying linear system
+\item In \cite{MieheHofackerWelschinger:2010,MieheWelschingerHofacker:2010,BordenVerhooselScottHughesLandis:2012,KlinsmannRosatoKamlahMcMeeking:2015,MayVignolletBorst:2015} for instance, the irreversible constraint is dropped during energy minimization. The current phase-field corresponds to the solution of the following unconstrained optimization problem
 \begin{equation} \label{eq:linearsystem}
-\vec{H}\dvec=\vec{b}.
+\mathcal{E}(\vec{u}_t,\alpha_t)+\mathcal{S}(\alpha_t)\leq\mathcal{E}(\vec{u}_t,\beta_t)+\mathcal{S}(\beta_t)\text{ for all $\beta_t$}.
 \end{equation}
-Instead, the irreversible behaviors of the phase-field is modeled via the introduction of a history field defined by
+The irreversible behaviors of the phase-field is modeled via the introduction of a history field defined by
 \begin{equation} \label{eq:historyfield}
 \mathcal{H}_t=\max_{s\leq t}\psi_0\bigl(\eps(\vec{u}_s)\bigr)
 \end{equation}
@@ -561,9 +560,8 @@ In this particular case of a straight crack path, we can explicit this domain tr
 \caption{A particular virtual perturbation $\vtheta^*=\theta\vtau_0$ verifying \cref{def:velocityfield}. It is obtained by solving the Laplace's equation $\Delta\theta=0$ inside the crown $r\leq\norm{\vec{x}^*-\vec{P}_0}\leq R$ with adequate boundary conditions} \label{fig:exampletheta}
 \end{figure}
 This virtual perturbation should verify the following
-\begin{definition}[Virtual Perturbation] \label{def:velocityfield}
+\begin{definition}[Virtual Perturbation] \label{def:velocityfield} \noindent
 \begin{enumerate}
-\item[]
 \item It is sufficiently smooth in space to satisfy the definition of a diffeomorphism.
 \item It represents a virtual crack advance along the current crack propagation direction, that is in our case $\vtheta^*(\vec{P}_0)=\vtau_0$.
 \item It does not alter the crack lip \emph{shape}, that is $\vtheta^*\cdot\vec{n}=0$ on the crack lip $\Gamma_0$ with $\vec{n}$ the unit normal vector.
@@ -602,9 +600,8 @@ This section is devoted to the application of the shape derivative methods to th
 \caption{Numerical simulation of an edge-cracked plate under dynamic shearing impact that will be considered in \cref{sec:kalthoff}. The damage is concentrated inside a band and varies from 0 (blue zones) to 1 (red zones). It serves as a phase-field indicator of the crack propagating currently in the direction of $\vtau_t$ with its tip located at $\vec{P}_t$} \label{fig:kalthoffF}
 \end{figure}
 We observe initiation of the edge crack and subsequent propagation of the damage band representing the crack. The objective here is to understand the current crack tip $\vec{P}_t$ evolution during such \emph{simple} propagation phase. Complex topology changes such as crack kinking, branching or coalescence indicated by the phase-field $\alpha_t$ remain beyond the scope of the present section. Formally, we admit the following
-\begin{hypothesis}[Damage Band Structuration] \label{hypo:damageband}
+\begin{hypothesis}[Damage Band Structuration] \label{hypo:damageband} \noindent
 \begin{enumerate}
-\item[]
 \item The time-dependent totally damaged zone can be described by a curve $l\mapsto\vec{\gamma}(l)$ parametrized by its arc-length $l_t$
 \begin{equation} \label{eq:graddamalt}
 \Gamma_t=\set{\vec{x}\in\Omega|\alpha_t(\vec{x})=1}=\set{\vec{\gamma}(l_s)\in\mathbb{R}^2|0\leq s\leq t}
@@ -693,9 +690,8 @@ As can be seen, the damage profile variation $\beta_t^*-\alpha_t^*$ and the crac
 In practice, it means that if crack length variation is not considered, then the variation of the action integral with respect to the displacement and to the damage (profile) can be separately computed. Otherwise when $\delta l_t>0$, then damage variation must also be taken into account. Given an admissible crack length evolution $s\in\mathcal{Z}(l)$, the admissible evolution space for the damage profile will be denoted by $\mathcal{D}_s(\alpha^*)$, where the dependence on $s$ is explicitly indicated by the subscript and $\alpha^*$ describes the profile of a damage evolution verifying \cref{hypo:damageband}. As usual, at both ends of the time interval $I$, no variations of true damage profile are considered.
 
 Associated with an admissible triplet of displacement, damage profile and crack length evolutions $(\vec{u}^*,\alpha^*,l)\in\mathcal{C}(\vec{u}^*)\times\mathcal{D}_l(\alpha^*)\times\mathcal{Z}(l)$, we can now reformulate the dynamic gradient damage model under \cref{hypo:damageband} by the following
-\begin{definition}[Dynamic Gradient Damage Evolution Law for a Propagating Crack] \label{def:dynagraddamanew}
+\begin{definition}[Dynamic Gradient Damage Evolution Law for a Propagating Crack] \noindent \label{def:dynagraddamanew}
 \begin{enumerate}
-\item[]
 \item \textbf{Irreversibility}: the damage $t\mapsto\alpha_t$ and the crack length $t\mapsto l_t$ are a non-decreasing function of time.
 \item \textbf{First-order stability}: the first-order action variation is non-negative with respect to arbitrary admissible displacement, damage profile and crack evolutions
 \begin{multline} \label{eq:vi2}
