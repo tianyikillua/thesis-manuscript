@@ -133,7 +133,25 @@ Parameters & $\rho$, $E$ and $\nu$ & $\gc$ and $\sigma_\mathrm{m}$ & $\ell$ & $\
 \end{tabular}
 \end{table}
 
-The damage constitutive functions $\mathsf{a}(\alpha)$ and $\mathsf{w}(\alpha)$ contribute to the quantitative behaviors of gradient damage models used to approximate brittle fracture. Remark that no additional parameters are introduced in the \eqref{eq:at1} and the \eqref{eq:at2} models. In particular, the internal length $\ell$ can be determined as long as the two fracture parameters $\gc$ and $\sigma_\mathrm{m}$ as known. More modeling parameters can be introduced via the use of more sophisticated constitutive functions such as that defined in \cite{LorentzCuvilliezKazymyrenko:2012,AlessiMarigoVidoli:2015}.
+The damage constitutive functions $\mathsf{a}(\alpha)$ and $\mathsf{w}(\alpha)$ contribute to the quantitative behaviors of gradient damage models used to approximate brittle fracture. Remark that no additional parameters are introduced in the \eqref{eq:at1} and the \eqref{eq:at2} models. In particular, the internal length $\ell$ is determined as long as the two fracture parameters $\gc$ and $\sigma_\mathrm{m}$ as known. More modeling parameters can be introduced via the use of more sophisticated constitutive functions such as that defined in \cite{LorentzCuvilliezKazymyrenko:2012,AlessiMarigoVidoli:2015}. For instance, in \cite{AlessiMarigoVidoli:2015} the following damage constitutive laws are proposed
+\begin{align*}
+\mathsf{a}(\alpha)=\frac{1-\mathsf{w}(\alpha)}{1+(k-1)\mathsf{w}(\alpha)}\,,\quad \mathsf{w}(\alpha)=1-(1-\alpha)^2.
+\end{align*}
+Its homogeneous damage behavior is characterized by a linear softening curve parametrized by the $k$-parameter as illustrated in \cref{fig:atk}.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{1d_ATk.pdf}
+\caption{Constitutive behaviors for the constitutive functions proposed in \cite{AlessiMarigoVidoli:2015} during a homogeneous uniaxial traction experiment: (a) stress-strain behavior and (b) damage evolution} \label{fig:atk}
+\end{figure}
+According to \eqref{eq:sigc0} and \eqref{eq:gcingd}, the following relationships between the material parameters hold
+\[
+G_\mathrm{c}=\pi w_1\ell\,,\quad \sigma_\mathrm{c}^2=\frac{2G_\mathrm{c}E}{\pi k\ell}.
+\]
+In particular, the introduction of the $k$-parameters permits one to interpret $\ell$ as a genuine independent parameter. In that case, the $k$-parameter is fixed as long as other material parameters are
+\[
+k=\frac{2\gc E}{\pi\ell\sigma_\mathrm{c}^2}.
+\]
+Future work could be devoted to a thorough theoretic and numerical analysis of these kind of models in the dynamic setting.
 
 \subsection{Dynamic evolution laws}
 In this work we propose to formulate the variational dynamic evolution problem using an extension of Hamilton's principle, cf. \cite{Hamilton:1834}. In the quasi-static case the meta-stability condition \eqref{eq:qsstability} is a physically feasible principle due to the minimization structure of static equilibrium. In dynamics however, we merely have a \emph{stationary} action integral, since the temporal minimality is not always guaranteed, see \cite{Gray:2007aa}. From a mathematical modeling point of view, Hamilton's principle applies to temporal \emph{boundary value problems} defined in an interval $[0,T]$, since the state at both time ends is fixed during arbitrary variations of the action. More sophisticated variational principles can be designed to take into account only the initial displacement $\vec{u}_0$ and the initial velocity $\dot{\vec{u}}_0$ conditions, see for example \cite{Gurtin:1964aa}. We admit that the use of Hamilton's principle may not be an optimal one from a formulation point of view. Nevertheless it is not the object of the present work. Here Hamilton's principle is mainly used to derive the equations to solve the physical \emph{initial value problem}.
