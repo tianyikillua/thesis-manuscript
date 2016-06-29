@@ -170,7 +170,7 @@ In general due to the use of tension-compression asymmetry models \eqref{eq:elas
 \caption{Staggered time-stepping procedure for the dynamic gradient damage model based on the implicit Newmark-$\beta$ method.} \label{algo:implicit}
 \begin{algorithmic}[1]\linespread{1.2}\selectfont\normalsize
 \For{every successive time step $n\geq 0$}
-  \State Prediction $\tilde{\uvec}^{n+1}=u^n+\Delta t\dot{\uvec}^n+\frac{1-2\beta}{2}\Delta t^2\ddot{\uvec}^n$.
+  \State Prediction $\tilde{\uvec}^{n+1}=\uvec^n+\Delta t\dot{\uvec}^n+\frac{1-2\beta}{2}\Delta t^2\ddot{\uvec}^n$.
   \State Prediction $\tilde{\underline{\vec{v}}}^{n+1}=\dot{\uvec}^n+\frac{\Delta t}{2}\ddot{\uvec}^n$.
   \State Solve $\uvec^{n+1}$ via \eqref{eq:getuvecnp1}.
   \State Update $\ddot{\uvec}^{n+1}=(\uvec^{n+1}-\tilde{\uvec}^{n+1})/(\beta\Delta t^2)$.
