@@ -1,5 +1,9 @@
 # Thesis manuscript
 
+
+```
+#!text
+
 Avant-propos
 1  Introduction
    1.1 Dynamic Brittle Fracture in a Nutshell
@@ -33,3 +37,4 @@ Avant-propos
 A Griffith Revisited
 B Detailed Calculations
 C Résumé substantiel en français
+```
