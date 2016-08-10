@@ -36,9 +36,68 @@ General notation conventions adopted in the present work are summarized as follo
 
 \item Higher order tensors will be indicated by sans-serif letters: the elasticity tensor $\tens{A}$ for instance.
 
-\item Tensors are considered as linear operators and intrinsic notation is adopted. If the resulting quantity is not a scalar, the contraction operation will be written without dots, such as $\sig_t=\tens{A}\eps_t=\tens{A}_{ijkl}\eps_{kl}$.
+\item Tensors are considered as linear operators and intrinsic notation is adopted. If the resulting quantity is not a scalar, the contraction operation will be written without dots, such as $\sig_t=\tens{A}\eps_t=\tens{A}_{ijkl}\eps_{kl}$ (the summation
+convention is assumed).
 
-\item Inner products between two tensors of the same order will be denoted with a dot, such as $\tens{A}\eps_t\cdot\eps_t=\tens{A}_{ijkl}\eps_{kl}\eps_{ij}$.
+\item Inner products between two tensors of the same order will be denoted with a dot, such as $\tens{A}\eps_t\cdot\eps_t=\tens{A}_{ijkl}\eps_{kl}\eps_{ij}$ (the summation
+convention is assumed).
 
 \item Time dependence of the involved quantity will be indicated by a subscript, like $\vec{u}:(t,\vec{x})\mapsto\vec{u}_t(\vec{x})$. In particular, the notation $\vec{u}_t$ is understood as the displacement field at a fixed time $t$, whereas $\vec{u}$ refers to the time evolution of the displacement field.
 \end{itemize}
+
+\section*{PhD Metadata}
+\begin{quotation}
+\textbf{Warning}: According to the dictionary, the word ``metadata'' refers to a set of data that describes and gives information about other data. This section provides information behind the present PhD work and has nothing to do with the rest of the document. Serious readers concerned with \emph{la Patrie, les Sciences et la Gloire}\footnote{Motto of l'Ecole Polytechnique.} are sincerely invited to skip this section.
+\end{quotation}
+
+\subsection*{Publications and License Information}
+The present PhD work leads to the publication of the following journal papers:
+\begin{itemize}
+\item \fullcite{LiMarigoGuilbaudPotapov:2015}. \mybibexclude{LiMarigoGuilbaudPotapov:2015}
+
+\item \fullcite{LiMarigoGuilbaudPotapov:2016}. \mybibexclude{LiMarigoGuilbaudPotapov:2016}
+
+\item \fullcite{LiMarigo:2016}. \mybibexclude{LiMarigo:2016}
+
+\item \fullcite{Li:2016aa}. \mybibexclude{Li:2016aa}
+\end{itemize}
+
+The author declare that their \emph{submitted} versions (before peer-reviewing processes) are adapted and then reused in the present thesis.
+
+\doclicenseThis
+
+\subsection*{Source Files}
+The present PhD thesis is writtin with \TeX\ (with its version $3.14159265\neq \pi$)\footnote{Recall that the versioning of \TeX\ constitutes a series of approximations of $\pi$.}. The \TeX\ source files are available in a public Bitbucket repository:
+\begin{quotation}
+\url{https://bitbucket.org/litianyi/thesis-manuscript}
+\end{quotation}
+
+According to the above license information, interested readers can freely use or adapt the document structure, the title page, etc., to their needs.
+
+\subsection*{Statistics}
+Several text-based work (Fortran/Python scripts, journal articles, public presentations) is stored and tracked in a private Bitbucket repository from the day I was intoduced to the Mercurial version control system (approximately 2 months after the beginning of the thesis, \emph{i.e.} in December 2013). Every \emph{commit} to the repository represents some tasks done and can be used as a work unit. Of course, all commits are not born equal and some commits represent more important contributions than others (in terms of quantity and/or quality). However this effect is not taken into account here. \emph{Future work could be devoted to a better quantification or discrimination of differents commits}.
+
+Up to Augest 10, 2016, a total of 636 commits are contributed to the present PhD thesis repository in the past 3 years minus 2 months. We are here interested in the distribution of these commits with respect to different temporal spans.
+
+In \cref{fig:nbcommits1}(a) is shown the distribution of commits per year. The law of large numbers in probability theory seems to be verified: approximately an average of 250 commits are performed per year, according to the information for 2014 (total), 2015 (total) and 2016 (up to Augest). Thanks to the excellent working conditions in France, only $\approx 210$ work days (excluding public holidays, weekends, vacations) are totalized per year. This means more than 1 commit is done per work day. Of course I do work also during holidays.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.98\textwidth]{nbcommits_1.pdf}
+\caption{Distribution of commits up to Augest 10, 2016: (a) per year and (b) per month} \label{fig:nbcommits1}
+\end{figure}
+
+The distribution of commits per month is shown in \cref{fig:nbcommits1}(b). The most productive months are concentrated in the spring season, from March to June. I'm less productive during summer and autumn and least efficient when it's cold. A quick Google search doesn't seem to confirm this finding.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.98\textwidth]{nbcommits_2.pdf}
+\caption{Distribution of commits up to Augest 10, 2016: (a) per day and (b) per weekday} \label{fig:nbcommits2}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.49\textwidth]{nbcommits_hour.pdf}
+\caption{Distribution of commits up to Augest 10, 2016 per hour} \label{fig:nbcommits3}
+\end{figure}
+
+\subsection*{Remerciements}
+Pythonic \texttt{pass}.

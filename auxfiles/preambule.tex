@@ -22,9 +22,11 @@
 \usepackage{dingbat}
 \usepackage{csquotes}
 \usepackage[style=apa,backend=biber,apabackref=true,
-            hyperref=true,doi=false,abbreviate=false,
+            hyperref=true,doi=true,abbreviate=false,
             uniquename=false,eprint=false,url=false]{biblatex}
 \usepackage[normalem]{ulem}
+\usepackage{hyperxmp}
+\usepackage[type={CC},modifier={by},version={4.0},]{doclicense}
 
 \let\openbox\relax
 \usepackage{amsmath}
@@ -85,6 +87,9 @@
 \abx@macro@parenciteOrig}}
 \makeatother
 \renewcommand{\cite}{\parencite}
+
+\DeclareBibliographyCategory{fullcited}
+\newcommand{\mybibexclude}[1]{\addtocategory{fullcited}{#1}}
 
 \WarningFilter{minitoc(hints)}{W0010}
 \WarningFilter{minitoc(hints)}{W0023}
