@@ -28,7 +28,7 @@ The admissible function spaces for the displacement $\vec{u}^*$ and for the crac
 \begin{equation} \label{eq:action}
 \mathcal{A}(\vec{u}^*,l)=\int_I\mathcal{L}_t(\vec{u}^*_t,\dot{\vec{u}}^*_t,l_t,\dot{l}_t)\D{t}=\int_I\bigl(\mathcal{E}^*(\vec{u}_t^*,l_t)+\mathcal{S}(l_t)-\mathcal{K}^*(\vec{u}_t^*,\dot{\vec{u}}_t^*,l_t,\dot{l}_t)-\mathcal{W}_t^*(\vec{u}_t^*,l_t)\bigr)\D{t}
 \end{equation}
-which involves a generalized Lagrangian density $\mathcal{L}_t(\vec{u}^*_t,\dot{\vec{u}}^*_t,l_t,\dot{l}_t)$. The coupled evolution described by the couple $(\vec{u}^*,l)\in\mathcal{C}(\vec{u}^*)\times\mathcal{Z}(l)$ will then be governed by
+which involves a generalized Lagrangian $\mathcal{L}_t(\vec{u}^*_t,\dot{\vec{u}}^*_t,l_t,\dot{l}_t)$. The coupled evolution described by the couple $(\vec{u}^*,l)\in\mathcal{C}(\vec{u}^*)\times\mathcal{Z}(l)$ will then be governed by
 \begin{definition}[Variational Formulation of the Griffith's Theory of Dynamic Fracture] \label{def:griffith} \noindent
 \begin{enumerate}
 \item \textbf{Irreversibility}: the crack length is a non-decreasing function of time $\dot{l}_t\geq 0$.
@@ -82,11 +82,11 @@ Note that we retrieve the static energy release rate \cite{Destuynder:1981} by s
 \[
 \mathcal{A}'(\vec{u}^*,l)(\vec{0},\delta l)=\int_I\left(\frac{\partial\mathcal{L}_t}{\partial l_t}-\frac{\md}{\md t}\frac{\partial\mathcal{L}_t}{\partial\dot{l}_t}\right)\cdot\delta l_t\D{t}
 \]
-and the fact that the Lagrangian density depends on the crack velocity $\dot{l}_t$ solely via the kinetic energy $\mathcal{K}^*$, we find the same expression for the dynamic energy release rate $G_t$ as indicated in \cite[p.~423]{Freund:1990}
+and the fact that the Lagrangian depends on the crack velocity $\dot{l}_t$ solely via the kinetic energy $\mathcal{K}^*$, we find the same expression for the dynamic energy release rate $G_t$ as indicated in \cite[p.~423]{Freund:1990}
 \[
 G_t=\frac{\partial(\mathcal{K}^*+\mathcal{W}_t^*-\mathcal{E}^*)}{\partial l_t}-\frac{\md}{\md t}\frac{\partial\mathcal{K}^*}{\partial\dot{l}_t}.
 \]
-Contrary to the quasi-static regime, this quantity $G_t$ doesn't possess the physical meaning of the derivative of the Lagrangian energy with respect to crack extension due to the presence of the term $(\md/\md t)(\partial\mathcal{K}^*/\partial\dot{l}_t)$, as has been already noted in \cite{NishiokaAtluri:1983}.
+Contrary to the quasi-static regime, this quantity $G_t$ doesn't possess the physical meaning of the derivative of the Lagrangian with respect to crack extension due to the presence of the term $(\md/\md t)(\partial\mathcal{K}^*/\partial\dot{l}_t)$, as has been already noted in \cite{NishiokaAtluri:1983}.
 
 Although $\vtheta_t$ enters into the definition of $G_t$ in \eqref{eq:Gt}, the dynamic energy release rate is independent of the exact virtual perturbation used to establish the bijection \eqref{eq:philt}, owing to the following
 \begin{proposition} \label{prop:J}
@@ -147,7 +147,16 @@ Compared to the classical $J$-integral, the advantage of the dynamic energy rele
 \end{remark}
 
 \begin{remark}[Generalization to curved or kinked crack paths]
-Let us recall that the crack $l\mapsto\vec{\gamma}(l)$ is supposed to follow a pre-defined straight path in this paper. It can be generalized to arbitrary but smooth enough \emph{pre-defined} curved paths without much technical difficulties. It suffices to carefully reconstruct the virtual perturbation $\vtheta_t$ along the crack path, as a solution to a particular Cauchy evolution problem \cite{KhludnevSokolowskiSzulc:2010}. The obtained \emph{scalar} crack equation of motion will be formally the same as \eqref{eq:gtgc}, which predicts the crack length $l_t$ as a function of time along the this path. Note however that crack propagation direction should be at least continuous in time (curved path) so that the shape derivative method embodied by the diffeomorphism $\philt$ makes sense. In presence of a crack kinking associated with a temporal discontinuity of the crack tangent (cf. \cref{fig:kink}), the shape derivative methods should be adapted to capture the topology change due to the kinking \cite{Hintermuller:2011}.
+Let us recall that the crack $l\mapsto\vec{\gamma}(l)$ is supposed to follow a pre-defined straight path in this paper. It can be generalized to arbitrary but smooth enough \emph{pre-defined} curved paths without much technical difficulties. It suffices to carefully construct a virtual perturbation $\vtheta^*$ verifying \cref{def:velocityfield}, and define the bijection $\philt_t(\vec{x})$ as a solution to a particular Cauchy evolution problem
+\[
+\left\{
+\begin{aligned}
+& \philt_0(\vec{x})=\vec{x}\,, \\
+& \frac{\md}{\md t}{\philt}_t(\vec{x})=\vtheta^*\bigl(\philt_t(\vec{x})\bigr)\text{ for $t>0$}\,,
+\end{aligned}
+\right.
+\]
+see \cite{KhludnevSokolowskiSzulc:2010} for a mathematical analysis of this problem.. The obtained \emph{scalar} crack equation of motion will be formally the same as \eqref{eq:gtgc}, which predicts the crack length $l_t$ as a function of time along the this path. Note however that crack propagation direction should be at least continuous in time (curved path) so that the shape derivative method embodied by the diffeomorphism $\philt$ makes sense. In the presence of a crack kinking associated with a temporal discontinuity of the crack tangent (cf. \cref{fig:kink}), the shape derivative methods should be adapted to capture the topology change due to the kinking \cite{Hintermuller:2011}.
 
 When the crack path is unknown, an interesting attempt is to include the crack tangent angle into the action integral \eqref{eq:action} and evaluate the variation induced by arbitrary crack direction change. Remark that the propagation criterion derived in \cite{Oleaga:2001,Adda-BediaAriasAmarLund:1999} corresponds in fact to a vectorial extension of the scalar propagation law \eqref{eq:gtgc}
 \[
@@ -247,7 +256,7 @@ R=\int_I\delta l_t\D{t}\int_\domaint(\rho\ddot{\vec{u}}_t\cdot\nabla\vec{u}_t\vt
 which permits with \eqref{eq:aprime3} to deduce the desired equations \eqref{eq:actionvariationzerodisplacement} and \eqref{eq:Gt}.
 
 \section*{Local Energy Balance Condition}
-In this section we will derive the equivalent local condition of the global energy balance \eqref{eq:eb}, which gives the desired Griffith's law of motion \eqref{eq:gtgc} when combined with the local stability condition \eqref{eq:actionvariationzerodisplacement}. The Lagrangian density defined in \eqref{eq:action} is explicitly dependent on time solely through the external work potential \eqref{eq:externalworki}. Its total derivative can thus be given by
+In this section we will derive the equivalent local condition of the global energy balance \eqref{eq:eb}, which gives the desired Griffith's law of motion \eqref{eq:gtgc} when combined with the local stability condition \eqref{eq:actionvariationzerodisplacement}. The Lagrangian defined in \eqref{eq:action} is explicitly dependent on time solely through the external work potential \eqref{eq:externalworki}. Its total derivative can thus be given by
 \begin{equation} \label{eq:lagrangianderivativetime}
 \frac{\md\mathcal{L}}{\md t}=\frac{\partial\mathcal{L}}{\partial\vec{u}_t^*}\dot{\vec{u}}_t^*+\frac{\partial\mathcal{L}}{\partial\dot{\vec{u}}_t^*}\ddot{\vec{u}}_t^*+\frac{\partial\mathcal{L}}{\partial l_t}\dot{l}_t+\frac{\partial\mathcal{L}}{\partial\dot{l}_t}\ddot{l}_t+\frac{\partial\mathcal{L}}{\partial t}.
 \end{equation}
