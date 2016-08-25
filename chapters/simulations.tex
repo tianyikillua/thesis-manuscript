@@ -888,7 +888,7 @@ A size effect is present for the present Brazilian test following the analyses i
 In terms of fracture pattern prediction for concrete structures, the tension-compression model proposed by \cite{FreddiRoyer-Carfagni:2010} seems to be a good candidate compared to other choices. However the crack normal vector is not taken into account and residual stiffness may be present along and parallel to the crack lip. The ``erosion'' mechanism available in the EPX software could produce a real crack however its use need further investigation. Size effect for Brazilian tests on concrete cylinders is reproduced by the gradient damage model. The existence of such experimentally validated size effects is due to the introduction of the material internal length $\ell$.
 
 \section{Dynamic Fracture of L-Shaped Concrete Specimen} \label{sec:L-specimen}
-This section is devoted to a gradient-damage modeling of the dynamic tensile test on a two-dimensional L-shaped concrete specimen. Compared to \cref{sec:brazilian}, the objective here is to investigate dynamic or velocity effects in dynamic fracture problems on concrete structures, \emph{i.e.} their influence on the temporal evolution of global quantities and spatial crack path. An experimental validation of the model is also considered against the results obtained in \cite{OzboltBedeSharmaMayer:2015}. The thematic subjects covered here are thus summarized in \cref{tab:summL}.
+This section is devoted to a gradient-damage modeling of the dynamic tensile test on a two-dimensional plane-strain L-shaped concrete specimen. Compared to \cref{sec:brazilian}, the objective here is to investigate dynamic or velocity effects in dynamic fracture problems on concrete structures, \emph{i.e.} their influence on the temporal evolution of global quantities and spatial crack path. An experimental validation of the model is also considered against the results obtained in \cite{OzboltBedeSharmaMayer:2015}. The thematic subjects covered here are thus summarized in \cref{tab:summL}.
 \begin{table}[htbp]
 \centering
 \caption{Thematic subjects covered in this section} \label{tab:summL}
@@ -904,7 +904,7 @@ The geometry and loading conditions are adapted from \cite{OzboltBedeSharmaMayer
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.45\linewidth]{L-specimen.pdf}
-\caption{Geometry and loading conditions for the L-specimen problem. Damage field $\alpha_t$ at $t=\SI{6e-4}{s}$ ranging from 0 (gray) to 1 (white) obtained by $\ell=\SI{1}{mm}$, for $v=\SI{0.74}{m/s}$} \label{fig:L-specimen}
+\caption{Geometry and loading conditions for the L-specimen problem. Damage field $\alpha_t$ at $t=\SI{6e-4}{s}$ ranging from 0 (gray) to 1 (white) obtained by $\eta=\SI{1}{mm}$, for $v=\SI{0.74}{m/s}$} \label{fig:L-specimen}
 \end{figure}
 A hard device (displacement control) is applied on the lower left arm \SI{30}{mm} from the edge through a disc of $D=\SI{45}{mm}$ to avoid local concentration. The load is applied through unilateral contact (EPX keyword \texttt{IMPACT}) with an imposed velocity $\vec{V}(t)=\overline{V}f(t)\vec{e}_2$. The intensity is scaled via the factor $\overline{V}$. The function $f(t)$ defined below ensures that at crack initiation the loading velocity is approximately $V$:
 \begin{mdframed}[hidealllines=true,backgroundcolor=gray!20]
