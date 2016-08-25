@@ -907,11 +907,9 @@ The geometry and loading conditions are adapted from \cite{OzboltBedeSharmaMayer
 \caption{Geometry and loading conditions for the L-specimen problem. Damage field $\alpha_t$ at $t=\SI{6e-4}{s}$ ranging from 0 (gray) to 1 (white) obtained by $\eta=\SI{1}{mm}$, for $v=\SI{0.74}{m/s}$} \label{fig:L-specimen}
 \end{figure}
 A hard device (displacement control) is applied on the lower left arm \SI{30}{mm} from the edge through a disc of $D=\SI{45}{mm}$ to avoid local concentration. The load is applied through unilateral contact (EPX keyword \texttt{IMPACT}) with an imposed velocity $\vec{V}(t)=\overline{V}f(t)\vec{e}_2$. The intensity is scaled via the factor $\overline{V}$. The function $f(t)$ defined below ensures that at crack initiation the loading velocity is approximately $V$:
-\begin{mdframed}[hidealllines=true,backgroundcolor=gray!20]
-\begin{verbatim}
+\begin{lstlisting}
 FONC 1 TABL 5 0D0 0D0 1.5D-4 1D0 2D-4 1D0 4D-4 2D0 1D0 2D0.
-\end{verbatim}
-\end{mdframed}
+\end{lstlisting}
 The concrete material properties are borrowed from \cite{OzboltBedeSharmaMayer:2015} and are summarized in \cref{tab:L}. The damage constitutive law \eqref{eq:at1} is used. Using \eqref{eq:gcingd}, the internal length $\eta$ can be derived from $\gc$ and $\sigma_\mc$, which gives $\eta\approx \SI{72}{mm}$. The analysis is performed in the temporal interval $[0,\SI{6e-4}{s}]$ and the explicit time-stepping method (\cref{algo:explicit}) is used. According to the comparative analyses in \cref{sec:kalthoff,sec:brazilian}, the tension-compression model proposed by \cite{FreddiRoyer-Carfagni:2010} should be preferred for brittle materials. The domain is discretized by a non-structured quadrilateral mesh with a typical size $h\approx\SI{10}{mm}$, arriving at approximately \num{2000} elements. 
 \begin{table}[htbp]
 \centering

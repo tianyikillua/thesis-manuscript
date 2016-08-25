@@ -255,11 +255,9 @@ In this work, the damage energy minimization problem \eqref{eq:cracknummin} will
 Consequently, \eqref{eq:cracknummin} can be regarded as a large scale bound-constrained minimization problem defined at the structural level. Due to the damage constitutive requirement, the problem is convex and gradient-based numerical algorithms can be applied. These methods call for the evaluation of the objective functional \eqref{eq:Hb} as well as its first and second derivatives (Hessian matrix $\vec{H}$). An efficient storage and manipulation of these objects is essential especially in an explicit dynamics context.
 
 Here the library PETSc is adopted due to its optimized efficiency, see \cite{PETSc:2015}. As a high-level C++/Fortran numerical linear algebra backend, PETSc provides in particular the \texttt{Vec} and the \texttt{Mat} classes for defining vectors and matrices. The actual storage format is not fixed in advance and it suffices to call the function \texttt{Vec/MatSetType} to affect a particular format. The computational arrays (the CSR format for example) can be extracted for output but in general all operations of these objects \texttt{Vec}/\texttt{Mat} are independent of the storage format used and thus transparent to the user. As an example, a unique interface is available to conduct a matrix-vector product
-\begin{mdframed}[hidealllines=true,backgroundcolor=gray!20]
-\begin{verbatim}
+\begin{lstlisting}[language=Fortran]
 CALL MATMULT(H,X,GRAD,PETSCERR)
-\end{verbatim}
-\end{mdframed}
+\end{lstlisting}
 where the vector \texttt{GRAD} stocks the result of $\vec{H}\dvec$. PETSc is built on the Message Passing Interface (MPI) standard and only one generic version exists which can be run either in sequential or parallel. The calling functions are almost the same in both cases, thus the code could be parallelized with minor interface changes.
 
 Specifically the algorithm Gradient Projection Conjugate Gradient (GPCG) proposed in \cite{MoreToraldo:1991} is used to numerically solve \eqref{eq:cracknummin}. It is already implemented in the TAO package of PETSc and is designed for quadratic bound-constrained minimization problems. It consists of several gradient projections to identify the \emph{active} nodes, \emph{i.e.} those either $\dvec^n=\dvec^{n-1}$ or $\dvec^n=1$. Then it applies the preconditioned conjugate gradient (PCG) method to minimize an unconstrained reduced problem of the \emph{free} variables, \emph{i.e.} those satisfying $\dvec^{n-1}<\dvec^n<1$. The incomplete Cholesky factorization preconditioner is applied block-wise into each decomposed subdomain. Computational load is also well balanced in parallel computations based on domain decomposition, see \cite{BensonMcInnesMore:2001}.
@@ -282,8 +280,7 @@ To guarantee a good efficiency when assembling sparse matrices, it is essential 
 During a MPI parallel computation, a permutation of nodes is needed according to the PETSc convention described by the documentation of the routine \texttt{MatMPIAIJSetPreallocation}. It is achieved during initialization by a loop on all the processors based on the mesh partition performed by EPX. At the end two integer Fortran arrays are provided: \texttt{CONV\_EP(I)} which gives the position of the $i$-th EPX node in the PETSc convention, while \texttt{CONV\_PE} converts the PETSc node ordering to the EPX one.
 
 \paragraph{Time-stepping} The change to the EPX time iteration routines \texttt{calcul.ff} and \texttt{d\_calcul.ff} is minimal. We simply add the following pseudo code concerning the assembly and the solving of the damage problem before the elastodynamics part.
-\begin{mdframed}[hidealllines=true,backgroundcolor=gray!20]
-\begin{verbatim}
+\begin{lstlisting}[language=Fortran]
 ...
 IF (L_ENDOGRAD) THEN
   CALL SEQ/MPI_ASSEM_ALPHA(...)
@@ -292,8 +289,7 @@ END IF
 ...
 CALL CELEM(...)
 ...
-\end{verbatim}
-\end{mdframed}
+\end{lstlisting}
 
 We note that the routine \texttt{SEQ/MPI\_ASSEM\_ALPHA} constructs the Hessian matrix $\vec{H}$ and the second member $\vec{b}$ associated to the quadratic damage minimization problem by performing a first loop on all the elements. The copy and the correspondence between the global damage vector and the local damage vector specific to each element are conducted without modifying the arguments of all existing routines: \texttt{celem.ff}, \texttt{loopelm.ff}, \texttt{wpgen.ff} and all element routines \texttt{triang.ff} for example. The elementary variables associated with the current element $\alpha^\mathrm{e}$, $\vec{H}^\mathrm{e}$ and $\vec{b}^\mathrm{e}$ are all stored globally inside the module \texttt{m\_endograd\_data.ff}. They are preallocated during the initialization phase depending on the maximum local nodes. This current implementation is not thread-safe, thus OpenMP parallelization is not available.
 
