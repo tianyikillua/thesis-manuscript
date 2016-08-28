@@ -136,9 +136,9 @@ Consider an arbitrary discretization $(t^n)$ of the time interval $I=[0,T]$ wher
 \begin{equation} \label{eq:crackstdis}
 q_{\,\uvec^{n+1}}(\dvec^{n+1})\leq q_{\,\uvec^{n+1}}(\underline{\vec{\beta}}) \text{ for all $\underline{\vec{\beta}}$ that $0\leq\dvec^n\leq\underline{\vec{\beta}}\leq 1$}
 \end{equation}
-where the Hessian matrix and the second member vector in \eqref{eq:Hb} are evaluated at $\uvec^{n+1}$. The equation \eqref{eq:crackstdis} can be interpreted as a numerical minimization problem of the quadratic functional $q$ under the irreversible constraint that the current sought damage state $\dvec^{n+1}$ is pointwise within the bound $(\dvec^n,1)$
+where the Hessian matrix and the second member vector in \eqref{eq:Hb} are evaluated at $\uvec^{n+1}$. The equation \eqref{eq:crackstdis} can be interpreted as a numerical minimization problem of the quadratic functional $q$ under the irreversible constraint that the current sought damage state $\dvec^{n+1}$ is pointwise within the bound $[\dvec^n,1]$
 \begin{equation} \label{eq:cracknummin}
-\dvec^{n+1}=\operatorname{arg min}q_{\,\uvec^{n+1}}(\cdot)\text{ subjected to the constraints $0\leq\dvec^n\leq\dvec^{n+1}\leq 1$}.
+\dvec^{n+1}=\operatorname{arg min}q_{\,\uvec^{n+1}}(\cdot)\text{ subject to the constraints $0\leq\dvec^n\leq\dvec^{n+1}\leq 1$}.
 \end{equation}
 The next damage state $\dvec^{n+1}$ can thus be accurately calculated as long as the next deformation state $\uvec^{n+1}$ is known.
 
@@ -179,6 +179,10 @@ In general due to the use of tension-compression asymmetry models \eqref{eq:elas
 \EndFor
 \end{algorithmic}
 \end{algorithm}
+
+\begin{remark}
+After temporal discretization, the elastic-damage dynamic wave equation \eqref{eq:weakform} and the damage minimality condition \eqref{eq:crackmin} can also be solved in a monolithic fashion as described for example in \cite{BordenVerhooselScottHughesLandis:2012,SchlueterWillenbuecherKuhnMueller:2014}. The irreversible condition contained in \eqref{eq:cracknummin} should be included in the monolithic solver to ensure that the damage variable is subject to a bound constraint during solving. Future work could be devoted to a detailed analysis of these schemes in terms of computational efficiency.
+\end{remark}
 
 In the explicit case when $\beta=0$, it turns out that the time evolution system in $(\uvec,\dvec)$ is automatically decoupled and the two subproblems separately in $\uvec^{n+1}$ and in $\dvec^{n+1}$ can be solved in a sequence at every time step, see \cref{fig:updatestate}.
 \begin{figure}[htbp]
@@ -260,7 +264,19 @@ CALL MATMULT(H,X,GRAD,PETSCERR)
 \end{lstlisting}
 where the vector \texttt{GRAD} stocks the result of $\vec{H}\dvec$. PETSc is built on the Message Passing Interface (MPI) standard and only one generic version exists which can be run either in sequential or parallel. The calling functions are almost the same in both cases, thus the code could be parallelized with minor interface changes.
 
-Specifically the algorithm Gradient Projection Conjugate Gradient (GPCG) proposed in \cite{MoreToraldo:1991} is used to numerically solve \eqref{eq:cracknummin}. It is already implemented in the TAO package of PETSc and is designed for quadratic bound-constrained minimization problems. It consists of several gradient projections to identify the \emph{active} nodes, \emph{i.e.} those either $\dvec^n=\dvec^{n-1}$ or $\dvec^n=1$. Then it applies the preconditioned conjugate gradient (PCG) method to minimize an unconstrained reduced problem of the \emph{free} variables, \emph{i.e.} those satisfying $\dvec^{n-1}<\dvec^n<1$. The incomplete Cholesky factorization preconditioner is applied block-wise into each decomposed subdomain. Computational load is also well balanced in parallel computations based on domain decomposition, see \cite{BensonMcInnesMore:2001}.
+Specifically the Gradient Projection Conjugate Gradient (GPCG) algorithm proposed in \cite{MoreToraldo:1991} is used to numerically solve \eqref{eq:cracknummin} in an iterative fashion. It is already implemented in the TAO package of PETSc and is designed for quadratic bound-constrained minimization problems. Due to the bound constraint, approximate solutions $\bvec$ to \eqref{eq:cracknummin} can be defined using the projected gradient $[\vec{g}]$ of which the $i$-th component is given by
+\[
+0\overset{?}{\approx}[\vec{g}]_i=\begin{cases}
+\partial_i q & \text{if $\bvec_i\in(\dvec_i^n,1)$}\,, \\
+\min(\partial_i q, 0) & \text{if $\bvec_i=\dvec_i^n$}\,, \\
+\max(\partial_i q, 0) & \text{if $\bvec_i=1$}.
+\end{cases}
+\]
+At each solving iteration, the method consists of several gradient projections
+\[
+\bvec\gets\mathbb{P}\bigl(\bvec-c\nabla q(\bvec)\bigr)
+\]
+to \emph{approximately} identify the \emph{active} nodes, \emph{i.e.} those either $\dvec_i^{n+1}=\dvec_i^n$ or $\dvec_i^{n+1}=1$. Then it applies the preconditioned conjugate gradient method to minimize an unconstrained reduced problem of the \emph{free} variables, \emph{i.e.} those satisfying $\dvec_i^n<\dvec_i^{n+1}<1$. The method proceeds to the next iteration until convergence. Interested readers are referred to \cite{MoreToraldo:1991} for a more detailed explanation of the algorithm. The incomplete Cholesky factorization preconditioner is applied block-wise into each decomposed subdomain. Computational load is also well balanced in parallel computations based on domain decomposition, see \cite{BensonMcInnesMore:2001}.
 
 Using the PETSc library, both the implicit and explicit time-stepping \cref{algo:implicit,algo:explicit} are implemented by the author as a Python package named ``FEniCS Dynamic Gradient Damage'', see \cite{LiMaurini:2015}. It is based on the FEniCS Project \cite{LoggMardalWells:2012} for automated solution of partial differential equations. A specific C++ interface \texttt{PETScTAOSolver} is developed by the author which brings various mathematical optimization algorithms defined in PETSc/TAO into FEniCS. In this implementation the tension-compression asymmetry is not taken into account. A linearized strain theory is also assumed.
 

@@ -21,6 +21,7 @@ It should include all the chapter TeX files in the `chapters` folder and automat
 This work is licensed under a [Creative Commons "Attribution 4.0 International" license](https://creativecommons.org/licenses/by/4.0). Licensees may copy, distribute, display and perform the work and make derivative works and remixes based on it only if they give the author the credits (attribution). The following BiBTeX source code can be used to cite the current document:
 
 ``` latex
+@phdthesis{Li:2016,
   Author = {Li, Tianyi},
   Month = oct,
   School = {Université Paris-Saclay},

@@ -169,7 +169,7 @@ On a subset $\partial\Omega_U$ of the boundary the body is subject to a prescrib
 \end{equation}
 
 \begin{remark}[Dirichlet boundary condition]
-The field $\vec{U}_t\in\mathcal{C}_t$ should be understood as a \emph{lift} of the Dirichlet boundary condition classically defined only on $\partial\Omega_U$.
+The field $\vec{U}_t\in\mathcal{C}_t$ should be understood as a \emph{lifting} of the Dirichlet boundary condition classically defined only on $\partial\Omega_U$.
 \end{remark}
 
 Damage is here modeled as an irreversible defect evolution. Its admissible space will be built from a current damage state $0\leq\alpha_t\leq 1$ and it is defined by
@@ -188,7 +188,7 @@ Informally, we assume that the displacement $\vec{u}$ and the damage $\alpha$ ar
 
 With all the variational ingredients set, we are now in a position to introduce the following space-time action integral associated with an admissible pair of displacement and damage evolutions $(\vec{u},\alpha)\in\mathcal{C}(\vec{u})\times\mathcal{D}(\alpha)$, which involves an augmented Lagrangian
 \begin{equation} \label{eq:actionG}
-\mathcal{A}(\vec{u},\alpha)=\int_I\mathcal{L}_t(\vec{u}_t,\dot{\vec{u}}_t,\alpha_t)\,\mathrm{d}t=\int_I\mathcal{E}(\vec{u}_t,\alpha_t)+\mathcal{S}(\alpha_t)-\mathcal{K}(\dot{\vec{u}}_t)-\mathcal{W}_t(\vec{u}_t)\D{t}.
+\mathcal{A}(\vec{u},\alpha)=\int_I\mathcal{L}_t(\vec{u}_t,\dot{\vec{u}}_t,\alpha_t)\,\mathrm{d}t=\int_I\bigl(\mathcal{E}(\vec{u}_t,\alpha_t)+\mathcal{S}(\alpha_t)-\mathcal{K}(\dot{\vec{u}}_t)-\mathcal{W}_t(\vec{u}_t)\bigr)\D{t}.
 \end{equation}
 The coupled two-field time-continuous dynamic gradient damage problem can then be formulated by the following
 \begin{definition}[Dynamic Gradient Damage Evolution Law] \label{def:dynagraddama} \noindent
@@ -216,7 +216,7 @@ In the first-order stability condition \eqref{eq:vi}, we evaluate the directiona
 \]
 where $\vec{w}=\vec{v}-\vec{u}$ denotes a displacement evolution variation and $\vec{s}_t=(\vec{u}_t,\dot{\vec{u}}_t,\alpha_t)$ corresponds to a state of the dynamical system. Remark that \eqref{eq:vi} is written as a variational inequality to take into account the unilateral effects introduced by the irreversibility condition in the definition of the damage admissible space \eqref{eq:Dalphat}. It can be regarded as an extension of Hamilton's principle applied to systems with irreversible dissipation.
 
-The energy balance condition \eqref{eq:dyngdeb} characterizes the energy flow into the system: the external work is balanced by the mechanical energy variation of the system consisting of the elastic energy \eqref{eq:elasticG} and the kinetic energy \eqref{eq:kineticG}, and the energy dissipated in the process of crack production \eqref{eq:surface}. Observe that \eqref{eq:dyngdeb} also applies to non-smooth evolutions in the presence of possible velocity shocks, since no higher spatial or temporal derivatives of the displacement and the damage are involved other than that needed for the definition of the Lagrangian density. With the help of integration by parts, the regularity is transferred to the boundary conditions $t\mapsto \vec{U}_t$ and the external work potential $t\mapsto \mathcal{W}_t$. If in particular the acceleration field $\ddot{\vec{u}}_t$ is sufficiently regular, the energy balance condition admits an equivalent formulation which reads after an integration by parts in the time domain
+The energy balance condition \eqref{eq:dyngdeb} characterizes the energy flow into the system: the external work is balanced by the mechanical energy variation of the system consisting of the elastic energy \eqref{eq:elasticG} and the kinetic energy \eqref{eq:kineticG}, and the energy dissipated in the process of crack production \eqref{eq:surface}. The energy balance condition \eqref{eq:dyngdeb} complements the first-order stability condition \eqref{eq:vi} which ensures that energy could only be dissipated through damage (or gradient-damage like fracture). Observe that \eqref{eq:dyngdeb} also applies to non-smooth evolutions in the presence of possible velocity shocks, since no higher spatial or temporal derivatives of the displacement and the damage are involved other than that needed for the definition of the Lagrangian density. With the help of integration by parts, the regularity is transferred to the boundary conditions $t\mapsto \vec{U}_t$ and the external work potential $t\mapsto \mathcal{W}_t$. If in particular the acceleration field $\ddot{\vec{u}}_t$ is sufficiently regular, the energy balance condition admits an equivalent formulation which reads after an integration by parts in the time domain
 \begin{align} \label{eq:dyngdeb2}
 \mathcal{H}_t=\mathcal{H}_0+\int_0^t\left(\int_\Omega\bigl(\sig_s\cdot\eps(\dot{\vec{U}}_s)+\rho\ddot{\vec{u}}_s\cdot\dot{\vec{U}}_s\bigr)\dx-\mathcal{W}_s(\dot{\vec{U}}_s)-\dot{\mathcal{W}}_s(\vec{u}_s)\right)\D{s}. \tag{\ref*{eq:dyngdeb}${}^\prime$}
 \end{align}
