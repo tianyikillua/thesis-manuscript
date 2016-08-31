@@ -21,7 +21,7 @@ Contrary to previous chapters, a conclusion is provided at the end of each numer
 \caption{Thematic subjects covered in the numerical simulations of this chapter} \label{tab:summsim}
 \begin{tabular}{cccc} \toprule
 & $\alpha\leftrightarrow\phi$ & $\nabla\alpha\to\Gamma$ & Experimental validation \\ \midrule
-Numerics & \cref{sec:branching,sec:kalthoff,sec:brazilian} & \cref{sec:1d,sec:antiplane,sec:kinking,sec:branching,sec:kalthoff,sec:brazilian} & \cref{sec:branching,sec:kalthoff,sec:gregoire,sec:brazilian,sec:L-specimen,sec:beam} \\ \bottomrule
+Numerics & \cref{sec:branching,sec:kalthoff,sec:brazilian} & \cref{sec:1d,sec:antiplane,sec:kinking,sec:branching,sec:kalthoff,sec:brazilian,sec:L-specimen} & \cref{sec:branching,sec:kalthoff,sec:gregoire,sec:brazilian,sec:L-specimen,sec:beam} \\ \bottomrule
 \end{tabular}
 \end{table}
 
@@ -918,7 +918,7 @@ This section is devoted to a gradient-damage modeling of the dynamic tensile tes
 \begin{tabular}{ccccc} \toprule
 & Going dynamical & $\alpha\leftrightarrow\phi$ & $\nabla\alpha\to\Gamma$ & Experimental validation \\ \midrule
 Theoretics & & & & \\
-Numerics & & \rightthumbsup & & \rightthumbsup \\ \bottomrule
+Numerics & & & \rightthumbsup & \rightthumbsup \\ \bottomrule
 \end{tabular}
 \end{table}
 
@@ -965,7 +965,7 @@ The failure to reproduce the experimentally observed fracture pattern in this ex
 \item With the damage constitutive law \eqref{eq:at1} (but also with \eqref{eq:at2}), since no additional parameters are introduced, the internal length is directly computed from \eqref{eq:gcingd} from the fracture toughness and the maximal material stress. For brittle materials such as PMMA considered in \cref{sec:gregoire}, it leads to an extremely small internal length ($\eta\approx\SI{0.0375}{mm}$ is used there) compared to industrial specimen or structures. It calls for a computationally costly numerical simulation with parallel computing techniques, however a confined damage process zone leads to a separation of scales described above and a link between damage and fracture can be achieved. For concrete on the other hand, one obtains with \eqref{eq:gcingd} an internal length of several centimeters. The modeling of fracture phenomena in small concrete specimens with these kind of constitutive laws is questionable.
 \end{itemize}
 
-Due to this reason, another series of simulation is performed with $\eta=\SI{1}{mm}$. Using the definition of the maximal stress \eqref{eq:sigc0} and the fracture toughness \eqref{eq:gcingd}, it leads to an overestimation of the maximal tensile strength $\sigma_m\approx \SI{27}{MPa}$ of the concrete. At a lower loading speed $v=\SI{0.74}{m/s}$, the final fracture pattern indicated by the damage field with $\eta=\SI{1}{mm}$ is illustrated in \cref{fig:L-specimen}. A better agreement between the simulation and the experimental observed crack path is found.
+Due to this reason, another series of simulation is performed with $\eta=\SI{1}{mm}$. Using the definition of the maximal stress \eqref{eq:sigc0} and the fracture toughness \eqref{eq:gcingd}, it leads to an overestimation of the maximal tensile strength $\sigma_\mathrm{m}\approx \SI{27}{MPa}$ of the concrete. At a lower loading speed $v=\SI{0.74}{m/s}$, the final fracture pattern indicated by the damage field with $\eta=\SI{1}{mm}$ is illustrated in \cref{fig:L-specimen}. A better agreement between the simulation and the experimental observed crack path is found.
 
 The temporal evolution of the applied force is then analyzed for two different internal lengths. In \cref{fig:F_v740_ell}, it can be observed that the they predict different global structural behaviors only during the post-crack initiation phase. In particular, the peak load is not sensible to the internal length. It could be explained by the presence of the geometric singularity where the damage initiates, which implies that the material critical stress is quickly reached when the waves arrive at the corner.
 \begin{figure}[htbp]
