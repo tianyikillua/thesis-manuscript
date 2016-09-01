@@ -8,10 +8,10 @@ An author-generated PDF version is available at [http://thesis.litianyi.me](http
 
 ## LaTeX compilation
 
-The simplest way is to use the `latexmk` script available in all latest TeXLive distributions. Make sure that it calls the `pdflatex` program. You only need to compile the main LaTeX file:
+The simplest way is to use the `latexmk` script available in all latest TeXLive distributions. You only need to compile the main LaTeX file:
 
 ```
-latexmk main.tex
+latexmk -pdf main.tex
 ```
 
 It should include all the chapter TeX files in the `chapters` folder and automatically call several times `pdflatex` and `biber` to obtain the final `main.pdf` file.
