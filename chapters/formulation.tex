@@ -354,7 +354,7 @@ where $\vec{V}_t$ is the left stretch tensor from the polar decomposition of the
 \psi_0(\vec{h}_t)=\frac{1}{2}\lambda(\tr\vec{h}_t)^2+\mu\vec{h}_t\cdot\vec{h}_t. \label{eq:soundpsi}
 \end{equation}
 We emphasize that the stress measure conjugate to the Hencky logarithmic strain is the Kirchhoff stress, which implies the following definition of the Cauchy stress
-\begin{equation}
+\begin{equation} \label{eq:kirchhoffs}
 \sig_t=\frac{1}{J_t}\frac{\partial\psi_0}{\partial\vec{h}_t}(\vec{h}_t)=\frac{1}{J_t}\bigl(\lambda(\tr\vec{h}_t)\mathbb{I}+2\mu\vec{h}_t\bigr)\,,
 \end{equation}
 where $J_t=\det\vec{F}_t$ is the Jacobian determinant.
@@ -392,7 +392,7 @@ Several existing approaches consist of \emph{additively} partitioning the sound 
 \begin{equation} \label{eq:elasticTC}
 \psi(\eps,\alpha)=\mathsf{a}(\alpha)\psi_0^+(\eps)+\psi_0^-(\eps)
 \end{equation}
-where the damage degradation function $\mathsf{a}(\alpha)$ only acts on the \emph{positive} part $\psi_0^+(\eps)$. By doing so, damage evolution is then driven by the \emph{positive} elastic energy according to \eqref{eq:crackmin}. In this contribution we will adopt this additive partition approach since only small strains are expected for brittle materials. In the finite strain regime, a multiplicative decomposition of the deformation gradient $\vec{F}_t$ could be a more suitable alternative \cite{HeschWeinberg:2014} for allowing fracture only under tension.
+where the damage degradation function $\mathsf{a}(\alpha)$ only acts on the \emph{positive} part $\psi_0^+(\eps)$. By doing so, damage evolution is then driven by the \emph{positive} elastic energy according to \eqref{eq:crackmin}.
 
 Furthermore, if the partition of the sound elastic energy $\psi_0(\eps)$ is based on that of the strain tensor $\eps=\eps^++\eps^-$, \emph{i.e.} the constitutive behaviors
 \begin{equation} \label{eq:elasdecom}
@@ -443,6 +443,27 @@ By differentiating the orthogonality condition \eqref{eq:orthogonality} with res
 \sig_t=\sig(\eps,\alpha)=\mathsf{a}(\alpha)\sig_0^++\sig_0^-.
 \end{equation}
 This is the stress expression $\sig_t$ which will be used in the elastic-damage dynamic wave equation \eqref{eq:weakform} or \eqref{eq:wavedyn} when tension-compression asymmetry is considered. It can be noted that this expression is reduced to its negative part $\sig(\eps,1)=\sig_0^-\in\mathcal{C}^*$ for a totally damaged element.
+
+\begin{remark}
+The tension-compression split described above, especially the additive strain decomposition \eqref{eq:elasdecom}, applies only to the small displacement case. However it can be extended to the large displacement framework outlined in \cref{sec:extensions}.
+
+Assume that the additive strain decomposition is performed with respect to a same basis, \emph{i.e.} the positive/negative strain $\eps^\pm$ is coaxial to the total strain $\eps$, then the definition of the Hencky logarithmic strain $\eps=\vec{h}_t$ implies (see \eqref{eq:logstrain})
+\begin{align*}
+\eps &= \eps^++\eps^- \\
+&= \sum_i(\log\lambda_i)\vec{n}_i\otimes\vec{n}_i=\sum_i(\log\lambda_i^++\log\lambda_i^-)\vec{n}_i\otimes\vec{n}_i=\sum_i\bigl(\log(\lambda_i^+\lambda_i^-)\bigr)\vec{n}_i\otimes\vec{n}_i.
+\end{align*}
+Thus, an additive decomposition of the logarithmic strain becomes automatically a multiplicative decomposition of the principal stretches
+\[
+\lambda_i=\lambda_i^+\lambda_i^-.
+\]
+This strategy is adopted for example in \cite{HeschWeinberg:2014}. Note that the coaxiality between $\eps^\pm$ and $\eps$ is generally verified in the current variational principle \eqref{eq:variationalepspos}, if elastic isotropy is assumed.
+
+Since the stress measure conjugate to the Hencky logarithmic strain is the Kirchhoff stress, see \eqref{eq:kirchhoffs}. The stress expression \eqref{eq:stressposneg} becomes
+\[
+\sig_t=\sig(\eps,\alpha)=\frac{1}{J}(\mathsf{a}(\alpha)\tens{A}_0\eps^++\tens{A}_0\eps^-)\,,
+\]
+where $J$ refers to the Jacobian determinant of the total strain, for the particular material point under question.
+\end{remark}
 
 Using this variational formulation \eqref{eq:variationalepspos}, the modeling of material tension-compression asymmetry is thus reduced to the setting of such convex cone $\mathcal{C}$ destined to represent the strains that contribute to damage. Several existing phase-field like models of fracture can be derived within this framework \cite{FreddiRoyer-Carfagni:2010}.
 \begin{itemize}

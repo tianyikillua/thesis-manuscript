@@ -159,6 +159,22 @@ where $\alpha_\mathrm{d}=\sqrt{1-c^2/c_\mathrm{d}^2}$ and $\alpha_\mathrm{s}=\sq
 \item The limiting speed for a mode-III crack is the shear wave speed $c_\mathrm{s}$.
 \end{itemize}
 
+\begin{remark}[Prediction of the crack speed in inplane cases]
+According to stress singularity analyses, see for example \cite{Freund:1990}, the dynamic stress intensity factors admit the following form
+\[
+K_\RNN{1}(t,l_t,\dot{l}_t)=k(\dot{l}_t)K_\RNN{1}(t,l_t,0)\,,
+\]
+where $K_\RNN{1}(t,l_t,0)$ corresponds to the intensity factor of a \emph{stationary} crack under the same geometry and loading conditions. This quantity can be evaluated using interaction integrals \cite{RethoreGravouilCombescure:2005}. Assuming a constant fracture toughness $\gc$, then according to Griffith's law \eqref{eq:gtgc}, during propagation we have
+\begin{equation} \label{eq:Gkk}
+G_t=\frac{1}{\overline{E}}A_\RNN{1}(\dot{l}_t)k(\dot{l}_t)^2K_\RNN{1}(t,l_t,0)^2=\gc.
+\end{equation}
+It is found that the universal function $g(v)=A_\RNN{1}(v)k(v)^2$ can be approximated by a linear function
+\[
+g(v)=A_\RNN{1}(v)k(v)^2\approx1-\frac{v}{c_\mathrm{R}}.
+\]
+From \eqref{eq:Gkk}, an approximate crack velocity can thus be explicitly deduced. This method is frequently referred to the Kanninen's formula \cite{Kanninen:1985} in the computational fracture mechanics community, see for example \cite{HaboussaGregoireElguedjMaigreCombescure:2011}.
+\end{remark}
+
 \subsection{Theoretical and experimental critiques} \label{sec:theoexpcrit}
 From the physical point of view, the main drawbacks of the Griffith's theory as a modeling approach to dynamic brittle fracture concerns crack nucleation and crack path prediction, see \cite{FrancfortMarigo:1998} for a discussion on these points for the quasi-static Griffith's theory which applies also in the dynamic case. Remark however that through the introduction of inertia effects, the Griffith's theory accompanied with the dynamic energy release rate \eqref{eq:Jdyn} is able to account for the classically termed ``brutal'' or ``unstable propagation'' cases where cracks propagate at a velocity comparable to the material sound speed such that the quasi-static hypothesis no long holds. On the contrary, such propagations which may involve ``temporal'' discontinuities can not be considered by the quasi-static Griffith's theory, see \cite{FrancfortMarigo:1998}.
 
