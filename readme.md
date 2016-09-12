@@ -6,6 +6,10 @@ This repository contains the LaTeX source files of my PhD thesis entitled "Gradi
 
 An author-generated PDF version is available at [http://thesis.litianyi.me](http://thesis.litianyi.me).
 
+## Figures
+
+All figure files will be soon available as a ZIP file.
+
 ## LaTeX compilation
 
 The simplest way is to use the `latexmk` script available in all latest TeXLive distributions. You only need to compile the main LaTeX file:
