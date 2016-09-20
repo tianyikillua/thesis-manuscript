@@ -8,7 +8,9 @@ An author-generated PDF version is available at [http://thesis.litianyi.me](http
 
 ## Figures
 
-All figure files will be soon available as a ZIP file.
+You can download [here](https://dl.dropboxusercontent.com/u/4509593/Thesis/Figs.7z) all the figures used in this thesis. Please put the `figs` folder in the current thesis workspace, namely inside the `thesis-manuscript` folder.
+
+Many shematic figures are created proudly by the [ipe](http://ipe.otfried.org) software and its matplotlib backend available at [https://github.com/otfried/ipe-tools](https://github.com/otfried/ipe-tools). I would like to express my deep love to [ipe](http://ipe.otfried.org).
 
 ## LaTeX compilation
 
