@@ -32,7 +32,6 @@ This work is licensed under a [Creative Commons "Attribution 4.0 International" 
   title  = {{G}radient-{D}amage {M}odeling of {D}ynamic {B}rittle {F}racture: {V}ariational {P}rinciples and {N}umerical {S}imulations},
   school = {Université Paris-Saclay},
   year   = {2016},
-  type   = {phdthesis},
   month  = oct,
 }
 ```
