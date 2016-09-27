@@ -167,7 +167,7 @@ from \eqref{eq:un1} we obtain the equation for $\uvec^{n+1}$
 \end{equation}
 In general due to the use of tension-compression asymmetry models \eqref{eq:elasticTC}, it is a nonlinear equation which requires several Newton iterations and the evaluation of the current tangent stiffness. The time-stepping procedure for the dynamic gradient damage model based on the implicit Newmark-$\beta$ method in a prediction-correction form is summarized in \cref{algo:implicit}.
 \begin{algorithm}[htbp]
-\caption{Staggered time-stepping procedure for the dynamic gradient damage model based on the implicit Newmark-$\beta$ method.} \label{algo:implicit}
+\caption{Staggered time-stepping procedure for the dynamic gradient damage model based on the implicit Newmark-$\beta$ method} \label{algo:implicit}
 \begin{algorithmic}[1]\linespread{1.2}\selectfont\normalsize
 \For{every successive time step $n\geq 0$}
   \State Prediction $\tilde{\uvec}^{n+1}=\uvec^n+\Delta t\dot{\uvec}^n+\frac{1-2\beta}{2}\Delta t^2\ddot{\uvec}^n$.
@@ -211,7 +211,7 @@ the Newmark time-stepping \eqref{eq:un2} and \eqref{eq:un1} reads
 \end{align*}
 The explicit time-stepping procedure for the discretized dynamic gradient damage model is then summarized in \cref{algo:explicit}. It is implemented by the author in the explicit dynamics software EPX, see \cite{EPX:2015}.
 \begin{algorithm}[htbp]
-\caption{Explicit time-stepping procedure for the dynamic gradient damage model.} \label{algo:explicit}
+\caption{Explicit time-stepping procedure for the dynamic gradient damage model} \label{algo:explicit}
 \begin{algorithmic}[1]\linespread{1.2}\selectfont\normalsize
 \For{every successive time step $n\geq 0$}
   \State Update $\dot{\uvec}^{n+1/2}=\dot{\uvec}^{n}+\frac{\Delta t}{2}\ddot{\uvec}^n$.
@@ -225,7 +225,7 @@ The explicit time-stepping procedure for the discretized dynamic gradient damage
 
 The initialization phase for the above implicit and explicit time-stepping procedure is described in \cref{algo:init}. We observe that the initial damage is recomputed $\dvec^{-1}\mapsto\dvec^0$ in the step 2. The role of $\dvec^{-1}$ is to bring some \emph{a priori} knowledge of the damage field resulting from a previous calculation or more frequently to represent an initial crack $\dvec^{-1}=1$ on $\Gamma_0$. This step thus renders it compatible with the initial displacement condition and the energy minimization structure. Remark that in phase field approaches for example in \cite{BordenVerhooselScottHughesLandis:2012}, the initial crack is introduced via an initial history field $\mathcal{H}_0$ which is localized along the desired initial defect. It is due to the fact that the irreversible constraint is dropped during energy minimization \eqref{eq:crackmin} in their models.
 \begin{algorithm}[htbp]
-\caption{Initialization for the implicit and explicit time-stepping procedure described in \cref{algo:implicit,algo:explicit}.} \label{algo:init}
+\caption{Initialization for the implicit and explicit time-stepping procedure described in \cref{algo:implicit,algo:explicit}} \label{algo:init}
 \begin{algorithmic}[1]\linespread{1.2}\selectfont\normalsize
 \State Given initial conditions $\uvec^0$, $\dot{\uvec}^0$ and $\dvec^{-1}$.
 \State Reinitialize the damage $\dvec^0=\operatorname{arg min}q_{\,\uvec^0}(\cdot)$ subjected to constraints $0\leq\dvec^{-1}\leq\dvec^0\leq 1$.
