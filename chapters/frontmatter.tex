@@ -1,4 +1,106 @@
 %!TEX root=../main.tex
+
+\chapter{Résumé en français}
+\begin{otherlanguage}{french}
+
+\section*{Introduction}
+Une bonne tenue mécanique des structures du génie civil en béton armé sous chargements dynamiques sévères est primordiale pour la sécurité et nécessite une évaluation précise de leur comportement en présence de propagation de fissures dynamiques. Dans ce travail, on se focalise sur la modélisation constitutive du béton assimilé à un matériau élastique-fragile endommageable en tension seulement. La rupture fragile s'accompagne de très peu de déformations loin de fissures et d'une localisation du tenseur des déformations le long des fissures. La modélisation et l'analyse décrites dans cette étude s'appliquent aux matériaux fragiles vérifiant ces comportements à la rupture.
+
+Une étude bibliographique sur la rupture dynamique fragile est proposée dans le chapitre \ref{chap:introduction}. Plusieurs modèles physiques sont comparés quant à leur aptitude à modéliser la rupture fragile: la théorie classique de Griffith, l'approche variationnelle de la rupture et les modèles d'endommagement à gradient formulés initialement dans un cadre quasi statique. Plusieurs objectifs de cette présente étude sont classifiés en fonction de l'approche utilisée (théorique ou numérique) et en utilisant les sujets thématiques suivants
+\begin{itemize}
+\item Vers la dynamique,
+\item Établir un lien avec les approches « champ de phase »,
+\item Meilleure compréhension des modèles d'endommagement à gradient, et
+\item Validation expérimentale.
+\end{itemize}
+
+\section*{Modèles d'endommagement à gradient en dynamique}
+Le chapitre \ref{chap:graddama} regroupe les contributions théoriques de cette these. On postule que l'évolution spatio-temporelle de la localisation des déformations dans un solide fragile est régie par un modèle d'endommagement à gradient. Il consiste à introduire un nouveau champ scalaire $0\leq\alpha_t\leq 1$ réalisant une description régularisée entre la partie saine de la structure $\alpha_t=0$ et la région fissurée $\alpha_t=1$.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.55\textwidth]{fiss3.pdf}
+\end{figure}
+
+On propose une formulation variationnelle des modèles d'endommagement à gradient en dynamique à l'aide de trois principes physiques d'irréversibilité, de stabilité et de bilan d'énergie
+\begin{enumerate}
+\item \textbf{Irréversibilité}: l'endommagement $t\mapsto\alpha_t$ est non-décroissant du temps.
+\item \textbf{Stabilité d'ordre un}: la variation première de l'action est non-negative par rapport aux évolutions arbitraires et admissibles du couple déplacement-endommagement
+\begin{equation*}
+\mathcal{A}'(\vec{u},\alpha)(\vec{v}-\vec{u},\beta-\alpha)\geq 0\text{ for all $\vec{v}\in\mathcal{C}(\vec{u})$ and all $\beta\in\mathcal{D}(\alpha)$}.
+\end{equation*}
+\item \textbf{Bilan d'énergie}: la dissipation d'énergie est uniquement due à l'endommagement
+\begin{multline*}
+\mathcal{H}_t=\mathcal{H}_0+\int_0^t\left(\int_\Omega\bigl(\sig_s\cdot\eps(\dot{\vec{U}}_s)-\rho\dot{\vec{u}}_s\cdot\ddot{\vec{U}}_s\bigr)\dx-\mathcal{W}_s(\dot{\vec{U}}_s)-\dot{\mathcal{W}}_s(\vec{u}_s)\right)\D{s} \\
++\int_\Omega\rho(\dot{\vec{u}}_t\cdot\dot{\vec{U}}_t-\dot{\vec{u}}_0\cdot\dot{\vec{U}}_0)\dx
+\end{multline*}
+où l'énergie totale est définie par
+\[
+\mathcal{H}_t=\mathcal{E}(\vec{u}_t,\alpha_t)+\mathcal{S}(\alpha_t)+\mathcal{K}(\dot{\vec{u}}_t)-\mathcal{W}_t(\vec{u}_t).
+\]
+\end{enumerate}
+Il s'agit d'une extension en dynamique du formalisme existant en statique via la variation de l'intégrale temporelle d'un lagrangien généralisé prenant en compte l'énergie cinétique $\mathcal{K}$ et aussi l'énergie dissipée $\mathcal{S}$ due au processus d'endommagement. Grâce au caractère variationnel de la formulation, ces modèles d'endommagement permettent de rendre compte de toute l'évolution de la fissuration avec des trajets et topologies complexes et non-présupposés d'un point de vue modélisation de l'évolution du défaut.
+
+Pour modéliser le comportement asymétrique des matériaux fragiles en traction et en compression, plusieurs formulations basées sur la dépendance de l'énergie élastique vis-à-vis de l'endommagement sont revues et un cadre unificateur est proposé via un principe variationnel. Ces modèles sont vus comme un paramètre matériau en soi décrivant différents mécanismes d'endommagement déterminés par la microstructure. Une meilleure compréhension de leur comportement est obtenue via un essai de traction/compression unidimensionnel.
+
+On s'intéresse ensuite à l'équation d'évolution de fissures régularisées par le champ d'endommagement durant la phase de propagation. On démontre que la pointe de la fissure dynamique est régie par un critère de Griffith faisant intervenir le taux de restitution d'énergie dynamique conventionnel
+\begin{equation*}
+G_t^\alpha=\int_\domaint\Bigl(\bigl(\kappa(\dot{\vec{u}}_t)-\psi\bigl(\eps(\vec{u}_t),\alpha_t\bigr)\bigr)\div\vtheta_t+\sig_t\cdot(\nabla\vec{u}_t\nabla\vtheta_t)+\div(\vec{f}_t\otimes\vtheta_t)\cdot\vec{u}_t+\rho\ddot{\vec{u}}_t\cdot\nabla\vec{u}_t\vtheta_t+\rho\dot{\vec{u}}_t\cdot\nabla\dot{\vec{u}}_t\vtheta_t\Bigr)\dx\,,
+\end{equation*}
+et le taux de dissipation d'endommagement
+\begin{equation*}
+\gamma_t=\frac{\partial}{\partial l_t}\mathcal{S}^*(\alpha^*_t,l_t)=\int_\domaint\bigl(\varsigma(\alpha_t,\nabla\alpha_t)\div\vtheta_t-\vec{q}_t\cdot\nabla\vtheta_t\nabla\alpha_t\bigr)\dx.
+\end{equation*}
+La démonstration et la dérivation rigoureuse de ces concepts dans le modèle d'endommagement reposent sur les techniques de dérivation lagrangienne par rapport au domaine basée sur la configuration fissurée initiale et une séparation d'échelles lorsque la longueur interne est petite par rapport à la taille de la structure.
+
+\section*{Implémentation numérique}
+Le caractère variationnel de l'approche permet aussi une implémentation numérique directe et de manière consistante pour des problèmes bi et tri-dimensionnels, cf. le chapitre \ref{chap:numerics}. Elle est basée sur une discrétisation par éléments finis standards en espace et le schéma de $\beta$-Newmark en temps. Le problème d'endommagement qui détermine l'état de fissuration à l'instant actuel est résolu à l'échelle de la structure par la méthode du gradient conjugué projeté. L'architecture informatique est basée sur la librairie d'algèbre linéaire numérique PETSc qui assure une gestion uniforme des vecteurs et des matrices lors d'un calcul séquentiel ou parallèle. Dans le cas explicite, le modèle discrétisé résumé par l'algorithme suivant est implémenté dans le code de dynamique rapide EuroPlexus, cf. \cite{EPX:2015}
+\begin{algorithmic}[1]\linespread{1.2}\selectfont\normalsize
+\For{chaque pas de temps $n\geq 0$}
+  \State M-à-j $\dot{\uvec}^{n+1/2}=\dot{\uvec}^{n}+\frac{\Delta t}{2}\ddot{\uvec}^n$.
+  \State M-à-j $\uvec^{n+1}=\uvec^n+\Delta t\dot{\uvec}^{n+1/2}$.
+  \State Obtenir $\dvec^{n+1}$ via la minimisation d'énergie.
+  \State Obtenir $\ddot{\uvec}^{n+1}$ via l'équilibre dynamique.
+  \State M-à-j $\dot{\uvec}^{n+1}=\dot{\uvec}^{n+1/2}+\frac{\Delta t}{2}\ddot{\uvec}^{n+1}$.
+\EndFor
+\end{algorithmic}
+Une implémentation \emph{open source} est aussi disponible dans le code d'éléments finis FEniCS, voir \cite{LiMaurini:2015}.
+
+\section*{Simulations numériques}
+Les résultats de simulation obtenus issu des calculs parallèles sont alors discutés d'un point de vue numérique et physique dans le chapitre \ref{chap:simulation}. L'efficacité du modèle numérique est démontrée via une analyse de scalabilité.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.5\textwidth]{plate_scaling.pdf}
+\end{figure}
+On montre en particulier que la résolution du problème d'endommagement à l'échelle de la structure n'est pas pénalisante pour un calcul explicite de fissuration fragile dynamique. Les lois constitutives d'endommagement et les formulations d'asymétrie en traction et en compression sont comparées quant à leur aptitude à modéliser la rupture fragile. On confirme que la loi d'endommagement intégrant une zone purement élastique est préférable aussi d'un point de vue numérique. Pour un comportement asymétrique en traction et en compression, le modèle basé sur la décomposition spectrale (contraintes/déformations principales) inscrit dans le cadre variationnel du chapitre \ref{chap:graddama} permettrait de mieux modéliser la rupture des matériaux fragiles. Cela permettrait un rapprochement avec les modèles « champ de phase » issue de la communauté mécanique numérique.
+
+Pour mieux comprendre les approches d'endommagement à gradient en dynamique en tant qu'un modèle de rupture \emph{per se}, on adopte une stratégie « divide ut regnes » et leurs propriétés spécifiques sont analysées séparément pour différentes phases de l'évolution du défaut : nucléation, initiation, propagation, arrêt, branchement et bifurcation.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{allphases-H.pdf}
+\end{figure}
+
+En particulier, la nucléation d'une fissure dans un solide sain est régie par un critère en contrainte accompagné des effets d'échelle introduits par la longueur interne. Cela est illustré par les simulations d'une barre sous choc et d'un essai brésilien sur un cylindre sous compression.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.5\textwidth]{brazilian-size.pdf}
+\end{figure}
+
+Via un calcul antiplan d'une plaque, on vérifie que la propagation de fissure satisfait la loi de Griffith démontrée dans le chapitre \ref{chap:graddama}.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{crack_speed.pdf}
+\end{figure}
+Une analyse numérique de convergence vers le modèle quasi-statique y est aussi proposée.
+
+Quelques observations numériques au tour d'un zoom spatio-temporel des phénomènes de branchement ou de bifurcation sont décrites et on propose une comparaison avec des critères classiques en mécanique de la rupture.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{plate-micro-macro.pdf}
+\end{figure}
+
+Des confrontations avec les résultats expérimentaux sont aussi réalisées afin d'évaluer le modèle et proposer des axes d'amélioration. En particulier, on envisage d'utiliser les lois d'endommagement plus sophistiquées pour pouvoir contrôler la bande d'endommagement pour le béton.
+\end{otherlanguage}
+
 \chapter{Avant-propos}
 
 \section*{Research Background and Outline}
@@ -126,7 +228,7 @@ J'aimerais remercier les co-occupants-de-bureau, les co-travailleurs, les co-FEn
 
 \vspace{0.2cm}
 
-Ô cher \texttt{dsp0647318} (à tel point que je l'ai encore mémorisé jusqu'aujourd'hui, soit \SI{5760}{mn} après la soutenance), un vieux Debian Squeeze, qui m'a accompagné dans le froid du R013 et qui a dû beaucoup souffert grâce à FEniCS (cancer de disques RAID). Tu t'es libéré un mois avant l'échéance mais je te remercie quand même pour ta loyauté. Monsieur Hérisson à oeil unique, ne m'en veux pas si je t'ai lassé sur mon bureau O2C.10A. Avant de se jeter dans la poubelle de Saclay, dis merci à quiconque qui voudra prendre quelques articles sur la mécanique des milieux continus, la rupture\ldots
+Ô cher \texttt{dsp0647318} (à tel point que je l'ai encore mémorisé jusqu'aujourd'hui, soit \SI{5760}{mn} après la soutenance), un vieux Debian Squeeze, qui m'a accompagné dans le froid du R013 et qui a dû beaucoup souffert grâce à FEniCS (cancer de disques RAID). Tu t'es libéré un mois avant l'échéance mais je te remercie quand même pour ta loyauté. Monsieur Hérisson à oeil unique, ne m'en veuille pas si je t'ai lassé sur mon bureau O2C.10A. Avant de se jeter dans la poubelle de Saclay, dis merci à quiconque qui voudra prendre quelques articles sur la mécanique des milieux continus, la rupture\ldots
 
 \vspace{0.2cm}
 
