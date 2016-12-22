@@ -4,7 +4,7 @@ This repository contains the LaTeX source files of my PhD thesis entitled "Gradi
 
 ## PDF version
 
-An author-generated PDF version is available at [http://thesis.litianyi.me](http://thesis.litianyi.me).
+The official archived version is available at [http://thesis.litianyi.me](http://thesis.litianyi.me), where you can find also some detailed information concerning the defense of the current thesis. You can either download it directly [in the "Downloads" section](https://bitbucket.org/litianyi/thesis-manuscript/downloads/Thesis-Li.pdf) of the current repository.
 
 ## Figures
 
