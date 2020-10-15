@@ -4,11 +4,11 @@ This repository contains the LaTeX source files of my PhD thesis entitled "Gradi
 
 ## PDF version
 
-The official archived version is available at [http://thesis.litianyi.me](http://thesis.litianyi.me), where you can find also some detailed information concerning the defense of the current thesis. You can either download it directly [in the "Downloads" section](https://bitbucket.org/litianyi/thesis-manuscript/downloads/Thesis-Li.pdf) of the current repository.
+The official archived version is available at [http://www.theses.fr/2016SACLX042](http://www.theses.fr/2016SACLX042).
 
 ## Figures
 
-You can download [here](https://dl.dropboxusercontent.com/u/4509593/Thesis/Figs.7z) all the figures used in this thesis. Please put the `figs` folder in the current thesis workspace, namely inside the `thesis-manuscript` folder.
+You can download [here](https://github.com/tianyikillua/thesis-manuscript/files/5387267/Figs.zip) all the figures used in this thesis. Please put the `figs` folder in the current thesis workspace, namely inside the `thesis-manuscript` folder.
 
 Many shematic figures are created proudly by the [ipe](http://ipe.otfried.org) software and its matplotlib backend available at [https://github.com/otfried/ipe-tools](https://github.com/otfried/ipe-tools). I would like to express my deep love to [ipe](http://ipe.otfried.org).
 
